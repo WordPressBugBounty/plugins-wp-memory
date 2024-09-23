@@ -107,7 +107,7 @@ ob_end_clean();
 // Sempre exibe a seção adicional
 echo '<ul>';
 
-echo '<img src="' . esc_url(WPMEMORYIMAGES) . '/help1.jpg' . '" style="width: 100%; height: auto;" />';
+echo '<img src="' . esc_url(WPMEMORYIMAGES) . '/help3.jpg' . '" style="width: 100%; height: auto;" />';
 
 $x = rand(1, 2);
 if ($x < 2) {
