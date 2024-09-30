@@ -107,11 +107,12 @@ ob_end_clean();
 // Sempre exibe a seção adicional
 echo '<ul>';
 
-echo '<img src="' . esc_url(WPMEMORYIMAGES) . '/help3.jpg' . '" style="width: 100%; height: auto;" />';
 
 $x = rand(1, 2);
 if ($x < 2) {
     echo '<h2>' . esc_html__("Did this plugin provide useful information?", 'wp-memory') . '</h2>';
+    echo '<img src="' . esc_url(WPMEMORYIMAGES) . '/help3.jpg' . '" style="width: 100%; height: auto;" />';
+
     esc_html_e("Please support us by rating our plugin on WordPress.org and help us keep it alive and up to date.", 'wp-memory');
 ?>
     <br /><br />
@@ -119,12 +120,48 @@ if ($x < 2) {
 <?php
 } else {
     echo '<h2>' . esc_html__('Can You Do Us a Favor?', 'wp-memory') . '</h2>';
-    esc_html_e("If you're enjoying the WP Memory Plugin, we’d be grateful if you could rate it on WordPress.org. It only takes a moment and helps us reach more users and stay motivated. Thank you!", 'wp-memory');
+    echo '<img src="' . esc_url(WPMEMORYIMAGES) . '/help1.jpg' . '" style="width: 100%; height: auto;" />';
+
+
+    esc_html_e("If this plugin provide useful information, we’d be grateful if you could rate it on WordPress.org. It only takes a moment and helps us reach more users and stay motivated. Thank you!", 'wp-memory');
 ?>
     <br /><br />
     <a href="https://wordpress.org/support/plugin/wp-memory/reviews/#new-post" class="button button-medium button-primary"><?php esc_html_e('Rate', 'wp-memory'); ?></a>
 <?php
 }
+echo '</ul>';
+
+// Exibe vídeos e informações adicionais
+echo '<ul>';
+$x = rand(1, 3);
+$url = '';
+switch ($x) {
+    case 1:
+        $url = esc_url(WPMEMORYURL . "assets/videos/memory4.mp4");
+        $title_ad = esc_attr__("Boost Your WP Memory with Our Premium Version – No Manual Changes Needed!", "wp-memory");
+        break;
+    case 2:
+        $url = esc_url(WPMEMORYURL . "assets/videos/memory2.mp4");
+        $title_ad = esc_attr__("Increase WP Memory with Our Premium Version – No Manual Edits Required!", "wp-memory");
+        break;
+    case 3:
+        $url = esc_url(WPMEMORYURL . "assets/videos/memory3.mp4");
+        $title_ad  = esc_attr__("Upgrade for Safe WP Memory Boost – Avoid Risky Manual Adjustments!", "wp-memory");
+        break;
+}
+echo '<h2>' . esc_attr($title_ad) . '</h2>';
+?>
+<video id="bill-banner-2" style="margin:-20px 0px -15px -12px; padding:0px;" width="400" height="230" muted>
+    <source src="<?php echo esc_url($url); ?>" type="video/mp4">
+</video>
+<li><?php esc_html_e("Lifetime license with premium enhancements: One-time payment of just $17.99!", "wp-memory"); ?></li>
+<li><?php esc_html_e("Our Premium version can modify quickly the necessary files to increase your WP Memory Limit and PHP Memory. Don't take the risk of making manual changes that can harm your site.", "wp-memory"); ?></li>
+<li><?php esc_html_e("Let your site run smoothly, free from memory issues with our plugin.", "wp-memory"); ?></li>
+<li><?php esc_html_e("Dedicated Premium Support", "wp-memory"); ?></li>
+<li><?php esc_html_e("More...", "wp-memory"); ?></li>
+<br />
+<a href="https://wpmemory.com/premium/" class="button button-medium button-primary"><?php esc_html_e('Learn More', 'wp-memory'); ?></a>
+<?php
 echo '</ul>';
 
 // Exibição dos dados com prioridade para o cupom
@@ -199,32 +236,5 @@ if ($cached_coupon_data !== '' && $cached_coupon_data !== false) {
         echo '</ul>';
     }
 }
-// Exibe vídeos e informações adicionais
-echo '<ul>';
-$x = rand(1, 3);
-$url = '';
-switch ($x) {
-    case 1:
-        $url = esc_url(WPMEMORYURL . "assets/videos/memory4.mp4");
-        break;
-    case 2:
-        $url = esc_url(WPMEMORYURL . "assets/videos/memory2.mp4");
-        break;
-    case 3:
-        $url = esc_url(WPMEMORYURL . "assets/videos/memory3.mp4");
-        break;
-}
-?>
-<video id="bill-banner-2" style="margin:-20px 0px -15px -12px; padding:0px;" width="400" height="230" muted>
-    <source src="<?php echo esc_url($url); ?>" type="video/mp4">
-</video>
-<li><?php esc_html_e("Lifetime license with premium enhancements: One-time payment of just $17.99!", "wp-memory"); ?></li>
-<li><?php esc_html_e("Our Premium version can modify quickly the necessary files to increase your WP Memory Limit and PHP Memory. Don't take the risk of making manual changes that can harm your site.", "wp-memory"); ?></li>
-<li><?php esc_html_e("Let your site run smoothly, free from memory issues with our plugin.", "wp-memory"); ?></li>
-<li><?php esc_html_e("Dedicated Premium Support", "wp-memory"); ?></li>
-<li><?php esc_html_e("More...", "wp-memory"); ?></li>
-<br />
-<a href="https://wpmemory.com/premium/" class="button button-medium button-primary"><?php esc_html_e('Learn More', 'wp-memory'); ?></a>
-<?php
-echo '</ul>';
+
 ?>
