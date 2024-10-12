@@ -3,6 +3,7 @@
 This file contains changelog entries, so we can keep the size of the standard WordPress readme.txt file reasonable.
 
 == Changelog ==
+3.50/51 2024-10-12 - Improved error handler
 3.48/49 2024-09-25 - Improved Dashboard
 3.47 2024-09-23 - Improved Dashboard
 3.45/46 2024-09-21 - Dashboard Improvements
