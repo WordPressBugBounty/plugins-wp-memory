@@ -2,7 +2,7 @@
 Plugin Name: WP Memory
 Plugin URI: http://wpmemory.com
 Description: Check for high memory usage, include the results on the Site Health page, and provide suggestions.
-Version: 3.52
+Version: 3.53
 Author: Bill Minozzi
 Domain Path: /language
 Author URI: http://billminozzi.com
@@ -670,9 +670,8 @@ function wpmemory_load_chat()
 {
 	if (function_exists('is_admin') && function_exists('current_user_can')) {
 		if (is_admin() and current_user_can("manage_options")) {
-			if ( ! class_exists( 'wpmemory_BillChat\ChatPlugin' ) ) {
+			if (! class_exists('wpmemory_BillChat\ChatPlugin')) {
 				require_once dirname(__FILE__) . "/includes/chat/class_bill_chat.php";
-
 			}
 		}
 	}
