@@ -2,8 +2,8 @@
 Contributors: sminozzi
 Tags: memory limit, memory usage, memory exhausted, memory increase, ram
 Requires at least: 5.2
-Tested up to: 6.6
-Stable tag: 3.51
+Tested up to: 6.7
+Stable tag: 3.52
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -223,4 +223,8 @@ We can keep the size of the standard WordPress readme.txt file reasonable.
 == External service ==
 The WPMemory plugin will retrieve tips and news from our site BillMinozzi.com. This information will be displayed in the plugin dashboard, in the right-hand column under the title "Tips and News." No data is sent to our server. Learn about the terms of use for our plugins and themes at this link:
 https://siterightaway.net/terms-of-use-of-our-plugins-and-themes/
+
+== External service 2 ==
+When using our chat, only some information about issues, such as your language and data from the Diagnose tab, may be sent to our server. We do not share, publish, or disclose any information with third parties.
+
 

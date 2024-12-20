@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:30+0100\n"
-"PO-Revision-Date: 2024-09-25 12:01+0100\n"
+"POT-Creation-Date: 2024-12-20 08:42+0000\n"
+"PO-Revision-Date: 2024-12-20 08:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -19,153 +19,148 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Loco-Version: 2.6.11; wp-6.6.2\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
 #: _includes/checkup/bill_class_diagnose.php:287
 #: _includes/checkup/bill_class_diagnose.php:308
-#: includes/diagnose/class_bill_diagnose.php:605
-#: includes/diagnose/class_bill_diagnose.php:626
+#: includes/diagnose/class_bill_diagnose.php:760
 msgid "Our plugin"
 msgstr "Il nostro plugin"
 
 #: _includes/checkup/bill_class_diagnose.php:289
-#: includes/diagnose/class_bill_diagnose.php:607
+#: includes/diagnose/class_bill_diagnose.php:762
 msgid ""
-"cannot function properly because your WordPress Memory Limit is too low. Your "
-"site will experience serious issues, even if you deactivate our plugin."
+"cannot function properly because your WordPress Memory Limit is too low. "
+"Your site will experience serious issues, even if you deactivate our plugin."
 msgstr ""
-"Il nostro plugin non può funzionare correttamente perché il limite di memoria "
-"di WordPress è troppo basso. Il tuo sito presenterà seri problemi, anche se "
-"disattivi il nostro plugin."
+"Il nostro plugin non può funzionare correttamente perché il limite di "
+"memoria di WordPress è troppo basso. Il tuo sito presenterà seri problemi, "
+"anche se disattivi il nostro plugin."
 
 #: _includes/checkup/bill_class_diagnose.php:295
 #: _includes/checkup/bill_class_diagnose.php:316
-#: includes/diagnose/class_bill_diagnose.php:613
-#: includes/diagnose/class_bill_diagnose.php:634
+#: includes/diagnose/class_bill_diagnose.php:768
 msgid "Learn more"
 msgstr "Per saperne di più"
 
 #: _includes/checkup/bill_class_diagnose.php:307
-#: includes/diagnose/class_bill_diagnose.php:625
 msgid "Your site has errors."
 msgstr "Il tuo sito presenta errori."
 
 #: _includes/checkup/bill_class_diagnose.php:310
-#: includes/diagnose/class_bill_diagnose.php:628
 msgid ""
 "can't function as intended. Errors, including JavaScript errors, may lead to "
-"visual problems or disrupt functionality, from minor glitches to critical site "
-"failures. Promptly address these issues before continuing."
+"visual problems or disrupt functionality, from minor glitches to critical "
+"site failures. Promptly address these issues before continuing."
 msgstr ""
 "non può funzionare come previsto. Gli errori, inclusi gli errori JavaScript, "
 "possono causare problemi visivi o interrompere la funzionalità, da piccoli "
-"problemi a guasti critici del sito. Affrontare tempestivamente questi problemi "
-"prima di continuare."
+"problemi a guasti critici del sito. Affrontare tempestivamente questi "
+"problemi prima di continuare."
 
 #: _includes/checkup/bill_class_diagnose.php:336
-#: includes/diagnose/class_bill_diagnose.php:654
+#: includes/diagnose/class_bill_diagnose.php:811
 msgctxt "Site Health"
 msgid "Critical Issues"
 msgstr "Problemi critici"
 
 #: _includes/checkup/bill_class_diagnose.php:371
-#: includes/diagnose/class_bill_diagnose.php:696
 msgid ""
-"Displaying the latest recurring errors from your error log file and eventually "
-"alert about low WordPress memory limit is a courtesy of plugin"
+"Displaying the latest recurring errors from your error log file and "
+"eventually alert about low WordPress memory limit is a courtesy of plugin"
 msgstr ""
 "La visualizzazione degli ultimi errori ricorrenti dal file di registro degli "
-"errori e l'eventuale avviso sul limite di memoria basso di WordPress sono una "
-"cortesia del plugin"
+"errori e l'eventuale avviso sul limite di memoria basso di WordPress sono "
+"una cortesia del plugin"
 
 #: _includes/checkup/bill_class_diagnose.php:373
-#: includes/diagnose/class_bill_diagnose.php:698
 msgid ""
 "Disabling our plugin does not stop the errors from occurring; \n"
-"                it simply means you will no longer be notified here that they "
-"are happening, but they can still harm your site."
+"                it simply means you will no longer be notified here that "
+"they are happening, but they can still harm your site."
 msgstr ""
 "Disattivare il nostro plugin non impedisce che si verifichino errori; \n"
 "significa semplicemente che non sarai più avvisato qui che si stanno "
 "verificando, ma possono comunque danneggiare il tuo sito."
 
 #: _includes/checkup/bill_class_diagnose.php:381
-#: includes/diagnose/class_bill_diagnose.php:706
+#: includes/diagnose/class_bill_diagnose.php:892
 msgid "Potential Problems"
 msgstr "Potenziali problemi"
 
 #: _includes/checkup/bill_class_diagnose.php:389
-#: includes/diagnose/class_bill_diagnose.php:714
+#: includes/diagnose/class_bill_diagnose.php:900
 msgid "Low WordPress Memory Limit"
 msgstr "Limite di memoria WordPress basso"
 
 #: _includes/checkup/bill_class_diagnose.php:402 dashboard/dashboard.php:91
-#: includes/diagnose/class_bill_diagnose.php:727
+#: includes/diagnose/class_bill_diagnose.php:913
 msgid "Your usage now"
 msgstr "Il tuo utilizzo ora"
 
 #: _includes/checkup/bill_class_diagnose.php:410
-#: includes/diagnose/class_bill_diagnose.php:735
+#: includes/diagnose/class_bill_diagnose.php:921
 msgid "Total Php Server Memory"
 msgstr "Totale della PHP memoria"
 
 #: _includes/checkup/bill_class_diagnose.php:419
-#: includes/diagnose/class_bill_diagnose.php:744
+#: includes/diagnose/class_bill_diagnose.php:930
 msgid ""
 "Your WordPress Memory Limit is too low, which can lead to critical issues on "
 "your site due to insufficient resources. Promptly address this issue before "
 "continuing."
 msgstr ""
-"Il limite di memoria di WordPress è troppo basso, il che può causare problemi "
-"critici sul tuo sito a causa di risorse insufficienti. Risolvi subito questo "
-"problema prima di continuare."
+"Il limite di memoria di WordPress è troppo basso, il che può causare "
+"problemi critici sul tuo sito a causa di risorse insufficienti. Risolvi "
+"subito questo problema prima di continuare."
 
 #: _includes/checkup/bill_class_diagnose.php:425
 #: _includes/checkup/bill_class_diagnose.php:445
-#: _includes/feedback/activated-manager.php:54 dashboard/mybanners.php:159
-#: includes/diagnose/class_bill_diagnose.php:750
-#: includes/diagnose/class_bill_diagnose.php:788
+#: _includes/feedback/activated-manager.php:54 dashboard/mybanners.php:163
+#: includes/diagnose/class_bill_diagnose.php:936
+#: includes/diagnose/class_bill_diagnose.php:974
 #: includes/feedback/activated-manager.php:65
 msgid "Learn More"
 msgstr "Per saperne di più"
 
 #: _includes/checkup/bill_class_diagnose.php:436
-#: includes/diagnose/class_bill_diagnose.php:779
+#: includes/diagnose/class_bill_diagnose.php:965
 msgid "Site Errors"
 msgstr "Errori del sito"
 
 #: _includes/checkup/bill_class_diagnose.php:441
-#: includes/diagnose/class_bill_diagnose.php:784
+#: includes/diagnose/class_bill_diagnose.php:970
 msgid ""
-"Your site has experienced errors for the past 2 days. These errors, including "
-"JavaScript issues, can result in visual problems or disrupt functionality, "
-"ranging from minor glitches to critical site failures. JavaScript errors can "
-"terminate JavaScript execution, leaving all subsequent commands inoperable."
+"Your site has experienced errors for the past 2 days. These errors, "
+"including JavaScript issues, can result in visual problems or disrupt "
+"functionality, ranging from minor glitches to critical site failures. "
+"JavaScript errors can terminate JavaScript execution, leaving all subsequent "
+"commands inoperable."
 msgstr ""
 "Il tuo sito ha riscontrato errori negli ultimi 2 giorni. Questi errori, "
-"inclusi problemi di JavaScript, possono causare problemi visivi o interrompere "
-"la funzionalità, che vanno da piccoli problemi a guasti critici del sito. Gli "
-"errori di JavaScript possono terminare l'esecuzione di JavaScript, lasciando "
-"tutti i comandi successivi inutilizzabili."
+"inclusi problemi di JavaScript, possono causare problemi visivi o "
+"interrompere la funzionalità, che vanno da piccoli problemi a guasti critici "
+"del sito. Gli errori di JavaScript possono terminare l'esecuzione di "
+"JavaScript, lasciando tutti i comandi successivi inutilizzabili."
 
 #: _includes/checkup/bill_class_diagnose.php:514
-#: includes/diagnose/class_bill_diagnose.php:842
+#: includes/diagnose/class_bill_diagnose.php:1028
 msgid "This is a partial list of the errors found."
 msgstr "Questo è un elenco parziale degli errori riscontrati."
 
 #: _includes/checkup/bill_class_diagnose.php:1052
-#: includes/diagnose/class_bill_diagnose.php:1327
+#: includes/diagnose/class_bill_diagnose.php:1527
 msgid ""
 "These are critical issues that can have a significant impact on your site's "
 "performance. They can cause many plugins and functionalities to malfunction "
 "and, in some cases, render your site completely inoperative, depending on "
 "their severity. Address them promptly."
 msgstr ""
-"Si tratta di problemi critici che possono avere un impatto significativo sulle "
-"prestazioni del tuo sito. Possono causare il malfunzionamento di molti plugin "
-"e funzionalità e, in alcuni casi, rendere il tuo sito completamente "
+"Si tratta di problemi critici che possono avere un impatto significativo "
+"sulle prestazioni del tuo sito. Possono causare il malfunzionamento di molti "
+"plugin e funzionalità e, in alcuni casi, rendere il tuo sito completamente "
 "inoperante, a seconda della loro gravità. Affrontali tempestivamente."
 
 #. Author of the plugin/theme
@@ -183,15 +178,15 @@ msgstr "Potresti farmi un GRANDE favore?"
 
 #: _includes/feedback/_feedback.php:91 includes/feedback/feedback.php:91
 msgid ""
-"If you use & enjoy WP Memory Plugin, please rate it 5 stars on WordPress.org. "
-"It only takes a second and help us spread the word and boost our motivation. "
-"Thank you!"
+"If you use & enjoy WP Memory Plugin, please rate it 5 stars on WordPress."
+"org. It only takes a second and help us spread the word and boost our "
+"motivation. Thank you!"
 msgstr ""
 "Se usi e ti piace WP Memory Plugin, per favore votalo su WordPress.org. Ci "
 "vuole solo un secondo e ci aiuta a mantenere il plugin vivo e mantenuto. "
 "Grazie!"
 
-#: _includes/feedback/_feedback.php:96 dashboard/mybanners.php:118
+#: _includes/feedback/_feedback.php:96 dashboard/mybanners.php:119
 #: includes/feedback/feedback.php:96
 msgid "Rate or Share"
 msgstr "Dai un punteggio o Condividi"
@@ -240,8 +235,8 @@ msgstr "Desideriamo ringraziarvi per aver provato i nostri prodotti."
 
 #: _includes/feedback/feedback-last.php:96
 msgid ""
-"We offer 20+ free plugins and 6 themes to supercharge your website's security, "
-"functionality, and backups. Trusted by over 50,000 users."
+"We offer 20+ free plugins and 6 themes to supercharge your website's "
+"security, functionality, and backups. Trusted by over 50,000 users."
 msgstr ""
 "Offriamo oltre 20 plugin gratuiti e 6 temi per potenziare la sicurezza, la "
 "funzionalità e i backup del tuo sito web. Scelto da oltre 50.000 utenti."
@@ -279,17 +274,41 @@ msgstr "Aprire Il plugin WP Memory qui!"
 msgid "Just Click Over Tools, then Go To WP Memory."
 msgstr "Basta fare clic su Strumenti, quindi andare su Memoria WP."
 
+#: dashboard/_dashboard_container.php:95 dashboard/dashboard_container.php:95
+msgid "PB"
+msgstr "PB"
+
+#: dashboard/_dashboard_container.php:97 dashboard/dashboard_container.php:97
+msgid "TB"
+msgstr "TB"
+
+#: dashboard/_dashboard_container.php:99 dashboard/dashboard_container.php:99
+msgid "GB"
+msgstr "GB"
+
+#: dashboard/_dashboard_container.php:101 dashboard/dashboard_container.php:101
+msgid "MB"
+msgstr "MB"
+
+#: dashboard/_dashboard_container.php:103 dashboard/dashboard_container.php:103
+msgid "KB"
+msgstr "KB"
+
+#: dashboard/_dashboard_container.php:105 dashboard/dashboard_container.php:105
+msgid "Unknown"
+msgstr "Sconosciuto"
+
 #: dashboard/dashboard.php:20
 msgid ""
 "This plugin check For High Memory Usage and also include the result in the "
-"Tools => Site Health Page. Our Premium version can modify the necessary files "
-"to increase your WP Memory Limit and PHP Memory without risking accidental "
-"file modifications."
+"Tools => Site Health Page. Our Premium version can modify the necessary "
+"files to increase your WP Memory Limit and PHP Memory without risking "
+"accidental file modifications."
 msgstr ""
 "Questo plugin controlla l'utilizzo elevato della memoria e include anche il "
-"risultato nella pagina Strumenti => Stato del sito. La nostra versione Premium "
-"può modificare i file necessari per aumentare il limite di memoria WP e la "
-"memoria PHP senza rischiare modifiche accidentali dei file."
+"risultato nella pagina Strumenti => Stato del sito. La nostra versione "
+"Premium può modificare i file necessari per aumentare il limite di memoria "
+"WP e la memoria PHP senza rischiare modifiche accidentali dei file."
 
 #: dashboard/dashboard.php:24 functions/functions.php:103
 msgid "Memory Usage"
@@ -301,13 +320,13 @@ msgstr "PHP Memory"
 
 #: dashboard/dashboard.php:117
 msgid ""
-"Our plugin cannot function properly because your WordPress memory limit is too "
-"low. Your site will experience serious issues, even if you deactivate our "
-"plugin."
+"Our plugin cannot function properly because your WordPress memory limit is "
+"too low. Your site will experience serious issues, even if you deactivate "
+"our plugin."
 msgstr ""
-"Il nostro plugin non può funzionare correttamente perché il limite di memoria "
-"di WordPress è troppo basso. Il tuo sito presenterà seri problemi, anche se "
-"disattivi il nostro plugin."
+"Il nostro plugin non può funzionare correttamente perché il limite di "
+"memoria di WordPress è troppo basso. Il tuo sito presenterà seri problemi, "
+"anche se disattivi il nostro plugin."
 
 #: dashboard/dashboard.php:133
 msgid "Understanding Memory Usage in WordPress."
@@ -327,13 +346,14 @@ msgstr "1) Memoria totale del server (MEMORIA HARDWARE):"
 
 #: dashboard/dashboard.php:160
 msgid ""
-"Server memory refers to the total physical memory of your server and can only "
-"be increased through physical intervention, which should be requested from "
-"your hosting provider. Look the TAB Hardware Memory above."
+"Server memory refers to the total physical memory of your server and can "
+"only be increased through physical intervention, which should be requested "
+"from your hosting provider. Look the TAB Hardware Memory above."
 msgstr ""
-"La memoria del server si riferisce alla memoria fisica totale del tuo server e "
-"può essere aumentata solo attraverso l'intervento fisico, che dovrebbe essere "
-"richiesto al tuo provider di hosting. Guarda la TAB Memoria hardware sopra."
+"La memoria del server si riferisce alla memoria fisica totale del tuo server "
+"e può essere aumentata solo attraverso l'intervento fisico, che dovrebbe "
+"essere richiesto al tuo provider di hosting. Guarda la TAB Memoria hardware "
+"sopra."
 
 #: dashboard/dashboard.php:166
 msgid "2) PHP Memory**:"
@@ -347,9 +367,9 @@ msgid ""
 "memory (point 1)."
 msgstr ""
 "PHP è il linguaggio di programmazione principale in cui è stato creato "
-"WordPress. La memoria PHP è solitamente definita nel file php.ini (il file di "
-"configurazione predefinito) situato all'esterno dell'ambiente WordPress. Deve "
-"essere inferiore alla memoria del server (punto 1)."
+"WordPress. La memoria PHP è solitamente definita nel file php.ini (il file "
+"di configurazione predefinito) situato all'esterno dell'ambiente WordPress. "
+"Deve essere inferiore alla memoria del server (punto 1)."
 
 #: dashboard/dashboard.php:174
 msgid "Instructions to increase PHP Memory:"
@@ -365,8 +385,8 @@ msgstr "3) WordPress Memory Limit*:"
 
 #: dashboard/dashboard.php:186
 msgid ""
-"WP Memory Limit is the maximum limit WordPress allows for each user and script "
-"of your site."
+"WP Memory Limit is the maximum limit WordPress allows for each user and "
+"script of your site."
 msgstr ""
 "Il limite di memoria WP è il limite massimo consentito da WordPress per "
 "ciascun utente e script del tuo sito. Deve essere inferiore alla memoria PHP "
@@ -401,36 +421,36 @@ msgid ""
 msgstr ""
 "se il tuo sito si comporta lentamente, o le pagine non si caricano, si "
 "ottengono schermate bianche o 500 errori interni del server, potresti aver "
-"bisogno di più memoria. Diverse cose consumano memoria, come WordPress stesso, "
-"i plugin installati, il tema che stai usando e il contenuto del sito."
+"bisogno di più memoria. Diverse cose consumano memoria, come WordPress "
+"stesso, i plugin installati, il tema che stai usando e il contenuto del sito."
 
 #: dashboard/dashboard.php:255
 msgid ""
-"Basically, the more content and features you add to your site, the bigger your "
-"memory limit has to be. if you're only running a small site with basic "
+"Basically, the more content and features you add to your site, the bigger "
+"your memory limit has to be. if you're only running a small site with basic "
 "functions without a Page Builder and Theme Options (for example the native "
-"Twenty twenty) maybe you don’t need make memory adjustments. However, once you "
-"use a Premium WordPress theme and you start encountering unexpected issues, it "
-"may be time to adjust your memory limit to meet the standards for a modern "
-"WordPress installation."
+"Twenty twenty) maybe you don’t need make memory adjustments. However, once "
+"you use a Premium WordPress theme and you start encountering unexpected "
+"issues, it may be time to adjust your memory limit to meet the standards for "
+"a modern WordPress installation."
 msgstr ""
 "Fondamentalmente, più contenuti e funzioni si aggiungono al tuo sito, più "
-"grande deve essere il tuo limite di memoria. Se stai solo eseguendo un piccolo "
-"sito con funzioni di base senza un Page Builder e Theme Options (per esempio "
-"il nativo Twenty twenty) forse non hai bisogno di fare regolazioni di memoria. "
-"Tuttavia, una volta che si utilizza un tema Premium WordPress e si iniziano a "
-"incontrare problemi inaspettati, potrebbe essere il momento di regolare il "
-"limite di memoria per soddisfare gli standard di una moderna installazione di "
-"WordPress."
+"grande deve essere il tuo limite di memoria. Se stai solo eseguendo un "
+"piccolo sito con funzioni di base senza un Page Builder e Theme Options (per "
+"esempio il nativo Twenty twenty) forse non hai bisogno di fare regolazioni "
+"di memoria. Tuttavia, una volta che si utilizza un tema Premium WordPress e "
+"si iniziano a incontrare problemi inaspettati, potrebbe essere il momento di "
+"regolare il limite di memoria per soddisfare gli standard di una moderna "
+"installazione di WordPress."
 
 #: dashboard/dashboard.php:262
 msgid ""
-"Increase the WP Memory Limit is a standard practice in WordPress and you find "
-"instructions also in the official WordPress documentation (Increasing memory "
-"allocated to PHP)."
+"Increase the WP Memory Limit is a standard practice in WordPress and you "
+"find instructions also in the official WordPress documentation (Increasing "
+"memory allocated to PHP)."
 msgstr ""
-"Aumentare il limite di memoria di WP è una pratica standard in WordPress e si "
-"trovano istruzioni anche nella documentazione ufficiale di WordPress "
+"Aumentare il limite di memoria di WP è una pratica standard in WordPress e "
+"si trovano istruzioni anche nella documentazione ufficiale di WordPress "
 "(Aumentare la memoria assegnata a PHP)."
 
 #: dashboard/dashboard.php:269
@@ -452,30 +472,6 @@ msgstr "Guida in linea"
 msgid "Troubleshooting Page"
 msgstr "Pagina di risoluzione dei problemi"
 
-#: dashboard/dashboard_container.php:95
-msgid "PB"
-msgstr "PB"
-
-#: dashboard/dashboard_container.php:97
-msgid "TB"
-msgstr "TB"
-
-#: dashboard/dashboard_container.php:99
-msgid "GB"
-msgstr "GB"
-
-#: dashboard/dashboard_container.php:101
-msgid "MB"
-msgstr "MB"
-
-#: dashboard/dashboard_container.php:103
-msgid "KB"
-msgstr "KB"
-
-#: dashboard/dashboard_container.php:105
-msgid "Unknown"
-msgstr "Sconosciuto"
-
 #: dashboard/hardware.php:14
 msgid "Total of Server RAM"
 msgstr "Totale della RAM del server"
@@ -490,8 +486,8 @@ msgstr ""
 
 #: dashboard/hardware.php:33
 msgid ""
-"Blocked by Hosting! Unable to find your total RAM memory. Please, ask to your "
-"hosting company."
+"Blocked by Hosting! Unable to find your total RAM memory. Please, ask to "
+"your hosting company."
 msgstr ""
 "Impossibile trovare la tua memoria RAM totale. Per favore, chiedete alla "
 "vostra società di hosting."
@@ -504,14 +500,14 @@ msgid ""
 "Talk with your hosting company if you need to increase that."
 msgstr ""
 "La RAM (Random Access Memory) del server è una\n"
-"memoria fisica, che di solito prende la forma di schede (DIMM) attaccate alla "
-"scheda madre.\n"
+"memoria fisica, che di solito prende la forma di schede (DIMM) attaccate "
+"alla scheda madre.\n"
 "Parla con la tua compagnia di hosting se hai bisogno di aumentarla."
 
 #: dashboard/hardware.php:43
 msgid ""
-"Sometimes hosting companies block access to this information. In these cases, "
-"you need to request them to unblock it or inquire directly with them."
+"Sometimes hosting companies block access to this information. In these "
+"cases, you need to request them to unblock it or inquire directly with them."
 msgstr ""
 "A volte le società di hosting bloccano l'accesso a queste informazioni. In "
 "questi casi, devi chiedere loro di sbloccarle o informarti direttamente con "
@@ -523,14 +519,15 @@ msgstr "Memoria RAM corrente totale:"
 
 #: dashboard/log.php:12
 msgid "We suggest keeping the usage percentage below 70%."
-msgstr "Suggeriamo di mantenere la percentuale di utilizzo al di sotto del 70%."
+msgstr ""
+"Suggeriamo di mantenere la percentuale di utilizzo al di sotto del 70%."
 
 #: dashboard/log.php:16
 msgid ""
 "Spammers and hackers may try loading non-existent pages, seeking "
 "vulnerabilities, and potentially overloading your server. Enhance your "
-"security with our Anti Hacker and Stop Bad Bots plugins. Click the \"More Tools"
-"\" tab above."
+"security with our Anti Hacker and Stop Bad Bots plugins. Click the \"More "
+"Tools\" tab above."
 msgstr ""
 "Spammer e hacker potrebbero provare a caricare pagine inesistenti, cercare "
 "vulnerabilità e potenzialmente sovraccaricare il server. Migliora la tua "
@@ -544,11 +541,11 @@ msgid_plural "%s items"
 msgstr[0] "%s elemento"
 msgstr[1] "%s elementi"
 
-#: dashboard/mybanners.php:114
+#: dashboard/mybanners.php:113
 msgid "Did this plugin provide useful information?"
 msgstr "Questo plugin ha fornito informazioni utili?"
 
-#: dashboard/mybanners.php:115
+#: dashboard/mybanners.php:116
 msgid ""
 "Please support us by rating our plugin on WordPress.org and help us keep it "
 "alive and up to date."
@@ -556,71 +553,70 @@ msgstr ""
 "Vi preghiamo di supportarci valutando il nostro plugin su WordPress.org e "
 "aiutateci a mantenerlo attivo e aggiornato."
 
-#: dashboard/mybanners.php:121
+#: dashboard/mybanners.php:122
 msgid "Can You Do Us a Favor?"
 msgstr "Puoi farci un favore?"
 
-#: dashboard/mybanners.php:122
-#| msgid ""
-#| "If you're enjoying the WP Memory Plugin, we’d be grateful if you could rate "
-#| "it on WordPress.org. It only takes a moment and helps us reach more users "
-#| "and stay motivated. Thank you!"
+#: dashboard/mybanners.php:126
 msgid ""
-"If this plugin provide useful information, we’d be grateful if you could rate "
-"it on WordPress.org. It only takes a moment and helps us reach more users and "
-"stay motivated. Thank you!"
+"If this plugin provide useful information, we’d be grateful if you could "
+"rate it on WordPress.org. It only takes a moment and helps us reach more "
+"users and stay motivated. Thank you!"
 msgstr ""
 "Se questo plugin fornisce informazioni utili, saremmo grati se potessi "
-"valutarlo su WordPress.org. Ci vuole solo un momento e ci aiuta a raggiungere "
-"più utenti e a rimanere motivati. Grazie!"
+"valutarlo su WordPress.org. Ci vuole solo un momento e ci aiuta a "
+"raggiungere più utenti e a rimanere motivati. Grazie!"
 
-#: dashboard/mybanners.php:125
+#: dashboard/mybanners.php:129
 msgid "Rate"
 msgstr "Tasso"
 
-#: dashboard/mybanners.php:137
-msgid "Boost Your WP Memory with Our Premium Version – No Manual Changes Needed!"
-msgstr ""
-"Potenzia la tua memoria WP con la nostra versione Premium: non sono necessarie "
-"modifiche manuali!"
-
 #: dashboard/mybanners.php:141
+msgid ""
+"Boost Your WP Memory with Our Premium Version – No Manual Changes Needed!"
+msgstr ""
+"Potenzia la tua memoria WP con la nostra versione Premium: non sono "
+"necessarie modifiche manuali!"
+
+#: dashboard/mybanners.php:145
 msgid "Increase WP Memory with Our Premium Version – No Manual Edits Required!"
 msgstr ""
 "Aumenta la memoria WP con la nostra versione Premium: non sono necessarie "
 "modifiche manuali!"
 
-#: dashboard/mybanners.php:145
+#: dashboard/mybanners.php:149
 msgid "Upgrade for Safe WP Memory Boost – Avoid Risky Manual Adjustments!"
 msgstr ""
-"Esegui l'upgrade per Safe WP Memory Boost: evita rischiose regolazioni manuali!"
+"Esegui l'upgrade per Safe WP Memory Boost: evita rischiose regolazioni "
+"manuali!"
 
-#: dashboard/mybanners.php:153
+#: dashboard/mybanners.php:157
 msgid ""
 "Lifetime license with premium enhancements: One-time payment of just $17.99!"
 msgstr ""
-"Licenza a vita con miglioramenti premium: pagamento una tantum di soli $ 17,99!"
+"Licenza a vita con miglioramenti premium: pagamento una tantum di soli $ "
+"17,99!"
 
-#: dashboard/mybanners.php:154 dashboard/premium.php:30
+#: dashboard/mybanners.php:158 dashboard/premium.php:30
 msgid ""
-"Our Premium version can modify quickly the necessary files to increase your WP "
-"Memory Limit and PHP Memory. Don't take the risk of making manual changes that "
-"can harm your site."
+"Our Premium version can modify quickly the necessary files to increase your "
+"WP Memory Limit and PHP Memory. Don't take the risk of making manual changes "
+"that can harm your site."
 msgstr ""
 "La nostra versione Premium può modificare rapidamente i file necessari per "
-"aumentare il limite di memoria WP e la memoria PHP. Non correre il rischio di "
-"apportare modifiche manuali che potrebbero danneggiare il tuo sito."
+"aumentare il limite di memoria WP e la memoria PHP. Non correre il rischio "
+"di apportare modifiche manuali che potrebbero danneggiare il tuo sito."
 
-#: dashboard/mybanners.php:155
+#: dashboard/mybanners.php:159
 msgid "Let your site run smoothly, free from memory issues with our plugin."
 msgstr ""
 "Rendi il tuo sito fluido e senza problemi di memoria grazie al nostro plugin."
 
-#: dashboard/mybanners.php:156
+#: dashboard/mybanners.php:160
 msgid "Dedicated Premium Support"
 msgstr "Supporto Premium dedicato"
 
-#: dashboard/mybanners.php:157
+#: dashboard/mybanners.php:161
 msgid "More..."
 msgstr "Altro..."
 
@@ -689,7 +685,8 @@ msgstr "consiglia di utilizzare PHP versione 7 o successiva"
 
 #: functions/functions.php:143
 msgid "Please upgrade your PHP version or contact your Server administrator."
-msgstr "Aggiorna la tua versione PHP o contatta l'amministratore del tuo server."
+msgstr ""
+"Aggiorna la tua versione PHP o contatta l'amministratore del tuo server."
 
 #: functions/functions.php:166
 msgid "Could not activate plugin: WordPress needs to be 5.2 or newer."
@@ -700,15 +697,16 @@ msgstr ""
 #: functions/functions.php:168
 msgid "Please, Update WordPress to Version 5.2 or newer to use this plugin."
 msgstr ""
-"Si prega di aggiornare WordPress alla versione 5.2 o superiore per utilizzare "
-"questo plugin."
+"Si prega di aggiornare WordPress alla versione 5.2 o superiore per "
+"utilizzare questo plugin."
 
 #: functions/functions.php:181
 msgid "WP Memory  Plugin was activated!"
 msgstr "Il plugin WP Memory è stato attivato!"
 
 #: functions/functions.php:184
-msgid "For details and help, take a look at WP Memory  at your left menu, Tools"
+msgid ""
+"For details and help, take a look at WP Memory  at your left menu, Tools"
 msgstr ""
 "Per dettagli e aiuto, date un'occhiata a WP Memory nel vostro menu di "
 "sinistra, Strumenti"
@@ -735,16 +733,16 @@ msgid ""
 "may lead to visual problems or disrupt functionality, from minor glitches to "
 "critical site failures. Promptly address these issues before continuing "
 "because these problems will persist even if you deactivate our plugin.Notice "
-"that the PHP error system does not capture JavaScript errors. Only our plugin "
-"captures them."
+"that the PHP error system does not capture JavaScript errors. Only our "
+"plugin captures them."
 msgstr ""
 "Il nostro plugin non può funzionare come previsto. Gli errori, inclusi gli "
 "errori JavaScript, possono causare problemi visivi o interrompere la "
 "funzionalità, da piccoli problemi a guasti critici del sito. Risolvi "
 "tempestivamente questi problemi prima di continuare perché questi problemi "
 "persisteranno anche se disattivi il nostro plugin. Tieni presente che il "
-"sistema di errori PHP non cattura gli errori JavaScript. Solo il nostro plugin "
-"li cattura."
+"sistema di errori PHP non cattura gli errori JavaScript. Solo il nostro "
+"plugin li cattura."
 
 #: functions/functions.php:786
 msgid "For bigger files, download and open them in your local computer."
@@ -758,13 +756,133 @@ msgstr "Ulteriori informazioni su errori e avvisi..."
 msgid "Log Files found"
 msgstr "File di registro di errori trovati"
 
+#: includes/chat/class_bill_chat.php:43
+msgid "Chat messages reset successfully."
+msgstr "I messaggi della chat sono stati reimpostati correttamente."
+
+#: includes/chat/class_bill_chat.php:44
+msgid "Error resetting chat messages."
+msgstr "Errore durante la reimpostazione dei messaggi della chat."
+
+#: includes/chat/class_bill_chat.php:45
+msgid "Invalid message received:"
+msgstr "Messaggio non valido ricevuto:"
+
+#: includes/chat/class_bill_chat.php:46
+msgid "Invalid response format:"
+msgstr "Formato di risposta non valido:"
+
+#: includes/chat/class_bill_chat.php:47
+msgid "Error processing server response:"
+msgstr "Errore durante l'elaborazione della risposta del server:"
+
+#: includes/chat/class_bill_chat.php:48
+msgid "Response is not valid JSON."
+msgstr "La risposta non è un JSON valido."
+
+#: includes/chat/class_bill_chat.php:49
+msgid "AJAX request failed:"
+msgstr "Richiesta AJAX fallita:"
+
+#: includes/chat/class_bill_chat.php:50
+msgid "Error sending the message. Please try again later."
+msgstr "Errore durante l'invio del messaggio. Riprova più tardi."
+
+#: includes/chat/class_bill_chat.php:51
+msgid "Please enter a message!"
+msgstr "Inserisci un messaggio!"
+
+#: includes/chat/class_bill_chat.php:211
+msgid ""
+"Error contacting the Artificial Intelligence (API). Please try again later."
+msgstr ""
+"Errore durante il contatto con l'intelligenza artificiale (API). Riprova più "
+"tardi."
+
+#: includes/chat/class_bill_chat.php:230
+msgid "Error to get response from AI source!"
+msgstr "Errore durante l'ottenimento della risposta dalla fonte AI!"
+
+#: includes/diagnose/class_bill_diagnose.php:87
+msgid ""
+"Here are some details about error and memory monitoring for your plugin. "
+"Errors and low memory can prevent your site from functioning properly. On "
+"this page, you will find a partial list of the most recent errors and "
+"warnings. If you need more details, use the chat form, which will search for "
+"additional information using Artificial Intelligence.  \n"
+"If you need to dive deeper, install the free plugin WPTools, which provides "
+"more in-depth insights."
+msgstr ""
+"Ecco alcuni dettagli sul monitoraggio degli errori e della memoria per il "
+"tuo plugin. Errori e poca memoria possono impedire al tuo sito di funzionare "
+"correttamente. In questa pagina troverai un elenco parziale degli errori e "
+"degli avvisi più recenti. Se hai bisogno di maggiori dettagli, usa il modulo "
+"di chat, che cercherà informazioni aggiuntive usando l'intelligenza "
+"artificiale. \n"
+"Se hai bisogno di approfondire, installa il plugin gratuito WPTools, che "
+"fornisce approfondimenti più approfonditi."
+
+#: includes/diagnose/class_bill_diagnose.php:95
+msgid "Memory & Error Monitoring"
+msgstr "Monitoraggio della memoria e degli errori"
+
+#: includes/diagnose/class_bill_diagnose.php:96
+msgid "Welcome to plugin Insights!"
+msgstr "Benvenuti al plugin Insights!"
+
+#: includes/diagnose/class_bill_diagnose.php:852
+msgid ""
+"Displaying the latest recurring errors (Javascript Included) from your error "
+"log file and eventually alert about low WordPress memory limit is a courtesy "
+"of plugin"
+msgstr ""
+"La visualizzazione degli ultimi errori ricorrenti dal file di registro degli "
+"errori e l'eventuale avviso sul limite di memoria basso di WordPress sono "
+"una cortesia del plugin"
+
+#: includes/diagnose/class_bill_diagnose.php:854
+msgid ""
+"Disabling our plugin does not stop the errors from occurring; it simply "
+"means you will no longer be notified here that they are happening, but they "
+"can still harm your site."
+msgstr ""
+"Disattivare il nostro plugin non impedisce che si verifichino errori; \n"
+"significa semplicemente che non sarai più avvisato qui che si stanno "
+"verificando, ma possono comunque danneggiare il tuo sito."
+
+#: includes/diagnose/class_bill_diagnose.php:856
+msgid ""
+"Click the help button in the top right or go directly to the AI chat box "
+"below for more specific information on the issues listed."
+msgstr ""
+"Per informazioni più specifiche sui problemi elencati, fare clic sul "
+"pulsante della guida in alto a destra o andare direttamente alla casella "
+"della chat AI qui sotto."
+
+#: includes/diagnose/class_bill_diagnose.php:865
+msgid "Artificial Intelligence Support Chat for Issues and Solutions"
+msgstr ""
+"Chat di supporto per l'intelligenza artificiale per problemi e soluzioni"
+
+#: includes/diagnose/class_bill_diagnose.php:874
+msgid "Enter your message..."
+msgstr "Inserisci il tuo messaggio..."
+
+#: includes/diagnose/class_bill_diagnose.php:875
+msgid "Send"
+msgstr "Inviare"
+
+#: includes/diagnose/class_bill_diagnose.php:1533
+msgid "Critical Issues"
+msgstr "Problemi critici"
+
 #: includes/feedback-last/feedback-last.php:245
 msgid ""
-"Thank you for using our products. Before you deactivate, we'd like to offer a "
-"few options to improve your experience:"
+"Thank you for using our products. Before you deactivate, we'd like to offer "
+"a few options to improve your experience:"
 msgstr ""
-"Grazie per aver utilizzato i nostri prodotti. Prima di disattivarli, vorremmo "
-"offrirti alcune opzioni per migliorare la tua esperienza:"
+"Grazie per aver utilizzato i nostri prodotti. Prima di disattivarli, "
+"vorremmo offrirti alcune opzioni per migliorare la tua esperienza:"
 
 #: includes/feedback-last/feedback-last.php:248
 msgid "Explore more plugins - Discover our other free plugins and themes."
@@ -789,7 +907,8 @@ msgid ""
 "supercharge your site's security, functionality, and backups."
 msgstr ""
 "Con la fiducia di oltre 50.000 utenti, i nostri oltre 20 plugin gratuiti e 6 "
-"temi possono potenziare la sicurezza, la funzionalità e i backup del tuo sito."
+"temi possono potenziare la sicurezza, la funzionalità e i backup del tuo "
+"sito."
 
 #: wpmemory.php:172
 msgid "Message from WP Memory"
@@ -813,8 +932,8 @@ msgstr "http://wpmemory.com#. Description of the plugin/theme"
 
 #. Description of the plugin/theme
 msgid ""
-"Check for high memory usage, include the results on the Site Health page, and "
-"provide suggestions."
+"Check for high memory usage, include the results on the Site Health page, "
+"and provide suggestions."
 msgstr ""
 "Controlla l'uso di memoria elevata, include il risultato nella pagina della "
 "salute del sito e dà suggerimenti.#. Author URI of the plugin/theme"
