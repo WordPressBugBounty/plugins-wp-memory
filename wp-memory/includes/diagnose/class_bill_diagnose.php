@@ -1,6 +1,6 @@
 <?php
 
-namespace wpmemory_BillDiagnose;
+namespace wp_memory_BillDiagnose;
 // 2023-08 upd: 2023-10-17 2024-06=21
 if (!defined('ABSPATH')) {
     die('Invalid request.');
@@ -9,9 +9,18 @@ if (function_exists('is_multisite') and is_multisite()) {
     return;
 }
 
+
+
+
+
+
+
+
+
+
 /*
 // >>>>>>>>>>>>>>>> call
-function recaptcha_for_all_bill_hooking_diagnose()
+function wp_memory_bill_hooking_diagnose()
 {
     if (function_exists('is_admin') && function_exists('current_user_can')) {
         if(is_admin() and current_user_can("manage_options")){
@@ -22,9 +31,27 @@ function recaptcha_for_all_bill_hooking_diagnose()
         }
     }
 }
-add_action("plugins_loaded", "recaptcha_for_all_bill_hooking_diagnose");
+add_action("plugins_loaded", "wp_memory_bill_hooking_diagnose");
 // end >>>>>>>>>>>>>>>>>>>>>>>>>
 */
+
+
+
+
+
+$plugin_file_path = __DIR__ . '/function_time_loading.php';
+
+
+
+
+if (file_exists($plugin_file_path)) {
+    include_once($plugin_file_path);
+} else {
+    error_log("File not found: " . $plugin_file_path);
+}
+
+
+
 
 
 $plugin_file_path = ABSPATH . 'wp-admin/includes/plugin.php';
@@ -77,10 +104,11 @@ function debug_screen_id_current_screen($screen)
 
 
 // Função para adicionar uma aba de ajuda
-function add_help_tab_to_screen() {
+function add_help_tab_to_screen()
+{
     // Verifica se estamos na tela correta
     $screen = get_current_screen();
-    
+
     // Verifica se o screen é o 'site-health' antes de adicionar a aba
     if ($screen && 'site-health' === $screen->id) {
         $hmessage = esc_attr__(
@@ -513,7 +541,7 @@ class MemoryChecker
 }
 
 
-class recaptcha_for_all_Bill_Diagnose
+class wp_memory_Bill_Diagnose
 {
     private static $instance = null;
 
@@ -799,7 +827,7 @@ class recaptcha_for_all_Bill_Diagnose
     // Helper function to check if a notification has been displayed today
     public function is_notification_displayed_today()
     {
-        $last_notification_date = get_option("recaptcha_for_all_bill_show_warnings");
+        $last_notification_date = get_option("wp_memory_bill_show_warnings");
         $today = date("Y-m-d");
         return $last_notification_date === $today;
     }
@@ -810,7 +838,7 @@ class recaptcha_for_all_Bill_Diagnose
         $tabs["Critical Issues"] = esc_html_x(
             "Critical Issues",
             "Site Health",
-            'wp-memory'
+            'wp_memory'
         );
         return $tabs;
     }
@@ -819,8 +847,14 @@ class recaptcha_for_all_Bill_Diagnose
     // Add Content
     public function site_health_tab_content($tab)
     {
-        if (!function_exists('recaptcha_for_all_bill_strip_strong99')) {
-            function recaptcha_for_all_bill_strip_strong99($htmlString)
+
+
+
+
+
+
+        if (!function_exists('wp_memory_bill_strip_strong99')) {
+            function wp_memory_bill_strip_strong99($htmlString)
             {
                 // return $htmlString;
                 // Use preg_replace para remover as tags <strong>
@@ -854,39 +888,212 @@ class recaptcha_for_all_Bill_Diagnose
                     echo esc_attr__("Disabling our plugin does not stop the errors from occurring; it simply means you will no longer be notified here that they are happening, but they can still harm your site.", 'wp-memory');
                     echo '<br>';
                     echo esc_attr__("Click the help button in the top right or go directly to the AI chat box below for more specific information on the issues listed.", 'wp-memory');
-               
+
                     ?>
                 </strong>
             </p>
 
-<!-- chat -->
-<div id="chat-box">
-    <div id="chat-header">
-        <h2><?php echo esc_attr__("Artificial Intelligence Support Chat for Issues and Solutions", "wp-memory");?></h2>
-    </div>
-    <div id="gif-container">
-        <div class="spinner999"></div>
-    </div> <!-- Onde o efeito será exibido -->
-    <div id="chat-messages"></div>
-    <div id="error-message" style="display:none;"></div> <!-- Mensagem de erro -->
-
-    <form id="chat-form">
-    <input type="text" id="chat-input" placeholder="<?php echo esc_attr__('Enter your message...', 'wp-memory'); ?>" />
-    <button type="submit"><?php echo esc_attr__('Send', 'wp-memory'); ?></button>
-
-    </form>
-</div>
+            <!-- chat -->
+            <div id="chat-box">
+                <div id="chat-header">
+                    <h2><?php echo esc_attr__("Artificial Intelligence Support Chat for Issues and Solutions", "wp-memory"); ?></h2>
+                </div>
+                <div id="gif-container">
+                    <div class="spinner999"></div>
+                </div> <!-- Onde o efeito será exibido -->
+                <div id="chat-messages"></div>
+                <div id="error-message" style="display:none;"></div> <!-- Mensagem de erro -->
 
 
+                <form id="chat-form">
+                    <div id="input-group">
+                        <input type="text" id="chat-input" placeholder="<?php echo esc_attr__('Enter your message...', 'wp-memory'); ?>" />
+                        <button type="submit"><?php echo esc_attr__('Send', 'wp-memory'); ?></button>
+                    </div>
+                    <div id="action-instruction" style="text-align: center; margin-top: 10px;">
+                        <span><?php echo esc_attr__("Enter a message and click 'Send', or just click 'Auto Checkup' to analyze the site's error log.", 'wp-memory'); ?></span>
+                    </div>
+                    <div class="auto-checkup-container" style="text-align: center; margin-top: 10px;">
 
 
+                        <button type="button" id="auto-checkup">
+                            <img src="<?php echo plugin_dir_url(__FILE__) . 'robot2.png'; ?>" alt="" width="35" height="30">
+                            <?php echo esc_attr__('Auto Checkup', 'wp-memory'); ?>
+                        </button>
+                    </div>
+                </form>
 
-            <h3 style="color: red;">
-                <?php
-                echo esc_attr__("Potential Problems", 'wp-memory');
-                ?>
-            </h3>
+            </div>
+
             <?php
+
+//
+//
+//
+//
+//
+
+
+
+
+            // echo (var_export(__LINE__));
+
+
+
+            /* --------------------- PAGE LOAD -----------------------------*/
+
+
+            function wptools_check_page_load()
+            {
+                global $wpdb;
+                $table_name = $wpdb->prefix . 'wptools_page_load_times';
+
+
+                if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+                    $charset_collate = $wpdb->get_charset_collate();
+                    $sql = "CREATE TABLE $table_name (
+                    id INT PRIMARY KEY AUTO_INCREMENT,
+                    page_url VARCHAR(255) NOT NULL,
+                    load_time FLOAT NOT NULL,
+                    timestamp DATETIME NOT NULL
+                ) $charset_collate;";
+                    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+                    dbDelta($sql);
+                    // echo var_export($sql);
+                }
+
+
+
+
+
+                $query = "SELECT DATE(timestamp) AS date, AVG(load_time) AS average_load_time
+          FROM $table_name
+          WHERE timestamp >= CURDATE() - INTERVAL 6 DAY
+            AND NOT page_url LIKE 'wp-admin'
+          GROUP BY DATE(timestamp)
+          ORDER BY date";
+
+
+
+
+                $results9 = $wpdb->get_results($query, ARRAY_A);
+
+                if ($results9) {
+                    $total = count($results9);
+                    if ($total < 1) {
+                        $wptools_empty = true;
+                        return false;
+                    }
+                } else {
+                    $wptools_empty = true;
+                    return false;
+                }
+
+
+                //echo var_export($results9);
+
+                // Calcula a média
+                $total = 0;
+                $count = 0;
+
+                foreach ($results9 as $entry) {
+                    $total += (float)$entry['average_load_time'];
+                    $count++;
+                }
+
+                $average = $total / $count;
+                $roundedAverage = round($average); // Arredonda para o número mais próximo
+                return $roundedAverage;
+            }
+
+
+
+
+
+
+
+
+
+
+            $average  = wptools_check_page_load();
+
+            //echo 'Average: ' . var_export($average);
+
+
+
+
+
+            //  $average = 9;
+
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+
+            echo '<br>';
+
+            //Excelente: Menos de 2 segundos
+            //Bom: Entre 2 e 3 segundos
+            //Regular: Entre 3 e 5 segundos
+            //Pobre: Entre 5 e 8 segundos
+            //Muito pobre: Mais de 8 segundos
+
+
+
+
+
+            if ($average > 5) {
+
+                echo '<hr>';
+                echo '<h3 style="color: red;">';
+
+                if ($average <= 8) {
+                    $message = esc_attr__("The page load time is poor.", "wptools");
+                } else {
+                    $message = esc_attr__("The page load time is very poor!", "wptools");
+                }
+                if ($average > 5) {
+                    echo $message;
+                    echo '</h3>';
+                    echo esc_attr__("The Load average of yours front pages is: ", "wptools");
+                    echo esc_attr($average);
+                    echo '<br>';
+                    echo  esc_attr__("Loading time can significantly impact your SEO.", "wptools");
+                    echo '<br>';
+                    echo esc_attr__("Many users will abandon the site before it fully loads.", "wptools");
+                    echo '<br>';
+                    echo esc_attr__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", "wptools");
+                }
+
+                echo '<br>';
+                echo '<a href="https://wptoolsplugin.com/page-load-times-and-their-negative-impact-on-seo/" >';
+                echo esc_attr__("Learn more about Page Load Times and their negative impact on SEO", "wptools") . "...";
+                echo "</a>";
+
+
+                echo '<hr>';
+                echo '<br>';
+            }
+
+
+
+
+            //} // end page load
+
+
+            /* --------------------- End PAGE LOAD -----------------------------*/
+
+
+            echo '<h3 style="color: red;">';
+
+            echo esc_attr__("Potential Problems", 'wp-memory');
+
+            echo '</h3>';
+
             $memory = $this->global_variable_memory;
             $wpmemory = $memory;
             if ($memory["free"] < 30 or $wpmemory["percent"] > 85) { ?>
@@ -937,16 +1144,7 @@ class recaptcha_for_all_Bill_Diagnose
 
             // end block memory...
 
-            ?>
 
-
-
-
-
-
-
-
-            <?php
 
 
             // Errors ...
@@ -1133,12 +1331,10 @@ class recaptcha_for_all_Bill_Diagnose
 
                                             if (preg_match("/\[(.*?)\]/", $line, $dateMatches)) {
                                                 $filteredDate = $dateMatches[1];
+                                            } else {
+                                                $filteredDate = '';
                                             }
-                                            else
-                                            {
-                                                $filteredDate = ''; 
-                                            }
-                                            
+
 
                                             // die(var_export(substr($line, 1, 25)));
 
@@ -1337,10 +1533,8 @@ class recaptcha_for_all_Bill_Diagnose
 
                                             if (preg_match("/\[(.*?)\]/", $line, $dateMatches)) {
                                                 $filteredDate = $dateMatches[1];
-                                            }
-                                            else
-                                            {
-                                                $filteredDate = ''; 
+                                            } else {
+                                                $filteredDate = '';
                                             }
 
 
@@ -1348,7 +1542,7 @@ class recaptcha_for_all_Bill_Diagnose
                                             $log_entry = [
                                                 "Date" => $filteredDate,
                                                 "News Type" => $matches[1],
-                                                "Problem Description" => recaptcha_for_all_bill_strip_strong99(
+                                                "Problem Description" => wp_memory_bill_strip_strong99(
                                                     $matches[2]
                                                 ),
                                             ];
@@ -1511,9 +1705,10 @@ class recaptcha_for_all_Bill_Diagnose
             ]);
         }
 
-        public function custom_help_tab() {
+        public function custom_help_tab()
+        {
             $screen = get_current_screen();
-        
+
             // Verifique se você está na página desejada
             if ("site-health" === $screen->id) {
                 // Adicione uma guia de ajuda
@@ -1521,7 +1716,7 @@ class recaptcha_for_all_Bill_Diagnose
                     "These are critical issues that can have a significant impact on your site's performance. They can cause many plugins and functionalities to malfunction and, in some cases, render your site completely inoperative, depending on their severity. Address them promptly.",
                     'wp-memory'
                 );
-        
+
                 $screen->add_help_tab([
                     "id"      => "custom-help-tab",
                     "title"   => esc_attr__("Critical Issues", 'wp-memory'),
@@ -1529,7 +1724,7 @@ class recaptcha_for_all_Bill_Diagnose
                 ]);
             }
         }
-        
+
         // add_action("admin_head", "custom_help_tab");
     } // end class
     /*
@@ -1539,8 +1734,8 @@ $notification_url = "https://wpmemory.com/fix-low-memory-limit/";
 $notification_url2 =
     "https://billplugin.com/site-language-error-can-crash-your-site/";
 */
-    $diagnose_instance = recaptcha_for_all_Bill_Diagnose::get_instance(
+    $diagnose_instance = wp_memory_Bill_Diagnose::get_instance(
         $notification_url,
         $notification_url2,
     );
-    update_option("recaptcha_for_all_bill_show_warnings", date("Y-m-d"));
+    update_option("wp_memory_bill_show_warnings", date("Y-m-d"));

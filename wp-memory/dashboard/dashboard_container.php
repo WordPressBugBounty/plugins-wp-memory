@@ -48,7 +48,7 @@ if ($active_tab == 'phpmemory') {
 } elseif ($active_tab == 'premium') {
   require_once(WPMEMORYPATH . 'dashboard/premium.php');
 } elseif ($active_tab == 'tools') {
-  require_once(WPMEMORYPATH . 'dashboard/tools.php');
+  require_once(WPMEMORYPATH . 'dashboard/more-tools.php');
 } elseif ($active_tab == 'errors') {
   require_once(WPMEMORYPATH . 'dashboard/errors.php');
 } elseif ($active_tab == 'settings') {
