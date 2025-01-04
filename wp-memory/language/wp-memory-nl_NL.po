@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - Memory Usage, Memory Limit, PHP and Server "
 "Memory Health Check and Fix Plugin - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 18:03+0000\n"
-"PO-Revision-Date: 2024-12-30 18:09+0000\n"
+"POT-Creation-Date: 2025-01-04 13:16+0000\n"
+"PO-Revision-Date: 2025-01-04 13:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -24,12 +24,14 @@ msgstr ""
 
 #: _includes/checkup/bill_class_diagnose.php:287
 #: _includes/checkup/bill_class_diagnose.php:308
-#: includes/diagnose/class_bill_diagnose.php:788
+#: includes/diagnose/__class_bill_diagnose.php:788
+#: includes/diagnose/class_bill_diagnose.php:471
 msgid "Our plugin"
 msgstr "Onze plug-in"
 
 #: _includes/checkup/bill_class_diagnose.php:289
-#: includes/diagnose/class_bill_diagnose.php:790
+#: includes/diagnose/__class_bill_diagnose.php:790
+#: includes/diagnose/class_bill_diagnose.php:473
 msgid ""
 "cannot function properly because your WordPress Memory Limit is too low. "
 "Your site will experience serious issues, even if you deactivate our plugin."
@@ -39,7 +41,8 @@ msgstr ""
 
 #: _includes/checkup/bill_class_diagnose.php:295
 #: _includes/checkup/bill_class_diagnose.php:316
-#: includes/diagnose/class_bill_diagnose.php:796
+#: includes/diagnose/__class_bill_diagnose.php:796
+#: includes/diagnose/class_bill_diagnose.php:479
 msgid "Learn more"
 msgstr "Leer meer"
 
@@ -59,7 +62,8 @@ msgstr ""
 "op voordat u verdergaat."
 
 #: _includes/checkup/bill_class_diagnose.php:336
-#: includes/diagnose/class_bill_diagnose.php:839
+#: includes/diagnose/__class_bill_diagnose.php:839
+#: includes/diagnose/class_bill_diagnose.php:497
 msgctxt "Site Health"
 msgid "Critical Issues"
 msgstr "Kritieke kwesties"
@@ -84,27 +88,32 @@ msgstr ""
 "optreden, maar ze kunnen nog steeds schadelijk zijn voor uw site."
 
 #: _includes/checkup/bill_class_diagnose.php:381
-#: includes/diagnose/class_bill_diagnose.php:1093
+#: includes/diagnose/__class_bill_diagnose.php:1093
+#: includes/diagnose/class_bill_diagnose.php:564
 msgid "Potential Problems"
 msgstr "Mogelijke problemen"
 
 #: _includes/checkup/bill_class_diagnose.php:389
-#: includes/diagnose/class_bill_diagnose.php:1101
+#: includes/diagnose/__class_bill_diagnose.php:1101
+#: includes/diagnose/class_bill_diagnose.php:572
 msgid "Low WordPress Memory Limit"
 msgstr "Lage WordPress-geheugenlimiet"
 
 #: _includes/checkup/bill_class_diagnose.php:402 dashboard/dashboard.php:91
-#: includes/diagnose/class_bill_diagnose.php:1114
+#: includes/diagnose/__class_bill_diagnose.php:1114
+#: includes/diagnose/class_bill_diagnose.php:585
 msgid "Your usage now"
 msgstr "Je huidig gebruik"
 
 #: _includes/checkup/bill_class_diagnose.php:410
-#: includes/diagnose/class_bill_diagnose.php:1122
+#: includes/diagnose/__class_bill_diagnose.php:1122
+#: includes/diagnose/class_bill_diagnose.php:593
 msgid "Total Php Server Memory"
 msgstr "Totaal PHP-servergeheugen"
 
 #: _includes/checkup/bill_class_diagnose.php:419
-#: includes/diagnose/class_bill_diagnose.php:1131
+#: includes/diagnose/__class_bill_diagnose.php:1131
+#: includes/diagnose/class_bill_diagnose.php:602
 msgid ""
 "Your WordPress Memory Limit is too low, which can lead to critical issues on "
 "your site due to insufficient resources. Promptly address this issue before "
@@ -117,19 +126,23 @@ msgstr ""
 #: _includes/checkup/bill_class_diagnose.php:425
 #: _includes/checkup/bill_class_diagnose.php:445
 #: _includes/feedback/activated-manager.php:54 dashboard/mybanners.php:163
-#: includes/diagnose/class_bill_diagnose.php:1137
-#: includes/diagnose/class_bill_diagnose.php:1166
+#: includes/diagnose/__class_bill_diagnose.php:1137
+#: includes/diagnose/__class_bill_diagnose.php:1166
+#: includes/diagnose/class_bill_diagnose.php:608
+#: includes/diagnose/class_bill_diagnose.php:629
 #: includes/feedback/activated-manager.php:65
 msgid "Learn More"
 msgstr "Leer meer"
 
 #: _includes/checkup/bill_class_diagnose.php:436
-#: includes/diagnose/class_bill_diagnose.php:1157
+#: includes/diagnose/__class_bill_diagnose.php:1157
+#: includes/diagnose/class_bill_diagnose.php:620
 msgid "Site Errors"
 msgstr "Sitefouten"
 
 #: _includes/checkup/bill_class_diagnose.php:441
-#: includes/diagnose/class_bill_diagnose.php:1162
+#: includes/diagnose/__class_bill_diagnose.php:1162
+#: includes/diagnose/class_bill_diagnose.php:625
 msgid ""
 "Your site has experienced errors for the past 2 days. These errors, "
 "including JavaScript issues, can result in visual problems or disrupt "
@@ -144,12 +157,14 @@ msgstr ""
 "beëindigen, waardoor alle daaropvolgende opdrachten niet meer werken."
 
 #: _includes/checkup/bill_class_diagnose.php:514
-#: includes/diagnose/class_bill_diagnose.php:1220
+#: includes/diagnose/__class_bill_diagnose.php:1220
+#: includes/diagnose/class_bill_diagnose.php:674
 msgid "This is a partial list of the errors found."
 msgstr "Dit is een gedeeltelijke lijst van de gevonden fouten."
 
 #: _includes/checkup/bill_class_diagnose.php:1052
-#: includes/diagnose/class_bill_diagnose.php:1716
+#: includes/diagnose/__class_bill_diagnose.php:1716
+#: includes/diagnose/class_bill_diagnose.php:1093
 msgid ""
 "These are critical issues that can have a significant impact on your site's "
 "performance. They can cause many plugins and functionalities to malfunction "
@@ -767,54 +782,55 @@ msgstr "Meer informatie over fouten en waarschuwingen..."
 msgid "Log Files found"
 msgstr "Logbestanden gevonden"
 
-#: includes/chat/class_bill_chat.php:43
+#: includes/chat/class_bill_chat.php:44
 msgid "Chat messages reset successfully."
 msgstr "Chatberichten succesvol gereset."
 
-#: includes/chat/class_bill_chat.php:44
+#: includes/chat/class_bill_chat.php:45
 msgid "Error resetting chat messages."
 msgstr "Fout bij het opnieuw instellen van chatberichten."
 
-#: includes/chat/class_bill_chat.php:45
+#: includes/chat/class_bill_chat.php:46
 msgid "Invalid message received:"
 msgstr "Ongeldig bericht ontvangen:"
 
-#: includes/chat/class_bill_chat.php:46
+#: includes/chat/class_bill_chat.php:47
 msgid "Invalid response format:"
 msgstr "Ongeldige antwoordopmaak:"
 
-#: includes/chat/class_bill_chat.php:47
+#: includes/chat/class_bill_chat.php:48
 msgid "Error processing server response:"
 msgstr "Fout bij het verwerken van serverrespons:"
 
-#: includes/chat/class_bill_chat.php:48
+#: includes/chat/class_bill_chat.php:49
 msgid "Response is not valid JSON."
 msgstr "Het antwoord is geen geldige JSON."
 
-#: includes/chat/class_bill_chat.php:49
+#: includes/chat/class_bill_chat.php:50
 msgid "AJAX request failed:"
 msgstr "AJAX-verzoek mislukt:"
 
-#: includes/chat/class_bill_chat.php:50
+#: includes/chat/class_bill_chat.php:51
 msgid "Error sending the message. Please try again later."
 msgstr "Fout bij het verzenden van het bericht. Probeer het later opnieuw."
 
-#: includes/chat/class_bill_chat.php:51
+#: includes/chat/class_bill_chat.php:52
 msgid "Please enter a message!"
 msgstr "Voer een bericht in!"
 
-#: includes/chat/class_bill_chat.php:213
+#: includes/chat/class_bill_chat.php:268
 msgid ""
 "Error contacting the Artificial Intelligence (API). Please try again later."
 msgstr ""
 "Fout bij het contacteren van de Artificial Intelligence (API). Probeer het "
 "later opnieuw."
 
-#: includes/chat/class_bill_chat.php:247
+#: includes/chat/class_bill_chat.php:294
 msgid "Error to get response from AI source!"
 msgstr "Fout bij het ontvangen van antwoord van AI-bron!"
 
-#: includes/diagnose/class_bill_diagnose.php:115
+#: includes/diagnose/__class_bill_diagnose.php:115
+#: includes/diagnose/class_bill_diagnose.php:82
 msgid ""
 "Here are some details about error and memory monitoring for your plugin. "
 "Errors and low memory can prevent your site from functioning properly. On "
@@ -833,15 +849,18 @@ msgstr ""
 "Als u dieper wilt duiken, installeer dan de gratis plugin WPTools, die meer "
 "diepgaande inzichten biedt."
 
-#: includes/diagnose/class_bill_diagnose.php:123
+#: includes/diagnose/__class_bill_diagnose.php:123
+#: includes/diagnose/class_bill_diagnose.php:89
 msgid "Memory & Error Monitoring"
 msgstr "Geheugen- en foutbewaking"
 
-#: includes/diagnose/class_bill_diagnose.php:124
+#: includes/diagnose/__class_bill_diagnose.php:124
+#: includes/diagnose/class_bill_diagnose.php:90
 msgid "Welcome to plugin Insights!"
 msgstr "Welkom bij de plugin Insights!"
 
-#: includes/diagnose/class_bill_diagnose.php:886
+#: includes/diagnose/__class_bill_diagnose.php:886
+#: includes/diagnose/class_bill_diagnose.php:527
 msgid ""
 "Displaying the latest recurring errors (Javascript Included) from your error "
 "log file and eventually alert about low WordPress memory limit is a courtesy "
@@ -851,7 +870,8 @@ msgstr ""
 "en uiteindelijk een waarschuwing over een lage geheugenlimiet voor WordPress "
 "is een service van de plugin"
 
-#: includes/diagnose/class_bill_diagnose.php:888
+#: includes/diagnose/__class_bill_diagnose.php:888
+#: includes/diagnose/class_bill_diagnose.php:529
 msgid ""
 "Disabling our plugin does not stop the errors from occurring; it simply "
 "means you will no longer be notified here that they are happening, but they "
@@ -861,7 +881,8 @@ msgstr ""
 "het betekent alleen dat u hier niet langer op de hoogte wordt gesteld dat ze "
 "optreden, maar ze kunnen nog steeds schadelijk zijn voor uw site."
 
-#: includes/diagnose/class_bill_diagnose.php:890
+#: includes/diagnose/__class_bill_diagnose.php:890
+#: includes/diagnose/class_bill_diagnose.php:531
 msgid ""
 "Click the help button in the top right or go directly to the AI chat box "
 "below for more specific information on the issues listed."
@@ -869,21 +890,25 @@ msgstr ""
 "Klik op de helpknop rechtsboven of ga direct naar het AI-chatvak hieronder "
 "voor meer specifieke informatie over de genoemde problemen."
 
-#: includes/diagnose/class_bill_diagnose.php:899
+#: includes/diagnose/__class_bill_diagnose.php:899
+#: includes/diagnose/class_bill_diagnose.php:538
 msgid "Artificial Intelligence Support Chat for Issues and Solutions"
 msgstr ""
 "Ondersteuningschat voor kunstmatige intelligentie voor problemen en "
 "oplossingen"
 
-#: includes/diagnose/class_bill_diagnose.php:910
+#: includes/diagnose/__class_bill_diagnose.php:910
+#: includes/diagnose/class_bill_diagnose.php:547
 msgid "Enter your message..."
 msgstr "Voer uw bericht in..."
 
-#: includes/diagnose/class_bill_diagnose.php:911
+#: includes/diagnose/__class_bill_diagnose.php:911
+#: includes/diagnose/class_bill_diagnose.php:548
 msgid "Send"
 msgstr "Versturen"
 
-#: includes/diagnose/class_bill_diagnose.php:914
+#: includes/diagnose/__class_bill_diagnose.php:914
+#: includes/diagnose/class_bill_diagnose.php:551
 msgid ""
 "Enter a message and click 'Send', or just click 'Auto Checkup' to analyze "
 "the site's error log."
@@ -891,31 +916,32 @@ msgstr ""
 "Voer een bericht in en klik op 'Verzenden', of klik op 'Automatisch "
 "controleren' om het foutenlogboek van de site te analyseren."
 
-#: includes/diagnose/class_bill_diagnose.php:921
+#: includes/diagnose/__class_bill_diagnose.php:921
+#: includes/diagnose/class_bill_diagnose.php:556
 msgid "Auto Checkup"
 msgstr "Automatische controle"
 
-#: includes/diagnose/class_bill_diagnose.php:1055
+#: includes/diagnose/__class_bill_diagnose.php:1055
 msgid "The page load time is poor."
 msgstr "De pagina laadt snel."
 
-#: includes/diagnose/class_bill_diagnose.php:1057
+#: includes/diagnose/__class_bill_diagnose.php:1057
 msgid "The page load time is very poor!"
 msgstr "De laadtijd van de pagina is erg kort!"
 
-#: includes/diagnose/class_bill_diagnose.php:1062
+#: includes/diagnose/__class_bill_diagnose.php:1062
 msgid "The Load average of yours front pages is: "
 msgstr "De gemiddelde laadsnelheid van uw voorpagina's is:"
 
-#: includes/diagnose/class_bill_diagnose.php:1065
+#: includes/diagnose/__class_bill_diagnose.php:1065
 msgid "Loading time can significantly impact your SEO."
 msgstr "De laadtijd kan een grote impact hebben op uw SEO."
 
-#: includes/diagnose/class_bill_diagnose.php:1067
+#: includes/diagnose/__class_bill_diagnose.php:1067
 msgid "Many users will abandon the site before it fully loads."
 msgstr "Veel gebruikers verlaten de site voordat deze volledig geladen is."
 
-#: includes/diagnose/class_bill_diagnose.php:1069
+#: includes/diagnose/__class_bill_diagnose.php:1069
 msgid ""
 "Search engines prioritize faster-loading pages, as they improve user "
 "experience and reduce bounce rates."
@@ -923,13 +949,30 @@ msgstr ""
 "Zoekmachines geven prioriteit aan pagina's die sneller laden, omdat deze de "
 "gebruikerservaring verbeteren en het bouncepercentage verlagen."
 
-#: includes/diagnose/class_bill_diagnose.php:1074
+#: includes/diagnose/__class_bill_diagnose.php:1074
 msgid "Learn more about Page Load Times and their negative impact on SEO"
 msgstr "Leer meer over laadtijden van pagina's en hun negatieve impact op SEO"
 
-#: includes/diagnose/class_bill_diagnose.php:1722
+#: includes/diagnose/__class_bill_diagnose.php:1722
+#: includes/diagnose/class_bill_diagnose.php:1098
 msgid "Critical Issues"
 msgstr "Kritieke kwesties"
+
+#: includes/diagnose/class_bill_diagnose.php:686
+msgid "File not readable."
+msgstr "Bestand niet leesbaar."
+
+#: includes/diagnose/class_bill_diagnose.php:691
+msgid "Size not determined."
+msgstr "Grootte niet bepaald."
+
+#: includes/diagnose/class_bill_diagnose.php:705
+msgid "Invalid size."
+msgstr "Ongeldige maat."
+
+#: includes/diagnose/class_bill_diagnose.php:729
+msgid "File Size: "
+msgstr "Bestandsgrootte:"
 
 #: includes/feedback-last/feedback-last.php:245
 msgid ""
