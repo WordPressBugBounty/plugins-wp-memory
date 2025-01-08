@@ -10,8 +10,6 @@ if (!defined('ABSPATH')) {
 
 echo '<div class="wrap-wpmemory ">' . "\n";
 
-
-
 echo '<h2 class="title">useful free plugins from the same Author</h2>' . "\n";
 
 if(!is_multisite())
