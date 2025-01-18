@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @ Author: Bill Minozzi
  * @ Copyright: 2020 www.BillMinozzi.com
@@ -9,30 +10,34 @@ if (!defined("ABSPATH")) {
 }
 echo '<div class="wrap-wpmemory ">' . "\n";
 echo '<h2 class="title">Memory Usage by Page (Last 200)</h2>' . "\n";
-echo esc_attr__("We suggest keeping the usage percentage below 70%.","wp-memory");
+echo esc_attr__("We suggest keeping the usage percentage below 70%.", "wp-memory");
 
 echo '<br>';
 
-echo esc_attr__('Spammers and hackers may try loading non-existent pages, seeking vulnerabilities, and potentially overloading your server. Enhance your security with our Anti Hacker and Stop Bad Bots plugins. Click the "More Tools" tab above.',"wp-memory");
+echo esc_attr__('Spammers and hackers may try loading non-existent pages, seeking vulnerabilities, and potentially overloading your server. Enhance your security with our Anti Hacker and Stop Bad Bots plugins. Click the "More Tools" tab above.', "wp-memory");
 echo '<br>';
 echo '<br>';
 ?>
 <style>
-.widefat tbody tr.even {
-    background-color: #f5f5f5;
-}
-.widefat tbody tr.high {
-    background-color: yellow;
-}
-.widefat thead th {
-    background-color: #333;
-    color: #fff !important; /* Ensure text is white */
-    padding: 10px;
-}
+    .widefat tbody tr.even {
+        background-color: #f5f5f5;
+    }
+
+    .widefat tbody tr.high {
+        background-color: yellow;
+    }
+
+    .widefat thead th {
+        background-color: #333;
+        color: #fff !important;
+        /* Ensure text is white */
+        padding: 10px;
+    }
 </style>
 <?php
-if(!function_exists("wpmemory_convert_to_bytes")) {
-    function wpmemory_convert_to_bytes($value) {
+if (!function_exists("wpmemory_convert_to_bytes")) {
+    function wpmemory_convert_to_bytes($value)
+    {
         $value = trim($value);
         $unit = strtoupper(substr($value, -1));
         $value = (int)$value;
@@ -49,7 +54,8 @@ if(!function_exists("wpmemory_convert_to_bytes")) {
 }
 wpmemory_display_custom_table_page();
 // Function to display the table
-function wpmemory_display_custom_table_page() {
+function wpmemory_display_custom_table_page()
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'wpmemory_log';
     $per_page = 20;
@@ -66,8 +72,8 @@ function wpmemory_display_custom_table_page() {
         }
     }
     // Get items from the table
-   // $data = $wpdb->get_results("SELECT * FROM $table_name ORDER BY date DESC LIMIT $offset, $per_page", ARRAY_A);
- 
+    // $data = $wpdb->get_results("SELECT * FROM $table_name ORDER BY date DESC LIMIT $offset, $per_page", ARRAY_A);
+
 
     $data = $wpdb->get_results(
         $wpdb->prepare(
@@ -78,8 +84,8 @@ function wpmemory_display_custom_table_page() {
         ),
         ARRAY_A
     );
-    
-    
+
+
     // Total items for pagination
     $total_items = $wpdb->get_var("SELECT COUNT(id) FROM $table_name");
     // Configure table headers
@@ -127,33 +133,33 @@ function wpmemory_display_custom_table_page() {
     $memory_limit = wpmemory_convert_to_bytes($memory_limit);
     $php_memory = wpmemory_convert_to_bytes(ini_get('memory_limit'));
     foreach ($data as $item) {
-       
+
         $memory_usage = $item['memory_usage'];
- 
+
         if (is_numeric($php_memory) && is_numeric($memory_usage)) {
             $perc = sprintf('%.2f%%', ($memory_usage / $memory_limit) * 100);
         } else {
             $perc = 0;
         }
-       
+
         // Toggle row class to create alternating gray background
-        if($perc > 70)
-           $row_class = 'high';
+        if ($perc > 70)
+            $row_class = 'high';
         else
-           $row_class = ($row_class == 'even') ? 'odd' : 'even';
+            $row_class = ($row_class == 'even') ? 'odd' : 'even';
         echo '<tr class="' . esc_attr($row_class) . '">';
         echo '<td>' . esc_html($item['date']) . '</td>';
         echo '<td>' . esc_html(wpmemory_sizeFilter($item['memory_usage'])) . '</td>';
-        echo '<td>' . esc_html(wpmemory_sizeFilter( $memory_limit)) . '</td>';
-       
+        echo '<td>' . esc_html(wpmemory_sizeFilter($memory_limit)) . '</td>';
+
 
         if (is_numeric($php_memory) && is_numeric($memory_usage)) {
             $percentage = sprintf('%.2f%%', ($memory_usage / $memory_limit) * 100);
         } else {
             $percentage = '?';
         }
- 
-        echo '<td>' . esc_html($percentage) . '</td>'; 
+
+        echo '<td>' . esc_html($percentage) . '</td>';
         echo '<td>' . esc_html($item['page']) . '</td>';
         echo '</tr>';
     }
@@ -163,12 +169,23 @@ function wpmemory_display_custom_table_page() {
     if ($total_pages > 1) {
         echo '<div class="tablenav bottom">';
         echo '<div class="tablenav-pages">';
- 
+
         echo '<span class="displaying-num">' . sprintf(esc_html(_n('%s item', '%s items', $total_items)), esc_html(number_format_i18n($total_items))) . '</span>';
-        echo '<span class="pagination-links">' . esc_html($pagination) . '</span>';
-        
- 
- 
+        //echo '<span class="pagination-links">' . esc_html($pagination) . '</span>';
+
+        $allowed_tags = array(
+            'span' => array(
+                'class' => array(),
+                'aria-current' => array(),
+            ),
+            'a' => array(
+                'class' => array(),
+                'href' => array(),
+            ),
+        );
+        echo '<span class="pagination-links">' . wp_kses($pagination, $allowed_tags) . '</span>';
+
+
         echo '</div>';
         echo '</div>';
     }

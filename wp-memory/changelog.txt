@@ -3,6 +3,7 @@
 This file contains changelog entries, so we can keep the size of the standard WordPress readme.txt file reasonable.
 
 == Changelog ==
+3.61 2025-01-18 - Small Improvements
 3.57/60 2025-01-08 - Small Improvements
 3.56 2025-01-04 - Small Improvements
 3.55 2025-01-01 - Small Improvements

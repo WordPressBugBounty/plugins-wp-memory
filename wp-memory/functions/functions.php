@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @ Author: Bill Minozzi
  * @ Copyright: 2020 www.BillMinozzi.com
@@ -15,52 +16,54 @@ if (is_admin()) {
 
 
 
-	$BILLCLASS = 'ACTIVATED_WP-MEMORY';
-    
-
-	if(!isset($_COOKIE[$BILLCLASS]) and $wpmemory_activated_notice == '1'){
-
-		add_action('wp_loaded', 'wpmemory_load_feedback3');
-		add_action( 'admin_notices', 'wpmemory_include_file_more_plugins' );
-	}
-
-	
-	// 2023
-    // activated manager
-	function wpmemory_load_feedback3() {
-	   // global $wpmemory_request_url;
+    $BILLCLASS = 'ACTIVATED_WP-MEMORY';
 
 
-                wp_register_style( 'bill-feedback-wpmemory-css', WPMEMORYURL. 'includes/feedback/feedback-plugin.css' );
-                wp_enqueue_style( 'bill-feedback-wpmemory-css' );
+    if (!isset($_COOKIE[$BILLCLASS]) and $wpmemory_activated_notice == '1') {
 
-                wp_register_script( 'bill-feedback-wpmemory-js', WPMEMORYURL.'includes/feedback/activated-manager.js' , array( 'jquery' ), WPMEMORYVERSION, true );
-                wp_enqueue_script( 'bill-feedback-wpmemory-js' );
+        add_action('wp_loaded', 'wpmemory_load_feedback3');
+        add_action('admin_notices', 'wpmemory_include_file_more_plugins');
     }
-	
 
-	function wpmemory_include_file_more_plugins() {
-		global $wpmemory_request_url;
-		if (strpos($wpmemory_request_url, 'plugins.php') !== false) 
-			require_once (WPMEMORYPATH . 'includes/feedback/activated-manager.php');
-	}
 
-	function wpmemory_activated()
-	{
-		$r = update_option('wpmemory_was_activated', '1');
-		if (!$r) {
-			add_option('wpmemory_was_activated', '1');
-		}
-		$r = update_option('wpmemory_activated_notice', '1');
-		if (!$r) {
-			add_option('wpmemory_activated_notice', '1');
-		}
-		$r = update_option('wpmemory_activated_pointer', '1');
-		if (!$r) {
-			add_option('wpmemory_activated_pointer', '1');
-		}
-	}
-	// end activation
+    // 2023
+    // activated manager
+    function wpmemory_load_feedback3()
+    {
+        // global $wpmemory_request_url;
+
+
+        wp_register_style('bill-feedback-wpmemory-css', WPMEMORYURL . 'includes/feedback/feedback-plugin.css');
+        wp_enqueue_style('bill-feedback-wpmemory-css');
+
+        wp_register_script('bill-feedback-wpmemory-js', WPMEMORYURL . 'includes/feedback/activated-manager.js', array('jquery'), WPMEMORYVERSION, true);
+        wp_enqueue_script('bill-feedback-wpmemory-js');
+    }
+
+
+    function wpmemory_include_file_more_plugins()
+    {
+        global $wpmemory_request_url;
+        if (strpos($wpmemory_request_url, 'plugins.php') !== false)
+            require_once(WPMEMORYPATH . 'includes/feedback/activated-manager.php');
+    }
+
+    function wpmemory_activated()
+    {
+        $r = update_option('wpmemory_was_activated', '1');
+        if (!$r) {
+            add_option('wpmemory_was_activated', '1');
+        }
+        $r = update_option('wpmemory_activated_notice', '1');
+        if (!$r) {
+            add_option('wpmemory_activated_notice', '1');
+        }
+        $r = update_option('wpmemory_activated_pointer', '1');
+        if (!$r) {
+            add_option('wpmemory_activated_pointer', '1');
+        }
+    }
+    // end activation
 }
 
 
@@ -76,22 +79,22 @@ $wpmemory_now = strtotime("now");
 $wpmemory_after = strtotime("now") + (3600);
 function wpmemory_enqueue_scripts()
 {
-   // wp_register_script('wpmemory-fix-config-manager', WPMEMORYURL . 'dashboard/fixconfig/wp-memory-fix-config-manager.js', array('jquery'), WPMEMORYVERSION, true);
-   // wp_enqueue_script('wpmemory-fix-config-manager');
-   // wp_enqueue_style('bill-help-wpmemory', WPMEMORYURL . 'dashboard/fixconfig/help.css');
+    // wp_register_script('wpmemory-fix-config-manager', WPMEMORYURL . 'dashboard/fixconfig/wp-memory-fix-config-manager.js', array('jquery'), WPMEMORYVERSION, true);
+    // wp_enqueue_script('wpmemory-fix-config-manager');
+    // wp_enqueue_style('bill-help-wpmemory', WPMEMORYURL . 'dashboard/fixconfig/help.css');
 }
 //add_action('admin_init', 'wpmemory_enqueue_scripts');
 if (!function_exists('ini_get')) {
-	function wpmemory_general_admin_notice2()
-	{
-		if (is_admin()) {
-			echo '<div class="notice notice-warning is-dismissible">
+    function wpmemory_general_admin_notice2()
+    {
+        if (is_admin()) {
+            echo '<div class="notice notice-warning is-dismissible">
 				 <p>Your server doesn\'t have a PHP function ini_get.</p>
 				 <p>Please, talk with your hosting company.</p>
 			 </div>';
-		}
-	}
-	add_action('admin_notices', 'wpmemory_general_admin_notice');
+        }
+    }
+    add_action('admin_notices', 'wpmemory_general_admin_notice');
 }
 
 
@@ -99,6 +102,7 @@ if (!function_exists('ini_get')) {
 function wpmemory_add_debug_info($debug_info)
 {
     global $wpmemory_usage_content;
+    /*
     $debug_info['wpmemory'] = array(
         'label' => __('Memory Usage', 'wp-memory' ),
         'fields' => array(
@@ -109,6 +113,19 @@ function wpmemory_add_debug_info($debug_info)
             )
         )
     );
+    */
+
+    $debug_info['wpmemory'] = array(
+        'label' => __('Memory Usage', 'wp-memory'),
+        'fields' => array(
+            'memory' => array(
+                'label' => __('Memory Usage information', 'wp-memory'),
+                'value' => wp_strip_all_tags($wpmemory_usage_content),
+                'private' => true
+            )
+        )
+    );
+
     return $debug_info;
 }
 function wpmemory_activation()
@@ -132,23 +149,21 @@ function wpmemory_activation()
 
         wp_die(
             '<h1>' . esc_html__('Could not activate plugin: PHP version error', 'wp-memory') . '</h1>' .
-            '<h2>PLUGIN: <i>' . esc_html($plugin_name) . ' ' . esc_html($plugin_version) . '</i></h2>' .
-            '<p><strong>' . esc_html__('You are using PHP version', 'wp-memory') . ' ' . esc_html(PHP_VERSION) . '</strong>. ' .
-            esc_html__('This plugin has been tested with PHP versions 5.3 and greater.', 'wp-memory') . '</p>' .
-            '<p>' . 
-            esc_html__('WordPress itself ', 'wp-memory') . 
-            '<a href="' . esc_url('https://wordpress.org/about/requirements/') . '" target="_blank">' .
-            esc_html__('recommends using PHP version 7 or greater', 'wp-memory') . 
-            '</a>. ' . 
-            esc_html__('Please upgrade your PHP version or contact your Server administrator.', 'wp-memory') . 
-            '</p>',
+                '<h2>PLUGIN: <i>' . esc_html($plugin_name) . ' ' . esc_html($plugin_version) . '</i></h2>' .
+                '<p><strong>' . esc_html__('You are using PHP version', 'wp-memory') . ' ' . esc_html(PHP_VERSION) . '</strong>. ' .
+                esc_html__('This plugin has been tested with PHP versions 5.3 and greater.', 'wp-memory') . '</p>' .
+                '<p>' .
+                esc_html__('WordPress itself ', 'wp-memory') .
+                '<a href="' . esc_url('https://wordpress.org/about/requirements/') . '" target="_blank">' .
+                esc_html__('recommends using PHP version 7 or greater', 'wp-memory') .
+                '</a>. ' .
+                esc_html__('Please upgrade your PHP version or contact your Server administrator.', 'wp-memory') .
+                '</p>',
             esc_html__('Could not activate plugin: PHP version error', 'wp-memory'),
             array(
                 'back_link' => true
             )
         );
-
-        
     }
     if (version_compare($wp_version, '5.2') < 0) {
         deactivate_plugins(plugin_basename(__FILE__));
@@ -164,13 +179,12 @@ function wpmemory_activation()
 
         wp_die(
             '<h1>' . esc_html__('Could not activate plugin: WordPress needs to be 5.2 or newer.', 'wp-memory') . '</h1>' .
-            '<h2>PLUGIN: <i>' . esc_html($plugin_name) . ' ' . esc_html($plugin_version) . '</i></h2>' .
-            '<p><strong>' . esc_html__('Please, Update WordPress to Version 5.2 or newer to use this plugin.', 'wp-memory') . '</strong></p>',
+                '<h2>PLUGIN: <i>' . esc_html($plugin_name) . ' ' . esc_html($plugin_version) . '</i></h2>' .
+                '<p><strong>' . esc_html__('Please, Update WordPress to Version 5.2 or newer to use this plugin.', 'wp-memory') . '</strong></p>',
             array(
                 'back_link' => true
             )
         );
-        
     }
 }
 function wp_memory_activ_message()
@@ -187,90 +201,90 @@ function wp_memory_activ_message()
         $bd_msg .= __('or click here', "wp-memory");
         $bd_msg .= '</a>';
 
-		$allowed_atts = array(
-			'align'      => array(),
-			'class'      => array(),
-			'type'       => array(),
-			'id'         => array(),
-			'dir'        => array(),
-			'lang'       => array(),
-			'style'      => array(),
-			'xml:lang'   => array(),
-			'src'        => array(),
-			'alt'        => array(),
-			'href'       => array(),
-			'rel'        => array(),
-			'rev'        => array(),
-			'target'     => array(),
-			'novalidate' => array(),
-			'type'       => array(),
-			'value'      => array(),
-			'name'       => array(),
-			'tabindex'   => array(),
-			'action'     => array(),
-			'method'     => array(),
-			'for'        => array(),
-			'width'      => array(),
-			'height'     => array(),
-			'data'       => array(),
-			'title'      => array(),
+        $allowed_atts = array(
+            'align'      => array(),
+            'class'      => array(),
+            'type'       => array(),
+            'id'         => array(),
+            'dir'        => array(),
+            'lang'       => array(),
+            'style'      => array(),
+            'xml:lang'   => array(),
+            'src'        => array(),
+            'alt'        => array(),
+            'href'       => array(),
+            'rel'        => array(),
+            'rev'        => array(),
+            'target'     => array(),
+            'novalidate' => array(),
+            'type'       => array(),
+            'value'      => array(),
+            'name'       => array(),
+            'tabindex'   => array(),
+            'action'     => array(),
+            'method'     => array(),
+            'for'        => array(),
+            'width'      => array(),
+            'height'     => array(),
+            'data'       => array(),
+            'title'      => array(),
 
-			'checked' => array(),
-			'selected' => array(),
+            'checked' => array(),
+            'selected' => array(),
 
 
-		);
+        );
 
-		$my_allowed['form'] = $allowed_atts;
-		$my_allowed['select'] = $allowed_atts;
-		// select options
-		$my_allowed['option'] = $allowed_atts;
-		$my_allowed['style'] = $allowed_atts;
-		$my_allowed['label'] = $allowed_atts;
-		$my_allowed['input'] = $allowed_atts;
-		$my_allowed['textarea'] = $allowed_atts;
+        $my_allowed['form'] = $allowed_atts;
+        $my_allowed['select'] = $allowed_atts;
+        // select options
+        $my_allowed['option'] = $allowed_atts;
+        $my_allowed['style'] = $allowed_atts;
+        $my_allowed['label'] = $allowed_atts;
+        $my_allowed['input'] = $allowed_atts;
+        $my_allowed['textarea'] = $allowed_atts;
 
         //more...future...
-		$my_allowed['form']     = $allowed_atts;
-		$my_allowed['label']    = $allowed_atts;
-		$my_allowed['input']    = $allowed_atts;
-		$my_allowed['textarea'] = $allowed_atts;
-		$my_allowed['iframe']   = $allowed_atts;
-		$my_allowed['script']   = $allowed_atts;
-		$my_allowed['style']    = $allowed_atts;
-		$my_allowed['strong']   = $allowed_atts;
-		$my_allowed['small']    = $allowed_atts;
-		$my_allowed['table']    = $allowed_atts;
-		$my_allowed['span']     = $allowed_atts;
-		$my_allowed['abbr']     = $allowed_atts;
-		$my_allowed['code']     = $allowed_atts;
-		$my_allowed['pre']      = $allowed_atts;
-		$my_allowed['div']      = $allowed_atts;
-		$my_allowed['img']      = $allowed_atts;
-		$my_allowed['h1']       = $allowed_atts;
-		$my_allowed['h2']       = $allowed_atts;
-		$my_allowed['h3']       = $allowed_atts;
-		$my_allowed['h4']       = $allowed_atts;
-		$my_allowed['h5']       = $allowed_atts;
-		$my_allowed['h6']       = $allowed_atts;
-		$my_allowed['ol']       = $allowed_atts;
-		$my_allowed['ul']       = $allowed_atts;
-		$my_allowed['li']       = $allowed_atts;
-		$my_allowed['em']       = $allowed_atts;
-		$my_allowed['hr']       = $allowed_atts;
-		$my_allowed['br']       = $allowed_atts;
-		$my_allowed['tr']       = $allowed_atts;
-		$my_allowed['td']       = $allowed_atts;
-		$my_allowed['p']        = $allowed_atts;
-		$my_allowed['a']        = $allowed_atts;
-		$my_allowed['b']        = $allowed_atts;
-		$my_allowed['i']        = $allowed_atts;
-     	
-
-		echo wp_kses($bd_msg, $my_allowed);
+        $my_allowed['form']     = $allowed_atts;
+        $my_allowed['label']    = $allowed_atts;
+        $my_allowed['input']    = $allowed_atts;
+        $my_allowed['textarea'] = $allowed_atts;
+        $my_allowed['iframe']   = $allowed_atts;
+        $my_allowed['script']   = $allowed_atts;
+        $my_allowed['style']    = $allowed_atts;
+        $my_allowed['strong']   = $allowed_atts;
+        $my_allowed['small']    = $allowed_atts;
+        $my_allowed['table']    = $allowed_atts;
+        $my_allowed['span']     = $allowed_atts;
+        $my_allowed['abbr']     = $allowed_atts;
+        $my_allowed['code']     = $allowed_atts;
+        $my_allowed['pre']      = $allowed_atts;
+        $my_allowed['div']      = $allowed_atts;
+        $my_allowed['img']      = $allowed_atts;
+        $my_allowed['h1']       = $allowed_atts;
+        $my_allowed['h2']       = $allowed_atts;
+        $my_allowed['h3']       = $allowed_atts;
+        $my_allowed['h4']       = $allowed_atts;
+        $my_allowed['h5']       = $allowed_atts;
+        $my_allowed['h6']       = $allowed_atts;
+        $my_allowed['ol']       = $allowed_atts;
+        $my_allowed['ul']       = $allowed_atts;
+        $my_allowed['li']       = $allowed_atts;
+        $my_allowed['em']       = $allowed_atts;
+        $my_allowed['hr']       = $allowed_atts;
+        $my_allowed['br']       = $allowed_atts;
+        $my_allowed['tr']       = $allowed_atts;
+        $my_allowed['td']       = $allowed_atts;
+        $my_allowed['p']        = $allowed_atts;
+        $my_allowed['a']        = $allowed_atts;
+        $my_allowed['b']        = $allowed_atts;
+        $my_allowed['i']        = $allowed_atts;
 
 
-       // echo $bd_msg;
+        echo wp_kses($bd_msg, $my_allowed);
+
+
+        // echo $bd_msg;
 
 
 
@@ -297,17 +311,17 @@ function wp_memory_init()
 }
 
 
-function wpmemory_check_memory() {
+function wpmemory_check_memory()
+{
     // global $memory;
     $memory["color"] = "font-weight:normal;";
     try {
 
         // PHP $memory["limit"]
-        if(!function_exists('ini_get')){
+        if (!function_exists('ini_get')) {
             $memory["msg_type"] = "notok";
             return $memory;
-        }
-        else{
+        } else {
             $memory["limit"] = (int) ini_get("memory_limit");
         }
 
@@ -323,11 +337,10 @@ function wpmemory_check_memory() {
 
 
         // usage
-        if(!function_exists('memory_get_usage')){
+        if (!function_exists('memory_get_usage')) {
             $memory["msg_type"] = "notok";
             return $memory;
-        }
-        else{
+        } else {
             // $bill_install_memory["usage"] = round(memory_get_usage() / 1024 / 1024, 0);
             $memory["usage"] = (int) memory_get_usage();
         }
@@ -336,10 +349,8 @@ function wpmemory_check_memory() {
         if ($memory["usage"] < 1) {
             $memory["msg_type"] = "notok";
             return $memory;
-        }
-        else{
+        } else {
             $memory["usage"] = round($memory["usage"] / 1024 / 1024, 0);
-
         }
 
         if (!is_numeric($memory["usage"])) {
@@ -353,8 +364,7 @@ function wpmemory_check_memory() {
             $memory['wp_limit'] = 40;
         } else {
             $memory['wp_limit'] = (int) WP_MEMORY_LIMIT;
-
-        }		
+        }
 
         $memory["percent"] =
             $memory["usage"] / $memory["wp_limit"];
@@ -376,7 +386,7 @@ function wpmemory_check_memory() {
 
 function wp_memory_admin_page()
 {
-            require_once WPMEMORYPATH . "/dashboard/dashboard_container.php";
+    require_once WPMEMORYPATH . "/dashboard/dashboard_container.php";
 }
 function wp_memory_plugin_settings_link($links)
 {
@@ -396,20 +406,20 @@ function wpmemory_add_memory_test($tests)
 */
 function wpmemory_check($code)
 {
-  $code = trim($code);
-  if(empty($code))
-    return false;
-  $code = stripNonAlphaNumeric($code);
-  $size = strlen($code);
-  if (($size != 17) and ($size != 6)  and ($size != 7)  and ($size != 8))
-    return false;
-  if ($size == 6 or $size == 7 or $size == 8) {
-    if (!is_numeric($code))
-      return false;
-    if ($code < 290000)
-      return false;
-  }
-  /*
+    $code = trim($code);
+    if (empty($code))
+        return false;
+    $code = stripNonAlphaNumeric($code);
+    $size = strlen($code);
+    if (($size != 17) and ($size != 6)  and ($size != 7)  and ($size != 8))
+        return false;
+    if ($size == 6 or $size == 7 or $size == 8) {
+        if (!is_numeric($code))
+            return false;
+        if ($code < 290000)
+            return false;
+    }
+    /*
   if (($size == 17)) {
     if (is_numeric($code))
       return false;
@@ -422,13 +432,13 @@ function wpmemory_check($code)
       return false;
   }
   */
-  return true;
+    return true;
 }
 function wpmemory_updated_message()
 {
     echo '<div class="notice notice-success is-dismissible">';
     echo '<br /><b>';
-    echo esc_attr__('Database Updated!', 'wp-memory' );
+    echo esc_attr__('Database Updated!', 'wp-memory');
     echo '<br /><br /></div>';
 }
 
@@ -550,9 +560,9 @@ function wpmemory_javascript_errors_today($onlytoday)
                         // var_dump($last_date);
 
                         //if ($onlytoday == 1) {
-                            if (time() - $last_date < (60 * 60 * ($onlytoday * 24))) {
-                                return true;
-                            }
+                        if (time() - $last_date < (60 * 60 * ($onlytoday * 24))) {
+                            return true;
+                        }
                         //} else {
                         //    return true;
                         //}
@@ -665,19 +675,19 @@ function wpmemory_errors_today($onlytoday)
 
 
                         // 
-                      //  die(var_dump($marray[$i]));
-                     // die(var_export(time() - $last_date < 60 * 60 * 24));
-                        
+                        //  die(var_dump($marray[$i]));
+                        // die(var_export(time() - $last_date < 60 * 60 * 24));
+
                         //var_dump($last_date);
 
-                      //  if ($onlytoday == 2) {
-                            if (time() - $last_date < (60 * 60 * ($onlytoday * 24))) {
-                                //die(var_export(time() - $last_date < 60 * 60 * 24));
-                                return true;
-                            }
-                       // } else {
-                           // return true;
-                       // }
+                        //  if ($onlytoday == 2) {
+                        if (time() - $last_date < (60 * 60 * ($onlytoday * 24))) {
+                            //die(var_export(time() - $last_date < 60 * 60 * 24));
+                            return true;
+                        }
+                        // } else {
+                        // return true;
+                        // }
                     }
                 }
             }
@@ -690,8 +700,8 @@ function wpmemory_errors()
 {
     if (isset($_GET["page"])) {
         $page = sanitize_text_field($_GET["page"]);
-		if ($page !== 'wp_memory_admin_page')
-	    	 return;
+        if ($page !== 'wp_memory_admin_page')
+            return;
     }
     $wpmemory_count = 0;
     define("WPMEMORYPLUGINPATH", plugin_dir_path(__FILE__));
@@ -769,7 +779,7 @@ function wpmemory_errors()
     //2023
     //die(var_export(wpmemory_errors_today(2)));
 
-    
+
     if (wpmemory_javascript_errors_today(2) or wpmemory_errors_today(2)) {
         echo '<h3 style="color: red;">';
         echo esc_attr__(
@@ -847,9 +857,9 @@ function wpmemory_errors()
                         $logs = [];
 
                         $line = trim($marray[$i]);
-                        if(empty($line))
-                           continue;
-                        
+                        if (empty($line))
+                            continue;
+
 
 
                         //  stack trace
@@ -887,7 +897,7 @@ function wpmemory_errors()
 
                             $apattern[] =
                                 "/(SyntaxError|Error|Syntax|Type|TypeError|Reference|ReferenceError|Range|Eval|URI|Error .*?): (.*?) - URL: (https?:\/\/\S+).*?Line: (\d+)/";
-            
+
                             // Google Maps !
                             //$apattern[] = "/Script error(?:\. - URL: (https?:\/\/\S+))?/i";
 
@@ -940,21 +950,21 @@ function wpmemory_errors()
 
                                 $script_path = $matches[3];
                                 $script_info = pathinfo($script_path);
-        
-        
+
+
                                 // Dividir o nome do script com base em ":"
                                 $parts = explode(":", $script_info["basename"]);
-        
+
                                 // O nome do script agora está na primeira parte
                                 $scriptName = $parts[0];
-        
+
                                 $log_entry["Script Name"] = $scriptName; // Get the script name
-        
+
                                 $log_entry["Script Location"] =
                                     $script_info["dirname"]; // Get the script location
-        
-                                if($log_entry["Script Location"] == 'http:' or $log_entry["Script Location"] == 'https:' )
-                                  $log_entry["Script Location"] = $matches[3];
+
+                                if ($log_entry["Script Location"] == 'http:' or $log_entry["Script Location"] == 'https:')
+                                    $log_entry["Script Location"] = $matches[3];
 
 
                                 if (
@@ -973,9 +983,9 @@ function wpmemory_errors()
                                         $log_entry["File Type"] = "Plugin";
                                         $log_entry["Plugin Name"] =
                                             $plugin_parts[0];
-                                     //   $log_entry["Script Location"] =
-                                      //      "/wp-content/plugins/" .
-                                     //       $plugin_parts[0];
+                                        //   $log_entry["Script Location"] =
+                                        //      "/wp-content/plugins/" .
+                                        //       $plugin_parts[0];
                                     }
                                 } elseif (
                                     strpos(
@@ -993,9 +1003,9 @@ function wpmemory_errors()
                                         $log_entry["File Type"] = "Theme";
                                         $log_entry["Theme Name"] =
                                             $theme_parts[0];
-                                       // $log_entry["Script Location"] =
-                                       //     "/wp-content/themes/" .
-                                       //     $theme_parts[0];
+                                        // $log_entry["Script Location"] =
+                                        //     "/wp-content/themes/" .
+                                        //     $theme_parts[0];
                                     }
                                 } else {
                                     // Caso não seja um tema nem um plugin, pode ser necessário ajustar o comportamento aqui.
@@ -1044,7 +1054,7 @@ function wpmemory_errors()
                                 if (isset($log_entry["Theme Name"])) {
                                     echo "THEME NAME: " . esc_html($log_entry["Theme Name"]) . "\n";
                                 }
-                                
+
 
                                 echo "------------------------\n";
                                 continue;
@@ -1180,7 +1190,7 @@ function wpmemory_errors()
                                 if (isset($log["Problem Description"])) {
                                     echo 'PROBLEM DESCRIPTION: ' . esc_html($log["Problem Description"]) . "\n";
                                 }
-                            
+
                                 // Check if the 'Script Name' key exists before printing
                                 if (
                                     isset($log["Script Name"]) &&
@@ -1188,22 +1198,22 @@ function wpmemory_errors()
                                 ) {
                                     echo 'SCRIPT NAME: ' . esc_html($log["Script Name"]) . "\n";
                                 }
-                            
+
                                 // Check if the 'Line' key exists before printing
                                 if (isset($log["Line"])) {
                                     echo 'LINE: ' . esc_html($log["Line"]) . "\n";
                                 }
-                            
+
                                 // Check if the 'Script Location' key exists before printing
                                 if (isset($log["Script Location"])) {
                                     echo 'SCRIPT LOCATION: ' . esc_html($log["Script Location"]) . "\n";
                                 }
-                            
+
                                 // Check if the 'File Type' key exists before printing
                                 if (isset($log["File Type"])) {
                                     // echo "FILE TYPE: " . esc_html($log["File Type"]) . "\n";
                                 }
-                            
+
                                 // Check if the 'Plugin Name' key exists before printing
                                 if (
                                     isset($log["Plugin Name"]) &&
@@ -1211,23 +1221,19 @@ function wpmemory_errors()
                                 ) {
                                     echo 'PLUGIN NAME: ' . esc_html($log["Plugin Name"]) . "\n";
                                 }
-                            
+
                                 // Check if the 'Theme Name' key exists before printing
                                 if (isset($log["Theme Name"])) {
                                     echo 'THEME NAME: ' . esc_html($log["Theme Name"]) . "\n";
                                 }
-                            
+
                                 echo "------------------------\n";
                             }
-                            
                         }
                         // end if PHP ...
                     } // end for...
 
                     echo "</textarea>";
-
-                        
-  
                 }
                 echo "<br />";
             }
@@ -1310,9 +1316,9 @@ function wpmemory_read_file($file, $lines)
 
 function wpmemory_sizeFilter($bytes)
 {
-	$label = array('Bytes', 'KB', 'MB', 'GB', 'TB', 'PB');
-	for ($i = 0; $bytes >= 1024 && $i < (count($label) - 1); $bytes /= 1024, $i++);
-	return (round($bytes, 2) . " " . $label[$i]);
+    $label = array('Bytes', 'KB', 'MB', 'GB', 'TB', 'PB');
+    for ($i = 0; $bytes >= 1024 && $i < (count($label) - 1); $bytes /= 1024, $i++);
+    return (round($bytes, 2) . " " . $label[$i]);
 }
 
 /*
