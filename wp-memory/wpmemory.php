@@ -2,7 +2,7 @@
 Plugin Name: WP Memory
 Plugin URI: http://wpmemory.com
 Description: Check for high memory usage, include the results on the Site Health page, and provide suggestions.
-Version: 3.61
+Version: 3.62
 Author: Bill Minozzi
 Domain Path: /language
 Author URI: http://billminozzi.com
@@ -70,6 +70,20 @@ function wpmemory_add_admstylesheet()
 			'js/jquery.flot.pie.js', array('jquery'));
 		wp_enqueue_script('wpmcircle', WPMEMORYURL .
 			'js/radialIndicator.js', array('jquery'));
+		/*
+
+		wp_enqueue_script('jquery-ui-core');
+		wp_enqueue_script('jquery-ui-dialog');
+
+		//if (!class_exists('TM_Builder_Core')) {
+		$wpmemory_jqueryurl = WPMEMORYURL . 'assets/css/jquery-ui.css';
+		//}
+		wp_register_style('bill-jquery-help', $wpmemory_jqueryurl, array(), '20120208', 'all');
+		*/
+
+
+
+
 
 		wp_register_script("wpmemory-cookies", WPMEMORYURL . 'js/c_o_o_k_i_e.js', array('jquery'), WPMEMORYVERSION, true);
 		wp_enqueue_script('wpmemory-cookies');
@@ -86,6 +100,14 @@ function wpmemory_add_admstylesheet()
 
 	wp_register_style('wpmemory ', plugin_dir_url(__FILE__) . '/css/wpmemory.css');
 	wp_enqueue_style('wpmemory ');
+
+	wp_enqueue_script('jquery-ui-core');
+	wp_enqueue_script('jquery-ui-dialog'); // Exemplo: carregar o diálogo do jQuery UI
+
+	// ui 
+	$wpmemory_jqueryurl = WPMEMORYURL . 'assets/css/jquery-ui.css';
+	wp_register_style('bill-jquery-ui', $wpmemory_jqueryurl, array(), '1.12.1', 'all');
+	wp_enqueue_style('bill-jquery-ui');
 }
 if (is_admin()) {
 	add_action('admin_init', 'wpmemory_add_admstylesheet');

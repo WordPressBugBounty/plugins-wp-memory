@@ -1,11 +1,12 @@
 <?php
+
 /**
  * @author William Sergio Minossi
  * @copyright 2016
  */
 
 // If uninstall is not called from WordPress, exit
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit();
 }
 
@@ -35,8 +36,30 @@ foreach ($wpmemory_options as $option_name) {
 // Drop a custom db table
 global $wpdb;
 $table = $wpdb->prefix . "wpmemory_log";
-$wpdb->query( "DROP TABLE IF EXISTS $table" );
+$wpdb->query("DROP TABLE IF EXISTS $table");
 
 // Clean up scheduled cron jobs
 wp_clear_scheduled_hook('wpmemory_keep_latest_records_cron');
-?>
+
+$plugin_name = 'bill-catch-errors.php'; // Name of the plugin file to be removed
+
+// Retrieve all must-use plugins
+$wp_mu_plugins = get_mu_plugins();
+
+
+// MU-Plugins directory
+$mu_plugins_dir = WPMU_PLUGIN_DIR;
+
+if (isset($wp_mu_plugins[$plugin_name])) {
+    // Get the plugin's destination path
+    $destination = $mu_plugins_dir . '/' . $plugin_name;
+
+    // Attempt to remove the plugin
+    if (!unlink($destination)) {
+        // Log the error if the file could not be deleted
+        error_log("Error removing the plugin file from the MU-Plugins directory: $destination");
+    } else {
+        // Optionally, log success if the plugin is removed successfully
+        // error_log("Successfully removed the plugin file: $destination");
+    }
+}
