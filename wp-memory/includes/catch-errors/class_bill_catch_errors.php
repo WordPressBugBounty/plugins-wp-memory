@@ -202,7 +202,7 @@ function bill_minozzi_js_error_catched()
             }
             if ($log_error) {
 
-                if ($wp_memory_plugin_slug  == 'wp_memory')
+                if ($wp_memory_plugin_slug  == 'wp-memory')
                     wp_memoryErrorHandler('Javascript', $errorMessage, $errorURL, $errorLine);
 
                 if (error_log("\n" . $formattedMessage, 3, $logFile)) {

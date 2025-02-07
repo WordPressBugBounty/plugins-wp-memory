@@ -746,9 +746,9 @@ class wp_memory_Bill_Diagnose
 
                 // Determina a mensagem com base na média
                 if ($average <= 8) {
-                    $message = esc_html__("The page load time is poor (click to open)", "wp_memory");
+                    $message = esc_html__("The page load time is poor (click to open)", "wp-memory");
                 } else {
-                    $message = esc_html__("The page load time is very poor (click to open)", "wp_memory");
+                    $message = esc_html__("The page load time is very poor (click to open)", "wp-memory");
                 }
 
                 echo $message; // Exibe a mensagem diretamente
@@ -759,29 +759,29 @@ class wp_memory_Bill_Diagnose
 
                 //  if ($average > 5) {
                 // Exibe as informações quando a média for maior que 5
-                echo esc_html__("The Load average of your front pages is: ", "wp_memory");
+                echo esc_html__("The Load average of your front pages is: ", "wp-memory");
                 echo esc_html($average);
                 echo '<br>';
-                echo esc_html__("Loading time can significantly impact your SEO.", "wp_memory");
+                echo esc_html__("Loading time can significantly impact your SEO.", "wp-memory");
                 echo '<br>';
-                echo esc_html__("Many users will abandon the site before it fully loads.", "wp_memory");
+                echo esc_html__("Many users will abandon the site before it fully loads.", "wp-memory");
                 echo '<br>';
-                echo esc_html__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", "wp_memory");
+                echo esc_html__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", "wp-memory");
                 //}
                 echo '<br>';
                 echo '<br>';
                 echo '<strong>';
-                echo esc_html__("Suggestions:", "wp_memory") . '<br>';
+                echo esc_html__("Suggestions:", "wp-memory") . '<br>';
                 echo '</strong>';
-                echo esc_html__("Block bots: They overload the server and steal your content. Install our free plugin StopBadBots.", "wp_memory") . '<br>';
-                echo esc_html__("Protect against hackers: They use bots to search for vulnerabilities and overload the server. Install our free plugin AntiHacker", "wp_memory") . '<br>';
+                echo esc_html__("Block bots: They overload the server and steal your content. Install our free plugin StopBadBots.", "wp-memory") . '<br>';
+                echo esc_html__("Protect against hackers: They use bots to search for vulnerabilities and overload the server. Install our free plugin AntiHacker", "wp-memory") . '<br>';
 
-                echo esc_html__("Check your site for errors with free plugin wpTools. Errors and warnings can increase page load time by being recorded in log files, consuming resources and slowing down performance.", "wp_memory");
+                echo esc_html__("Check your site for errors with free plugin wpTools. Errors and warnings can increase page load time by being recorded in log files, consuming resources and slowing down performance.", "wp-memory");
                 echo '<br>';
 
                 echo '<br>';
                 echo '<a href="https://wptoolsplugin.com/page-load-times-and-their-negative-impact-on-seo/">';
-                echo esc_html__("Learn more about Page Load Times and their negative impact on SEO and more", "wp_memory") . "...";
+                echo esc_html__("Learn more about Page Load Times and their negative impact on SEO and more", "wp-memory") . "...";
                 echo "</a>";
 
                 // echo '<hr>';
@@ -825,10 +825,10 @@ class wp_memory_Bill_Diagnose
                 echo '<h2 style="color: red;">Plugins with Updates Available (click to open)</h2>';
                 echo '<div>';
 
-                esc_attr_e("Keeping your plugins up to date is crucial for ensuring security, performance, and compatibility with the latest features and improvements.", "wp_memory");
+                esc_attr_e("Keeping your plugins up to date is crucial for ensuring security, performance, and compatibility with the latest features and improvements.", "wp-memory");
                 echo '<br>';
                 echo '<strong>';
-                esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", "wp_memory");
+                esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", "wp-memory");
                 echo '<strong>';
                 echo '<hr>';
                 foreach ($update_plugins as $plugin_path => $plugin) {
