@@ -90,9 +90,10 @@ if (isset($wp_mu_plugins[$plugin_name])) {
 } else {
     //debug4();
 
-    //debug4('The Bill Catch Errors plugin is not installed or loaded.');
-    bill_install_mu_plugin();
-    return;
+    //debug4('The Bill Catch Errors plugin is not installed or loaded.')
+    // criou ?
+    if(bill_install_mu_plugin())
+       return;
 }
 
 function bill_install_mu_plugin()
@@ -104,13 +105,50 @@ function bill_install_mu_plugin()
     $wp_memory_mu_plugin_dir = WP_PLUGIN_DIR . '/wp-memory/includes/mu-plugins'; // Current path inside wp_memory
     $mu_plugins_dir = WPMU_PLUGIN_DIR; // MU-Plugins directory
 
+    $transient_name = 'unable_to_create_mu_folder';
+    $transient_check = get_transient($transient_name);
+
+    if ($transient_check !== false) {
+        return false;
+    }
+
+    /*
+
+  
+
+    $transient_name = 'unable_to_create_mu_folder';
+    $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+    $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+
+    set_transient($transient_name, $transient_value, $expiration);
+
+    // Para verificar se o transiente foi criado (opcional):
+    $transient_check = get_transient($transient_name);
+
+    if ($transient_check !== false) {
+        echo 'Transiente "' . $transient_name . '" criado com sucesso.';
+    } else {
+        echo 'Falha ao criar o transiente "' . $transient_name . '".';
+    }
+
+
+
+
+    */
 
     try {
         // Check if the MU-Plugins directory exists
         if (!is_dir($mu_plugins_dir)) {
             // Try to create the directory with the appropriate permissions
             if (!mkdir($mu_plugins_dir, 0755, true)) {
+
+                $transient_name = 'bill_unable_to_create_mu_folder';
+                $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+                $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+                set_transient($transient_name, $transient_value, $expiration);
+
                 error_log("Unable to create the MU-Plugins directory: " . $mu_plugins_dir);
+                return false;
             }
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace wp_memory_BillDiagnose;
-// 2023-08 upd: 2023-10-17 2024-06=21 2024-31-12 2025-01-05
+// 2023-08 upd: 2023-10-17 2024-06=21 2024-31-12 2025-02-11
 if (!defined('ABSPATH')) {
     die('Invalid request.');
 }
@@ -9,8 +9,7 @@ if (function_exists('is_multisite') and is_multisite()) {
     return;
 }
 
-
-
+// debug4();
 
 /*
 // >>>>>>>>>>>>>>>> call
@@ -102,8 +101,22 @@ class ErrorChecker
         // add_action('admin_enqueue_scripts', array($this, 'enqueue_diagnose_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_diagnose_scripts'));
     }
+
+    public function limparString($string)
+    {
+        return preg_replace('/[[:^print:]]/', '', $string);
+    }
     public function bill_parseDate($dateString, $locale)
     {
+
+
+        if (isset($dateString) && !empty($dateString)) {
+            $dateString = trim($dateString); // Remover espaços extras
+            $dateString = ErrorChecker::limparString($dateString); // Remover caracteres invisíveis
+        } else {
+            return false;
+        }
+
         // Mapeamento de formatos de data por idioma
         $dateFormatsByLanguage = [
             'pt' => 'd/m/Y', // 31/12/2024 (Português)
@@ -115,10 +128,18 @@ class ErrorChecker
         ];
         // Extrai o código de idioma do locale (ex: 'pt_BR' -> 'pt')
         $language = substr($locale, 0, 2);
+        // debug4($language);
+
         // Obtém o formato de data correspondente ao idioma
         $format = $dateFormatsByLanguage[$language] ?? 'Y-m-d'; // Fallback para um formato padrão
         // Tenta criar o DateTime com o formato correspondente
+
+        // debug4($format);
+
         $date = \DateTime::createFromFormat($format, $dateString);
+
+        // debug4($date);
+
         if ($date !== false) {
             return $date;
         }
@@ -134,7 +155,10 @@ class ErrorChecker
         ];
         foreach ($possibleFormats as $format) {
             $date = \DateTime::createFromFormat($format, $dateString);
+            // debug4($date);
+            // debug4($format);
             if ($date !== false) {
+                // debug4($date);
                 return $date;
             }
         }
@@ -155,48 +179,127 @@ class ErrorChecker
         );
     }
 
+
+
+    /**
+     * Retrieves an array of paths to potential error log files.
+     *
+     * This function searches for common locations where error logs might be stored,
+     * including PHP error logs, WordPress root directory, plugin and theme directories,
+     * and the administration area.
+     *
+     * @return array An array of strings, where each string is a potential path to an error log file.
+     */
+    public static function get_path_logs()
+    {
+        $bill_folders = [];
+
+        // PHP error log (defined in php.ini)
+        $error_log_path = trim(ini_get("error_log"));
+        if (!is_null($error_log_path) && $error_log_path != trim(ABSPATH . "error_log")) {
+            $bill_folders[] = $error_log_path;
+        }
+
+        // Logs in WordPress root directory
+        $bill_folders[] = ABSPATH . "error_log";
+        $bill_folders[] = ABSPATH . "php_errorlog";
+        $bill_folders[] = WP_CONTENT_DIR . "/debug.log";
+
+        // Logs in current plugin directory
+        $bill_folders[] = plugin_dir_path(__FILE__) . "error_log";
+        $bill_folders[] = plugin_dir_path(__FILE__) . "php_errorlog";
+
+        // Logs in current theme directory
+        $bill_folders[] = get_theme_root() . "/error_log";
+        $bill_folders[] = get_theme_root() . "/php_errorlog";
+
+        // Logs in administration area (if it exists)
+        $bill_admin_path = str_replace(get_bloginfo("url") . "/", ABSPATH, get_admin_url());
+        $bill_folders[] = $bill_admin_path . "/error_log";
+        $bill_folders[] = $bill_admin_path . "/php_errorlog";
+
+
+
+
+
+
+
+
+
+        // Logs in plugin subdirectories
+        try {
+            $bill_plugins = array_slice(scandir(plugin_dir_path(__FILE__)), 2);
+            foreach ($bill_plugins as $bill_plugin) {
+                $plugin_path = plugin_dir_path(__FILE__) . $bill_plugin;
+                if (is_dir($plugin_path)) {
+                    $bill_folders[] = $plugin_path . "/error_log";
+                    $bill_folders[] = $plugin_path . "/php_errorlog";
+                }
+            }
+        } catch (Exception $e) {
+            // Handle the exception
+            error_log("Error scanning plugins directory: " . $e->getMessage());
+        }
+
+
+
+        // Logs in theme subdirectories
+        /*
+        $bill_themes = array_slice(scandir(get_theme_root()), 2);
+        foreach ($bill_themes as $bill_theme) {
+            $theme_path = get_theme_root() . "/" . $bill_theme;
+            if (is_dir($theme_path)) {
+                $bill_folders[] = $theme_path . "/error_log";
+                $bill_folders[] = $theme_path . "/php_errorlog";
+            }
+        }
+        */
+
+        try {
+            $bill_themes = array_slice(scandir(get_theme_root()), 2);
+
+
+            foreach ($bill_themes as $bill_theme) {
+                if (is_dir(get_theme_root() . "/" . $bill_theme)) {
+                    $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/error_log";
+                    $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/php_errorlog";
+                }
+            }
+        } catch (Exception $e) {
+            // Handle the exception
+            error_log("Error scanning theme directory: " . $e->getMessage());
+        }
+
+
+
+
+
+
+        return $bill_folders;
+    }
+
+
+
+
+
+
+
     public function bill_check_errors_today($num_days, $filter = null)
     {
         // return true;
 
 
         $bill_count = 0;
-        $bill_folders = [];
-        //$bill_themePath = get_theme_root();
-        $error_log_path = trim(ini_get("error_log"));
-        if (!is_null($error_log_path) and $error_log_path != trim(ABSPATH . "error_log")) {
-            $bill_folders[] = $error_log_path;
-        }
-        $bill_folders[] = ABSPATH . "error_log";
-        $bill_folders[] = ABSPATH . "php_errorlog";
-        $bill_folders[] = plugin_dir_path(__FILE__) . "/error_log";
-        $bill_folders[] = plugin_dir_path(__FILE__) . "/php_errorlog";
-        $bill_folders[] = get_theme_root() . "/error_log";
-        $bill_folders[] = get_theme_root() . "/php_errorlog";
-        // Adicionar caminhos específicos de administração se existirem
-        $bill_admin_path = str_replace(
-            get_bloginfo("url") . "/",
-            ABSPATH,
-            get_admin_url()
-        );
-        $bill_folders[] = $bill_admin_path . "/error_log";
-        $bill_folders[] = $bill_admin_path . "/php_errorlog";
-        $bill_folders[] = WP_CONTENT_DIR . "/debug.log";
-        // Adicionar diretórios de plugins
-        $bill_plugins = array_slice(scandir(plugin_dir_path(__FILE__)), 2);
-        foreach ($bill_plugins as $bill_plugin) {
-            if (is_dir(plugin_dir_path(__FILE__) . "/" . $bill_plugin)) {
-                $bill_folders[] = plugin_dir_path(__FILE__) . "/" . $bill_plugin . "/error_log";
-                $bill_folders[] = plugin_dir_path(__FILE__) . "/" . $bill_plugin . "/php_errorlog";
-            }
-        }
-        $bill_themes = array_slice(scandir(get_theme_root()), 2);
-        foreach ($bill_themes as $bill_theme) {
-            if (is_dir(get_theme_root() . "/" . $bill_theme)) {
-                $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/error_log";
-                $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/php_errorlog";
-            }
-        }
+
+
+
+
+
+        // $bill_folders = get_path_logs();
+        $bill_folders = ErrorChecker::get_path_logs();
+
+
+
         // Data limite para comparação
         //$dateThreshold = new DateTime('now');
         $dateThreshold = new \DateTime('now');
@@ -218,12 +321,19 @@ class ErrorChecker
         // Obtém o locale do WordPress
         $locale = get_locale(); // Exemplo: 'pt_BR', 'en_US', etc.
         $language = substr($locale, 0, 2); // Extrai o código de idioma (ex: 'pt', 'en')
-        // Itera sobre as pastas de faturas
+        // Itera sobre as pastas 
+
+        //debug4($bill_folders);
+
         foreach ($bill_folders as $bill_folder) {
             if (!empty($bill_folder) && file_exists($bill_folder) && filesize($bill_folder) > 0) {
+
+                //debug4($bill_folder);
+
                 $bill_count++;
                 $marray = $this->bill_read_file($bill_folder, 20);
                 if (is_array($marray) && !empty($marray)) {
+                    // debug4($marray);
                     foreach ($marray as $line) {
                         if (empty($line)) {
                             continue;
@@ -239,27 +349,39 @@ class ErrorChecker
                             if (preg_match($pattern, $line, $matches)) {
                                 try {
                                     // Usa a função parseDate para interpretar a data
-                                    // $date = bill_parseDate($matches[0], $locale);
+
+                                    // debug4($matches[0]);
+                                    // debug4($locale);
+
                                     $date = $this->bill_parseDate($matches[0], $locale);
 
-                                    if (!$date)
-                                        return false;
+                                    // debug4($date);
+
+                                    if (!$date) {
+                                        continue;
+                                    }
+
+                                    if (!$date instanceof \DateTime) {
+                                        continue;
+                                    }
+
                                     // Verifica se a data é anterior ao limite
-                                    // debug2($date);
+                                    // debug4($date);
+                                    // debug4($dateThreshold);
                                     if ($date < $dateThreshold) {
                                         // debug2('Antiga');
-                                        // debug2("Data antiga encontrada: " . $date->format('Y-m-d'));
+                                        // debug4("Data antiga encontrada: " . $date->format('Y-m-d'));
                                     } else {
-                                        // debug2('Data Nova encontrada');
+                                        // debug4('Data Nova encontrada');
                                         return true;
                                     }
                                 } catch (Exception $e) {
                                     // Ignorar linhas com datas inválidas
-                                    // debug2("Erro ao processar a data: " . $e->getMessage());
+                                    // debug4("Erro ao processar a data: " . $e->getMessage());
                                     continue;
                                 }
                             } else {
-                                // debug2('nao bateu');
+                                // debug4('nao bateu');
                             }
                         }
                         return false;
@@ -269,6 +391,7 @@ class ErrorChecker
         }
         return false;
     }
+
     public function bill_read_file($file, $lines)
     {
         $handle = fopen($file, "r");
@@ -401,12 +524,11 @@ class wp_memory_Bill_Diagnose
         //$this->global_variable_has_errors = $this->bill_check_errors_today();
         $errorChecker = new ErrorChecker(); //
         //
-        $this->global_variable_has_errors  = $errorChecker->bill_check_errors_today(1);
+        $this->global_variable_has_errors  = $errorChecker->bill_check_errors_today(3);
 
 
 
-
-        //  \debug3($this->global_variable_has_errors);
+        //debug4($this->global_variable_has_errors);
 
 
         // NOT same class
@@ -417,6 +539,7 @@ class wp_memory_Bill_Diagnose
         add_action("admin_notices", [$this, "show_dismissible_notification"]);
         //add_action("admin_notices", [$this, "show_dismissible_notification2"]);
         // 2024
+        // debug4($this->global_variable_has_errors);
         if ($this->global_variable_has_errors) {
             add_action("admin_bar_menu", [$this, "add_site_health_link_to_admin_toolbar"], 999);
             // debug2('global_variable_has_errors');
@@ -746,9 +869,9 @@ class wp_memory_Bill_Diagnose
 
                 // Determina a mensagem com base na média
                 if ($average <= 8) {
-                    $message = esc_html__("The page load time is poor (click to open)", "wp-memory");
+                    $message = esc_html__("The page load time is poor (click to open)", 'wp-memory');
                 } else {
-                    $message = esc_html__("The page load time is very poor (click to open)", "wp-memory");
+                    $message = esc_html__("The page load time is very poor (click to open)", 'wp-memory');
                 }
 
                 echo $message; // Exibe a mensagem diretamente
@@ -759,29 +882,29 @@ class wp_memory_Bill_Diagnose
 
                 //  if ($average > 5) {
                 // Exibe as informações quando a média for maior que 5
-                echo esc_html__("The Load average of your front pages is: ", "wp-memory");
+                echo esc_html__("The Load average of your front pages is: ", 'wp-memory');
                 echo esc_html($average);
                 echo '<br>';
-                echo esc_html__("Loading time can significantly impact your SEO.", "wp-memory");
+                echo esc_html__("Loading time can significantly impact your SEO.", 'wp-memory');
                 echo '<br>';
-                echo esc_html__("Many users will abandon the site before it fully loads.", "wp-memory");
+                echo esc_html__("Many users will abandon the site before it fully loads.", 'wp-memory');
                 echo '<br>';
-                echo esc_html__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", "wp-memory");
+                echo esc_html__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", 'wp-memory');
                 //}
                 echo '<br>';
                 echo '<br>';
                 echo '<strong>';
-                echo esc_html__("Suggestions:", "wp-memory") . '<br>';
+                echo esc_html__("Suggestions:", 'wp-memory') . '<br>';
                 echo '</strong>';
-                echo esc_html__("Block bots: They overload the server and steal your content. Install our free plugin StopBadBots.", "wp-memory") . '<br>';
-                echo esc_html__("Protect against hackers: They use bots to search for vulnerabilities and overload the server. Install our free plugin AntiHacker", "wp-memory") . '<br>';
+                echo esc_html__("Block bots: They overload the server and steal your content. Install our free plugin Antihacker.", 'wp-memory') . '<br>';
+                echo esc_html__("Protect against hackers: They use bots to search for vulnerabilities and overload the server. Install our free plugin AntiHacker", 'wp-memory') . '<br>';
 
-                echo esc_html__("Check your site for errors with free plugin wpTools. Errors and warnings can increase page load time by being recorded in log files, consuming resources and slowing down performance.", "wp-memory");
+                echo esc_html__("Check your site for errors with free plugin wpTools. Errors and warnings can increase page load time by being recorded in log files, consuming resources and slowing down performance.", 'wp-memory');
                 echo '<br>';
 
                 echo '<br>';
                 echo '<a href="https://wptoolsplugin.com/page-load-times-and-their-negative-impact-on-seo/">';
-                echo esc_html__("Learn more about Page Load Times and their negative impact on SEO and more", "wp-memory") . "...";
+                echo esc_html__("Learn more about Page Load Times and their negative impact on SEO and more", 'wp-memory') . "...";
                 echo "</a>";
 
                 // echo '<hr>';
@@ -825,10 +948,10 @@ class wp_memory_Bill_Diagnose
                 echo '<h2 style="color: red;">Plugins with Updates Available (click to open)</h2>';
                 echo '<div>';
 
-                esc_attr_e("Keeping your plugins up to date is crucial for ensuring security, performance, and compatibility with the latest features and improvements.", "wp-memory");
+                esc_attr_e("Keeping your plugins up to date is crucial for ensuring security, performance, and compatibility with the latest features and improvements.", 'wp-memory');
                 echo '<br>';
                 echo '<strong>';
-                esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", "wp-memory");
+                esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", 'wp-memory');
                 echo '<strong>';
                 echo '<hr>';
                 foreach ($update_plugins as $plugin_path => $plugin) {
@@ -891,44 +1014,16 @@ class wp_memory_Bill_Diagnose
                 </p>
     <?php
                 $bill_count = 0;
-                $bill_folders = [];
-                $bill_themePath = get_theme_root();
-                $error_log_path = trim(ini_get("error_log"));
-                if (
-                    !is_null($error_log_path) and $error_log_path != trim(ABSPATH . "error_log")
-                ) {
-                    $bill_folders[] = $error_log_path;
-                }
-                $bill_folders[] = ABSPATH . "error_log";
-                $bill_folders[] = ABSPATH . "php_errorlog";
-                $bill_folders[] = plugin_dir_path(__FILE__) . "/error_log";
-                $bill_folders[] = plugin_dir_path(__FILE__) . "/php_errorlog";
-                $bill_folders[] = get_theme_root() . "/error_log";
-                $bill_folders[] = get_theme_root() . "/php_errorlog";
-                // Adicionar caminhos específicos de administração se existirem
-                $bill_admin_path = str_replace(
-                    get_bloginfo("url") . "/",
-                    ABSPATH,
-                    get_admin_url()
-                );
-                $bill_folders[] = $bill_admin_path . "/error_log";
-                $bill_folders[] = $bill_admin_path . "/php_errorlog";
-                // Adicionar diretórios de plugins
-                //$bill_plugins = array_slice(scandir(WPTOOLSPATH), 2);
-                $bill_plugins = array_slice(scandir(plugin_dir_path(__FILE__)), 2);
-                foreach ($bill_plugins as $bill_plugin) {
-                    if (is_dir(plugin_dir_path(__FILE__) . "/" . $bill_plugin)) {
-                        $bill_folders[] = plugin_dir_path(__FILE__) . "/" . $bill_plugin . "/error_log";
-                        $bill_folders[] = plugin_dir_path(__FILE__) . "/" . $bill_plugin . "/php_errorlog";
-                    }
-                }
-                $bill_themes = array_slice(scandir(get_theme_root()), 2);
-                foreach ($bill_themes as $bill_theme) {
-                    if (is_dir(get_theme_root() . "/" . $bill_theme)) {
-                        $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/error_log";
-                        $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/php_errorlog";
-                    }
-                }
+
+
+
+
+                // Crie um objeto da classe ErrorChecker:
+                $errorChecker = new ErrorChecker();
+
+                // Chame o método get_path_logs() no objeto:
+                $bill_folders = $errorChecker->get_path_logs(); // Use -> (flecha)
+
                 echo "<br />";
                 echo esc_attr__("This is a partial list of the errors found.", 'wp-memory');
                 echo "<br />";
@@ -974,6 +1069,13 @@ class wp_memory_Bill_Diagnose
                 }
                 // Comeca a mostrar erros...
                 //
+
+                // debug4($bill_folders);
+
+                // print_r($bill_folders);
+
+
+
                 foreach ($bill_folders as $bill_folder) {
                     $files = glob($bill_folder);
                     if ($files === false) {
