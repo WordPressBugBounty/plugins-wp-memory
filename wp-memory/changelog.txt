@@ -3,6 +3,7 @@
 This file contains changelog entries, so we can keep the size of the standard WordPress readme.txt file reasonable.
 
 == Changelog ==
+3.71 2025-02-13 - Improved error system.
 3.68/70 2025-02-11 - Improved error system.
 3.64/67 2025-02-07 - Improved error system.
 3.62/63 2025-02-05 - Improved error system.

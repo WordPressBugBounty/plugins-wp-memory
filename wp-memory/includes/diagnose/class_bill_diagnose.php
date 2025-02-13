@@ -1,6 +1,6 @@
 <?php
 
-namespace wp_memory_BillDiagnose;
+namespace wpmemory_BillDiagnose;
 // 2023-08 upd: 2023-10-17 2024-06=21 2024-31-12 2025-02-11
 if (!defined('ABSPATH')) {
     die('Invalid request.');
@@ -13,7 +13,7 @@ if (function_exists('is_multisite') and is_multisite()) {
 
 /*
 // >>>>>>>>>>>>>>>> call
-function wp_memory_bill_hooking_diagnose()
+function wpmemory_bill_hooking_diagnose()
 {
     if (function_exists('is_admin') && function_exists('current_user_can')) {
         if(is_admin() and current_user_can("manage_options")){
@@ -24,7 +24,7 @@ function wp_memory_bill_hooking_diagnose()
         }
     }
 }
-add_action("plugins_loaded", "wp_memory_bill_hooking_diagnose");
+add_action("plugins_loaded", "wpmemory_bill_hooking_diagnose");
 // end >>>>>>>>>>>>>>>>>>>>>>>>>
 */
 
@@ -80,13 +80,13 @@ function add_help_tab_to_screen()
         $hmessage = esc_attr__(
             'Here are some details about error and memory monitoring for your plugin. Errors and low memory can prevent your site from functioning properly. On this page, you will find a partial list of the most recent errors and warnings. If you need more details, use the chat form, which will search for additional information using Artificial Intelligence.  
 If you need to dive deeper, install the free plugin WPTools, which provides more in-depth insights.',
-            'wp-memory'
+            "wp-memory"
         );
         // Adiciona a aba de ajuda
         $screen->add_help_tab([
             'id'      => 'site-health', // ID único para a aba
-            'title'   => esc_attr__('Memory & Error Monitoring', 'wp-memory'), // Título da aba
-            'content' => '<p>' . esc_attr__('Welcome to plugin Insights!', 'wp-memory') . '</p>
+            'title'   => esc_attr__('Memory & Error Monitoring', "wp-memory"), // Título da aba
+            'content' => '<p>' . esc_attr__('Welcome to plugin Insights!', "wp-memory") . '</p>
                           <p>' . $hmessage . '</p>',
         ]);
     }
@@ -481,12 +481,12 @@ class MemoryChecker
                 $wpmemory["msg_type"] = "notok";
                 return $wpmemory;
             }
-            // Check if wp_memory_LIMIT is defined
+            // Check if wpmemory_LIMIT is defined
             if (!defined("WP_MEMORY_LIMIT")) {
                 $wpmemory["wp_limit"] = 40; // Default value of 40M
             } else {
-                $wp_memory_limit = WP_MEMORY_LIMIT;
-                $wpmemory["wp_limit"] = (int) $wp_memory_limit;
+                $wpmemory_limit = WP_MEMORY_LIMIT;
+                $wpmemory["wp_limit"] = (int) $wpmemory_limit;
             }
             // Calculate the percentage of memory usage
             $wpmemory["percent"] = $wpmemory["usage"] / $wpmemory["wp_limit"];
@@ -507,7 +507,7 @@ class MemoryChecker
         return $wpmemory;
     }
 }
-class wp_memory_Bill_Diagnose
+class wpmemory_Bill_Diagnose
 {
     protected $global_plugin_slug;
     private static $instance = null;
@@ -625,15 +625,15 @@ class wp_memory_Bill_Diagnose
         if ($memory["free"] > 30 and $wpmemory["percent"] < 0.85) {
             return;
         }
-        $message = esc_attr__("Our plugin", 'wp-memory');
+        $message = esc_attr__("Our plugin", "wp-memory");
         $message .= ' (' . $this->plugin_slug . ') ';
-        $message .= esc_attr__("cannot function properly because your WordPress Memory Limit is too low. Your site will experience serious issues, even if you deactivate our plugin.", 'wp-memory');
+        $message .= esc_attr__("cannot function properly because your WordPress Memory Limit is too low. Your site will experience serious issues, even if you deactivate our plugin.", "wp-memory");
         $message .=
             '<a href="' .
             esc_url($this->notification_url) .
             '">' .
             " " .
-            esc_attr__("Learn more", 'wp-memory') .
+            esc_attr__("Learn more", "wp-memory") .
             "</a>";
         echo '<div class="notice notice-error is-dismissible">';
         echo '<p style="color: red;">' . wp_kses_post($message) . "</p>";
@@ -642,7 +642,7 @@ class wp_memory_Bill_Diagnose
     // Helper function to check if a notification has been displayed today
     public function is_notification_displayed_today()
     {
-        $last_notification_date = get_option("wp_memory_bill_show_warnings");
+        $last_notification_date = get_option("wpmemory_bill_show_warnings");
         $today = date("Y-m-d");
         return $last_notification_date === $today;
     }
@@ -653,15 +653,15 @@ class wp_memory_Bill_Diagnose
         $tabs["Critical Issues"] = esc_html_x(
             "Critical Issues",
             "Site Health",
-            'wp-memory'
+            "wp-memory"
         );
         return $tabs;
     }
     // Add Content
     public function site_health_tab_content($tab)
     {
-        if (!function_exists('wp_memory_bill_strip_strong99')) {
-            function wp_memory_bill_strip_strong99($htmlString)
+        if (!function_exists('wpmemory_bill_strip_strong99')) {
+            function wpmemory_bill_strip_strong99($htmlString)
             {
                 // return $htmlString;
                 // Use preg_replace para remover as tags <strong>
@@ -681,11 +681,11 @@ class wp_memory_Bill_Diagnose
             <p style="border: 1px solid red; padding: 10px;">
                 <strong>
                     <?php
-                    echo esc_attr__("Displaying the latest recurring errors (Javascript Included) from your error log file and eventually alert about low WordPress memory limit is a courtesy of plugin", 'wp-memory');
+                    echo esc_attr__("Displaying the latest recurring errors (Javascript Included) from your error log file and eventually alert about low WordPress memory limit is a courtesy of plugin", "wp-memory");
                     echo ': ' . esc_attr($this->global_plugin_slug) . '. ';
-                    echo esc_attr__("Disabling our plugin does not stop the errors from occurring; it simply means you will no longer be notified here that they are happening, but they can still harm your site.", 'wp-memory');
+                    echo esc_attr__("Disabling our plugin does not stop the errors from occurring; it simply means you will no longer be notified here that they are happening, but they can still harm your site.", "wp-memory");
                     echo '<br>';
-                    echo esc_attr__("Click the help button in the top right or go directly to the AI chat box below for more specific information on the issues listed.", 'wp-memory');
+                    echo esc_attr__("Click the help button in the top right or go directly to the AI chat box below for more specific information on the issues listed.", "wp-memory");
                     ?>
                 </strong>
             </p>
@@ -701,22 +701,22 @@ class wp_memory_Bill_Diagnose
                 <div id="error-message" style="display:none;"></div> <!-- Mensagem de erro -->
                 <form id="chat-form">
                     <div id="input-group">
-                        <input type="text" id="chat-input" placeholder="<?php echo esc_attr__('Enter your message...', 'wp-memory'); ?>" />
-                        <button type="submit"><?php echo esc_attr__('Send', 'wp-memory'); ?></button>
+                        <input type="text" id="chat-input" placeholder="<?php echo esc_attr__('Enter your message...', "wp-memory"); ?>" />
+                        <button type="submit"><?php echo esc_attr__('Send', "wp-memory"); ?></button>
                     </div>
                     <div id="action-instruction" style="text-align: center; margin-top: 10px;">
-                        <span><?php echo esc_attr__("Enter a message and click 'Send', or just click 'Auto Checkup' to analyze error log ou server info configuration.", 'wp-memory'); ?></span>
+                        <span><?php echo esc_attr__("Enter a message and click 'Send', or just click 'Auto Checkup' to analyze error log ou server info configuration.", "wp-memory"); ?></span>
                     </div>
                     <div class="auto-checkup-container" style="text-align: center; margin-top: 10px;">
 
                         <button type="button" id="auto-checkup">
                             <img src="<?php echo plugin_dir_url(__FILE__) . 'robot2.png'; ?>" alt="" width="35" height="30">
-                            <?php echo esc_attr__('Auto Checkup for Errors', 'wp-memory'); ?>
+                            <?php echo esc_attr__('Auto Checkup for Errors', "wp-memory"); ?>
                         </button>
                         &nbsp;&nbsp;&nbsp;
                         <button type="button" id="auto-checkup2">
                             <img src="<?php echo plugin_dir_url(__FILE__) . 'robot2.png'; ?>" alt="" width="35" height="30">
-                            <?php echo esc_attr__('Auto Checkup Server ', 'wp-memory'); ?>
+                            <?php echo esc_attr__('Auto Checkup Server ', "wp-memory"); ?>
                         </button>
 
 
@@ -730,7 +730,7 @@ class wp_memory_Bill_Diagnose
 
             <h3 style="color: red;">
                 <?php
-                echo esc_attr__("Potential Problems", 'wp-memory');
+                echo esc_attr__("Potential Problems", "wp-memory");
                 ?>
             </h3>
 
@@ -745,7 +745,7 @@ class wp_memory_Bill_Diagnose
                 ?>
                     <!-- Título da seção -->
                     <h2 style="color: red;">
-                        <?php echo esc_attr__("Low WordPress Memory Limit (click to open)", 'wp-memory'); ?>
+                        <?php echo esc_attr__("Low WordPress Memory Limit (click to open)", "wp-memory"); ?>
                     </h2>
 
                     <!-- Conteúdo da seção -->
@@ -759,22 +759,22 @@ class wp_memory_Bill_Diagnose
                             if ($perc > 0.7) {
                                 echo '<span style="color:' . esc_attr($wpmemory["color"]) . ';">';
                             }
-                            echo esc_attr__("Your usage now", 'wp-memory') . ": " . esc_attr($wpmemory["usage"]) . "MB &nbsp;&nbsp;&nbsp;";
+                            echo esc_attr__("Your usage now", "wp-memory") . ": " . esc_attr($wpmemory["usage"]) . "MB &nbsp;&nbsp;&nbsp;";
                             if ($perc > 0.7) {
                                 echo "</span>";
                             }
-                            echo "|&nbsp;&nbsp;&nbsp;" . esc_attr__("Total Php Server Memory", 'wp-memory') . " : " . esc_attr($wpmemory["limit"]) . "MB";
+                            echo "|&nbsp;&nbsp;&nbsp;" . esc_attr__("Total Php Server Memory", "wp-memory") . " : " . esc_attr($wpmemory["limit"]) . "MB";
                             ?>
                         </b>
                         <hr>
                         <?php
                         $free = $wpmemory["wp_limit"] - $wpmemory["usage"];
                         echo '<p>';
-                        echo esc_attr__("Your WordPress Memory Limit is too low, which can lead to critical issues on your site due to insufficient resources. Promptly address this issue before continuing.", 'wp-memory');
+                        echo esc_attr__("Your WordPress Memory Limit is too low, which can lead to critical issues on your site due to insufficient resources. Promptly address this issue before continuing.", "wp-memory");
                         echo '</p>';
                         ?>
                         <a href="https://wpmemory.com/fix-low-memory-limit/">
-                            <?php echo esc_attr__("Learn More", 'wp-memory'); ?>
+                            <?php echo esc_attr__("Learn More", "wp-memory"); ?>
                         </a>
                     </div>
                 <?php } ?>
@@ -869,9 +869,9 @@ class wp_memory_Bill_Diagnose
 
                 // Determina a mensagem com base na média
                 if ($average <= 8) {
-                    $message = esc_html__("The page load time is poor (click to open)", 'wp-memory');
+                    $message = esc_html__("The page load time is poor (click to open)", "wp-memory");
                 } else {
-                    $message = esc_html__("The page load time is very poor (click to open)", 'wp-memory');
+                    $message = esc_html__("The page load time is very poor (click to open)", "wp-memory");
                 }
 
                 echo $message; // Exibe a mensagem diretamente
@@ -882,29 +882,29 @@ class wp_memory_Bill_Diagnose
 
                 //  if ($average > 5) {
                 // Exibe as informações quando a média for maior que 5
-                echo esc_html__("The Load average of your front pages is: ", 'wp-memory');
+                echo esc_html__("The Load average of your front pages is: ", "wp-memory");
                 echo esc_html($average);
                 echo '<br>';
-                echo esc_html__("Loading time can significantly impact your SEO.", 'wp-memory');
+                echo esc_html__("Loading time can significantly impact your SEO.", "wp-memory");
                 echo '<br>';
-                echo esc_html__("Many users will abandon the site before it fully loads.", 'wp-memory');
+                echo esc_html__("Many users will abandon the site before it fully loads.", "wp-memory");
                 echo '<br>';
-                echo esc_html__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", 'wp-memory');
+                echo esc_html__("Search engines prioritize faster-loading pages, as they improve user experience and reduce bounce rates.", "wp-memory");
                 //}
                 echo '<br>';
                 echo '<br>';
                 echo '<strong>';
-                echo esc_html__("Suggestions:", 'wp-memory') . '<br>';
+                echo esc_html__("Suggestions:", "wp-memory") . '<br>';
                 echo '</strong>';
-                echo esc_html__("Block bots: They overload the server and steal your content. Install our free plugin Antihacker.", 'wp-memory') . '<br>';
-                echo esc_html__("Protect against hackers: They use bots to search for vulnerabilities and overload the server. Install our free plugin AntiHacker", 'wp-memory') . '<br>';
+                echo esc_html__("Block bots: They overload the server and steal your content. Install our free plugin Antihacker.", "wp-memory") . '<br>';
+                echo esc_html__("Protect against hackers: They use bots to search for vulnerabilities and overload the server. Install our free plugin AntiHacker", "wp-memory") . '<br>';
 
-                echo esc_html__("Check your site for errors with free plugin wpTools. Errors and warnings can increase page load time by being recorded in log files, consuming resources and slowing down performance.", 'wp-memory');
+                echo esc_html__("Check your site for errors with free plugin wpTools. Errors and warnings can increase page load time by being recorded in log files, consuming resources and slowing down performance.", "wp-memory");
                 echo '<br>';
 
                 echo '<br>';
                 echo '<a href="https://wptoolsplugin.com/page-load-times-and-their-negative-impact-on-seo/">';
-                echo esc_html__("Learn more about Page Load Times and their negative impact on SEO and more", 'wp-memory') . "...";
+                echo esc_html__("Learn more about Page Load Times and their negative impact on SEO and more", "wp-memory") . "...";
                 echo "</a>";
 
                 // echo '<hr>';
@@ -948,10 +948,10 @@ class wp_memory_Bill_Diagnose
                 echo '<h2 style="color: red;">Plugins with Updates Available (click to open)</h2>';
                 echo '<div>';
 
-                esc_attr_e("Keeping your plugins up to date is crucial for ensuring security, performance, and compatibility with the latest features and improvements.", 'wp-memory');
+                esc_attr_e("Keeping your plugins up to date is crucial for ensuring security, performance, and compatibility with the latest features and improvements.", "wp-memory");
                 echo '<br>';
                 echo '<strong>';
-                esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", 'wp-memory');
+                esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", "wp-memory");
                 echo '<strong>';
                 echo '<hr>';
                 foreach ($update_plugins as $plugin_path => $plugin) {
@@ -999,16 +999,16 @@ class wp_memory_Bill_Diagnose
             if ($this->global_variable_has_errors) { ?>
                 <h2 style="color: red;">
                     <?php
-                    echo esc_attr__("Site Errors", 'wp-memory');
+                    echo esc_attr__("Site Errors", "wp-memory");
                     ?>
                 </h2>
                 <p>
                     <?php
-                    echo esc_attr__("Your site has experienced errors for the past 2 days. These errors, including JavaScript issues, can result in visual problems or disrupt functionality, ranging from minor glitches to critical site failures. JavaScript errors can terminate JavaScript execution, leaving all subsequent commands inoperable.", 'wp-memory');
+                    echo esc_attr__("Your site has experienced errors for the past 2 days. These errors, including JavaScript issues, can result in visual problems or disrupt functionality, ranging from minor glitches to critical site failures. JavaScript errors can terminate JavaScript execution, leaving all subsequent commands inoperable.", "wp-memory");
                     ?>
                     <a href="https://wptoolsplugin.com/site-language-error-can-crash-your-site/">
                         <?php
-                        echo esc_attr__("Learn More", 'wp-memory');
+                        echo esc_attr__("Learn More", "wp-memory");
                         ?>
                     </a>
                 </p>
@@ -1025,7 +1025,7 @@ class wp_memory_Bill_Diagnose
                 $bill_folders = $errorChecker->get_path_logs(); // Use -> (flecha)
 
                 echo "<br />";
-                echo esc_attr__("This is a partial list of the errors found.", 'wp-memory');
+                echo esc_attr__("This is a partial list of the errors found.", "wp-memory");
                 echo "<br />";
                 /**
                  * Obtém o tamanho do arquivo em bytes.
@@ -1037,12 +1037,12 @@ class wp_memory_Bill_Diagnose
                 {
                     if (!file_exists($bill_filename) || !is_readable($bill_filename)) {
                         // return "File not readable.";
-                        return esc_attr__("File not readable.", 'wp-memory');
+                        return esc_attr__("File not readable.", "wp-memory");
                     }
                     $fileSizeBytes = filesize($bill_filename);
                     if ($fileSizeBytes === false) {
                         //return "Size not determined.";
-                        return esc_attr__("Size not determined.", 'wp-memory');
+                        return esc_attr__("Size not determined.", "wp-memory");
                     }
                     return $fileSizeBytes;
                 }
@@ -1056,7 +1056,7 @@ class wp_memory_Bill_Diagnose
                 {
                     if (!is_int($sizeBytes) || $sizeBytes < 0) {
                         // Retorna uma mensagem de erro se o tamanho for inválido
-                        return esc_attr__("Invalid size.", 'wp-memory');
+                        return esc_attr__("Invalid size.", "wp-memory");
                     }
                     $units = ['B', 'KB', 'MB', 'GB', 'TB'];
                     $unitIndex = 0;
@@ -1087,7 +1087,7 @@ class wp_memory_Bill_Diagnose
                             echo "<strong>";
                             echo esc_attr($bill_filename);
                             echo "<br />";
-                            echo esc_attr__("File Size: ", 'wp-memory');
+                            echo esc_attr__("File Size: ", "wp-memory");
                             $fileSizeBytes = getFileSizeInBytes($bill_filename);
                             if (is_int($fileSizeBytes)) {
                                 echo esc_attr(convertToHumanReadableSize($fileSizeBytes));
@@ -1318,7 +1318,7 @@ class wp_memory_Bill_Diagnose
                                             $log_entry = [
                                                 "Date" => $filteredDate,
                                                 "News Type" => $matches[1],
-                                                "Problem Description" => wp_memory_bill_strip_strong99(
+                                                "Problem Description" => wpmemory_bill_strip_strong99(
                                                     $matches[2]
                                                 ),
                                             ];
@@ -1452,11 +1452,11 @@ class wp_memory_Bill_Diagnose
                 // Adicione uma guia de ajuda
                 $message = esc_attr__(
                     "These are critical issues that can have a significant impact on your site's performance. They can cause many plugins and functionalities to malfunction and, in some cases, render your site completely inoperative, depending on their severity. Address them promptly.",
-                    'wp-memory'
+                    "wp-memory"
                 );
                 $screen->add_help_tab([
                     "id"      => "custom-help-tab",
-                    "title"   => esc_attr__("Critical Issues", 'wp-memory'),
+                    "title"   => esc_attr__("Critical Issues", "wp-memory"),
                     "content" => "<p>" . $message . "</p>",
                 ]);
             }
@@ -1470,8 +1470,8 @@ $notification_url = "https://wpmemory.com/fix-low-memory-limit/";
 $notification_url2 =
     "https://billplugin.com/site-language-error-can-crash-your-site/";
 */
-    $diagnose_instance = wp_memory_Bill_Diagnose::get_instance(
+    $diagnose_instance = wpmemory_Bill_Diagnose::get_instance(
         $notification_url,
         $notification_url2,
     );
-    update_option("wp_memory_bill_show_warnings", date("Y-m-d"));
+    update_option("wpmemory_bill_show_warnings", date("Y-m-d"));
