@@ -193,16 +193,34 @@ class ErrorChecker
     public static function get_path_logs()
     {
         $bill_folders = [];
+        $caminho_padrao = realpath(ABSPATH . "error_log");
+        $bill_folders[] = $caminho_padrao;
+        $bill_folders[] = realpath(ABSPATH . "php_errorlog");
 
+        
+        /*
         // PHP error log (defined in php.ini)
         $error_log_path = trim(ini_get("error_log"));
         if (!is_null($error_log_path) && $error_log_path != trim(ABSPATH . "error_log")) {
             $bill_folders[] = $error_log_path;
         }
+        */
+
+
+        // Opção 2 (mais robusta): Adiciona se estiver definido e for diferente do padrão
+
+        $caminho_padrao = realpath(ABSPATH . "error_log");
+        $caminho_atual = realpath($error_log_path);
+
+        if (!empty($error_log_path) && $caminho_atual != $caminho_padrao && !in_array($error_log_path, $bill_folders)) {
+            $bill_folders[] = $error_log_path;
+        }
+
+
 
         // Logs in WordPress root directory
-        $bill_folders[] = ABSPATH . "error_log";
-        $bill_folders[] = ABSPATH . "php_errorlog";
+  //
+
         $bill_folders[] = WP_CONTENT_DIR . "/debug.log";
 
         // Logs in current plugin directory
