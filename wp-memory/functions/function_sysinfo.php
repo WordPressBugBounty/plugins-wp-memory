@@ -29,7 +29,7 @@ function wp_memory_sysinfo_get()
     if ($host === false) {
         $host = wp_memory_get_host();
     }
-    $return  = '=== Begin System Info v 2.0 (Generated ' . date('Y-m-d H:i:s') . ') ===' . "\n\n";
+    $return  = '=== Begin System Info v 2.1 (Generated ' . date('Y-m-d H:i:s') . ') ===' . "\n\n";
     $file_path_from_plugin_root = str_replace(WP_PLUGIN_DIR . '/', '', __DIR__);
     $path_array = explode('/', $file_path_from_plugin_root);
     // Plugin folder is the first element
@@ -102,24 +102,42 @@ function wp_memory_sysinfo_get()
     if ($errorLogPath) {
 
         $return .= "Error Log is defined in PHP: " . $errorLogPath . "\n";
-        $return .= file_exists($errorLogPath) ? " (exists)\n" : " (does not exist)\n";
+        // $return .= file_exists($errorLogPath) ? " (exists)\n" : " (does not exist)\n";
+
+        try {
+            if (file_exists($errorLogPath)) {
+                $return .= " (exists)\n"; // Correção: adicionado parêntese de fechamento e removido operador ternário desnecessário
+                $return .= 'Size:                     ' . size_format(filesize($errorLogPath)) . "\n"; // Correção: removido ponto extra e adicionado parêntese de fechamento em filesize()
+                $return .= 'Readable:                 ' . (is_readable($errorLogPath) ? 'Yes' : 'No') . "\n"; // Correção: adicionado parêntese de fechamento em is_readable()
+                $return .= 'Writable:                 ' . (is_writable($errorLogPath) ? 'Yes' : 'No') . "\n"; // Correção: adicionado parêntese de fechamento em is_writable()
+            } else {
+                $return .= " (does not exist)\n"; // Adicionado mensagem para indicar que o arquivo não existe
+                $return .= 'Size:                     N/A' . "\n";
+                $return .= 'Readable:                 N/A' . "\n";
+                $return .= 'Writable:                 N/A' . "\n";
+            }
+        } catch (Exception $e) {
+            $return .= 'Error checking error log path: ' . $e->getMessage() . "\n";
+        }
+
+
     } else {
 
-        $return .= "Error log nao definido no PHP file ini\n";
+        $return .= "Error log not defined on PHP file ini\n";
 
 
 
         try {
             // Tenta definir o error_log programaticamente
             if (!ini_set('error_log', $error_log_path)) {  // Verifica se ini_set() falhou
-                $return .= "Nao foi possivel definir Error log usando ini_set() no path: " . $error_log_path . "\n";
+                $return .= "Not Possible to define Error log with ini_set() no path: " . $error_log_path . "\n";
             } else {
-                $return .= "Error Log pode ser definido usando ini_set() no path: " . $error_log_path . "\n";
+                $return .= "Error Log can be defined with ini_set() on path: " . $error_log_path . "\n";
             }
         } catch (Exception $e) {
 
-            $return .= "Erro ao tentar definir Error log usando ini_set\n";
-            $return .=  "Ocorreu um erro: " . $e->getMessage() . "\n";
+            $return .= "Error to define Error log with ini_set\n";
+            $return .=  "Error: " . $e->getMessage() . "\n";
         }
     }
 
@@ -171,11 +189,11 @@ function wp_memory_sysinfo_get()
 
     try {
         if (file_exists($error_log_path)) { // Check if the file exists before attempting to access its size, readability, or writability. This prevents warnings or errors if the file doesn't exist.
-            $return .= 'Size:                     ' . size_format(filesize($error_log_path)) . "\n"; // Use filesize() for file size and size_format() for human-readable format.  file_size() doesn't exist in PHP.
+            $return .= 'Size:                         ' . size_format(filesize($error_log_path)) . "\n"; // Use filesize() for file size and size_format() for human-readable format.  file_size() doesn't exist in PHP.
             $return .= 'Readable:                     ' . (is_readable($error_log_path) ? 'Yes' : 'No') . "\n";  // Use is_readable() instead of file_readable(). More common and accurate.
             $return .= 'Writable:                     ' . (is_writable($error_log_path) ? 'Yes' : 'No') . "\n"; // Use is_writable() instead of file_writable(). More common and accurate.
         } else {
-            $return .= 'Size:                     N/A' . "\n";
+            $return .= 'Size:                         N/A' . "\n";
             $return .= 'Readable:                     N/A' . "\n";
             $return .= 'Writable:                     N/A' . "\n";
         }
@@ -430,7 +448,7 @@ function wp_memory_sysinfo_get()
     $return .= 'Suhosin:                  ' . (extension_loaded('suhosin') ? 'Installed' : 'Not Installed') . "\n";
     $return .= 'SplFileObject:            ' . (class_exists('SplFileObject') ? 'Installed' : 'Not Installed') . "\n";
 
-    $return .= "\n" . '=== End System Info v 2.0  ===';
+    $return .= "\n" . '=== End System Info v 2.1  ===';
     return $return;
 }
 
