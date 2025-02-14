@@ -208,7 +208,7 @@ class ErrorChecker
 
 
         // Opção 2 (mais robusta): Adiciona se estiver definido e for diferente do padrão
-
+        $error_log_path = trim(ini_get("error_log"));
         $caminho_padrao = realpath(ABSPATH . "error_log");
         $caminho_atual = realpath($error_log_path);
 
