@@ -38,6 +38,8 @@ global $wpdb;
 $table = $wpdb->prefix . "wpmemory_log";
 $wpdb->query("DROP TABLE IF EXISTS $table");
 
+$table = $wpdb->prefix . 'bill_catch_some_bots';
+$wpdb->query("DROP TABLE IF EXISTS $table");
 // Clean up scheduled cron jobs
 wp_clear_scheduled_hook('wpmemory_keep_latest_records_cron');
 

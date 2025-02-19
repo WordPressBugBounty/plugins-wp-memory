@@ -29,7 +29,7 @@ function wp_memory_sysinfo_get()
     if ($host === false) {
         $host = wp_memory_get_host();
     }
-    $return  = '=== Begin System Info v 2.1 (Generated ' . date('Y-m-d H:i:s') . ') ===' . "\n\n";
+    $return  = '=== Begin System Info v 2.1a (Generated ' . date('Y-m-d H:i:s') . ') ===' . "\n\n";
     $file_path_from_plugin_root = str_replace(WP_PLUGIN_DIR . '/', '', __DIR__);
     $path_array = explode('/', $file_path_from_plugin_root);
     // Plugin folder is the first element
@@ -447,8 +447,9 @@ function wp_memory_sysinfo_get()
     $return .= 'SOAP Client:              ' . (class_exists('SoapClient') ? 'Installed' : 'Not Installed') . "\n";
     $return .= 'Suhosin:                  ' . (extension_loaded('suhosin') ? 'Installed' : 'Not Installed') . "\n";
     $return .= 'SplFileObject:            ' . (class_exists('SplFileObject') ? 'Installed' : 'Not Installed') . "\n";
+    $return .= 'Imageclick:               ' . (extension_loaded('imagick') ? 'Installed' : 'Not Installed') . "\n";
 
-    $return .= "\n" . '=== End System Info v 2.1  ===';
+    $return .= "\n" . '=== End System Info v 2.1a  ===';
     return $return;
 }
 
