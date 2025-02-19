@@ -264,6 +264,25 @@ class Bill_Catch_Bots
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'bill_catch_some_bots';
+
+
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'");
+        if (!$table_exists == $table_name) {
+            $charset_collate = $this->wpdb->get_charset_collate();
+            $sql = "CREATE TABLE $this->table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            data timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            ip varchar(45) DEFAULT NULL,
+            pag text DEFAULT NULL,
+            ua text DEFAULT NULL,
+            bot tinyint(1) DEFAULT 0,
+            http_code smallint(3) DEFAULT NULL,
+            PRIMARY KEY (id)
+        ) $charset_collate;";
+            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+            dbDelta($sql);
+        }
+
         // Sanitização dos dados
         $ip  = filter_var($ip, FILTER_VALIDATE_IP) ? $ip : '0.0.0.0';
         $pag = sanitize_text_field(wp_unslash($pag));
