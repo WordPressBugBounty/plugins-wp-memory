@@ -372,7 +372,7 @@ class Bill_Catch_Bots
         //// debug4($bill_bad_host);
         foreach ($this->bill_bad_host as $host) {
             if ($this->bill_procurarPalavra($bodyArray, $host)) {
-                echo "A palavra '$palavra' foi encontrada no array.<br>";
+                // echo "A palavra '$palavra' foi encontrada no array.<br>";
                 // debug4();
                 return true;
             }
