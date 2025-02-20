@@ -10,9 +10,9 @@ if (function_exists('is_multisite') and is_multisite()) {
     return;
 }
 
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
-if (!function_exists('is_plugin_active')){
+if (!function_exists('is_plugin_active')) {
     // debug4();
     return;
 }
@@ -157,16 +157,15 @@ class Bill_Catch_Bots
         // debug4();
 
         if (!$this->bill_isourserver($this->bill_catch_bots_ip) && !$this->bill_is_search_engine($user_agent)) {
-           // debug4();
+            // debug4();
             add_action('shutdown', [$this, 'bill_catch_bots_capture_and_insert']);
-        }
-        else
-        // debug4();
+        } else
+            // debug4();
 
-        //$transient_name = 'bill_daily_cleanup_done';
-        if (false === get_transient('bill_daily_cleanup_done')) {
-            $this->bill_daily_cleanup();
-        }
+            //$transient_name = 'bill_daily_cleanup_done';
+            if (false === get_transient('bill_daily_cleanup_done')) {
+                $this->bill_daily_cleanup();
+            }
     }
 
     private function bill_daily_cleanup()
@@ -282,7 +281,10 @@ class Bill_Catch_Bots
         $http_code = http_response_code();
         $is_bot = $this->bill_catch_bots_is_bad_hosting($this->bill_catch_bots_ip) ? 1 : 0;
         // debug4($is_bot);
-        $this->bill_catch_bots_insert_data($this->bill_catch_bots_ip, $pagina_atual, $user_agent, $is_bot, $http_code);
+
+        if ($is_bot === 1) {
+            $this->bill_catch_bots_insert_data($this->bill_catch_bots_ip, $pagina_atual, $user_agent, $is_bot, $http_code);
+        }
     }
     private function bill_catch_bots_insert_data($ip, $pag, $ua, $bot, $http_code)
     {
@@ -305,34 +307,34 @@ class Bill_Catch_Bots
         ) $charset_collate;";
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
             dbDelta($sql);
-        }
-
-        // Sanitização dos dados
-        $ip  = filter_var($ip, FILTER_VALIDATE_IP) ? $ip : '0.0.0.0';
-        $pag = sanitize_text_field(wp_unslash($pag));
-        $ua  = sanitize_text_field(wp_unslash($ua));
-        $bot = sanitize_text_field(wp_unslash($bot));
-        // Inserção segura com prepare()
-        $result = $wpdb->query(
-            $wpdb->prepare(
-                "INSERT INTO $table_name (ip, pag, ua, bot, http_code) VALUES (%s, %s, %s, %s, %s)",
-                $ip,
-                $pag,
-                $ua,
-                $bot,
-                $http_code
-            )
-        );
-
-        // debug4($result);
-
-
-        if ($result === false) {
-            error_log("DB ERROR: " . $wpdb->last_error);
-            error_log("Query: " . $wpdb->last_query);
-            //// // debug4(["error" => $wpdb->last_error, "query" => $wpdb->last_query]);
         } else {
-            // error_log("Insert OK, ID: " . $wpdb->insert_id);
+            // Sanitização dos dados
+            $ip  = filter_var($ip, FILTER_VALIDATE_IP) ? $ip : '0.0.0.0';
+            $pag = sanitize_text_field(wp_unslash($pag));
+            $ua  = sanitize_text_field(wp_unslash($ua));
+            $bot = sanitize_text_field(wp_unslash($bot));
+            // Inserção segura com prepare()
+            $result = $wpdb->query(
+                $wpdb->prepare(
+                    "INSERT INTO $table_name (ip, pag, ua, bot, http_code) VALUES (%s, %s, %s, %s, %s)",
+                    $ip,
+                    $pag,
+                    $ua,
+                    $bot,
+                    $http_code
+                )
+            );
+
+            // debug4($result);
+
+
+            if ($result === false) {
+                error_log("DB ERROR: " . $wpdb->last_error);
+                error_log("Query: " . $wpdb->last_query);
+                //// // debug4(["error" => $wpdb->last_error, "query" => $wpdb->last_query]);
+            } else {
+                // error_log("Insert OK, ID: " . $wpdb->insert_id);
+            }
         }
     }
     private function bill_catch_check_host_ripe($ip)
