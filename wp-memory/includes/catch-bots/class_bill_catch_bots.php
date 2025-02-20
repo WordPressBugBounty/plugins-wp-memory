@@ -2,12 +2,21 @@
 // 18 fev 25
 // Bill
 
+
 if (!defined("ABSPATH")) {
     die("Invalid request.");
 }
 if (function_exists('is_multisite') and is_multisite()) {
     return;
 }
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+if (!function_exists('is_plugin_active')){
+    // debug4();
+    return;
+}
+
 
 if (is_plugin_active('antibots/antibots.php')) {
     return;
@@ -20,6 +29,8 @@ if (is_plugin_active('stopbadbots/stopbadbots.php')) {
 if (is_plugin_active('antihacker/antihacker.php')) {
     return;
 }
+
+// debug4();
 
 /*
 function wpmemory_bill_hooking_catch_bots()
@@ -136,13 +147,24 @@ class Bill_Catch_Bots
         ];
         $this->bill_bad_host = $bill_bad_host;
         $this->bill_catch_bots_ip = $this->bill_catch_bots_findip();
+
+        // debug4($this->bill_catch_bots_findip());
+
         $this->bill_catch_bots_create_table();
+
         $user_agent = $this->bill_catch_bots_get_ua();
+
+        // debug4();
+
         if (!$this->bill_isourserver($this->bill_catch_bots_ip) && !$this->bill_is_search_engine($user_agent)) {
+           // debug4();
             add_action('shutdown', [$this, 'bill_catch_bots_capture_and_insert']);
         }
-        $transient_name = 'bill_daily_cleanup_done';
-        if (false === get_transient($transient_name)) {
+        else
+        // debug4();
+
+        //$transient_name = 'bill_daily_cleanup_done';
+        if (false === get_transient('bill_daily_cleanup_done')) {
             $this->bill_daily_cleanup();
         }
     }
@@ -181,8 +203,8 @@ class Bill_Catch_Bots
 
 
         // Cria o transient com duração de 86400 segundos (1 dia).
-        $transient_name = 'bill_daily_cleanup_done';
-        set_transient($transient_name, true, 86400);
+        //$transient_name = 'bill_daily_cleanup_done';
+        set_transient('bill_daily_cleanup_done', true, 86400);
     }
     private function bill_is_search_engine($ua)
     {
@@ -254,10 +276,12 @@ class Bill_Catch_Bots
     }
     public function bill_catch_bots_capture_and_insert()
     {
+        // debug4();
         $pagina_atual = $this->bill_catch_bots_get_current_url();
         $user_agent = $this->bill_catch_bots_get_ua();
         $http_code = http_response_code();
         $is_bot = $this->bill_catch_bots_is_bad_hosting($this->bill_catch_bots_ip) ? 1 : 0;
+        // debug4($is_bot);
         $this->bill_catch_bots_insert_data($this->bill_catch_bots_ip, $pagina_atual, $user_agent, $is_bot, $http_code);
     }
     private function bill_catch_bots_insert_data($ip, $pag, $ua, $bot, $http_code)
@@ -299,10 +323,14 @@ class Bill_Catch_Bots
                 $http_code
             )
         );
+
+        // debug4($result);
+
+
         if ($result === false) {
             error_log("DB ERROR: " . $wpdb->last_error);
             error_log("Query: " . $wpdb->last_query);
-            //// debug4(["error" => $wpdb->last_error, "query" => $wpdb->last_query]);
+            //// // debug4(["error" => $wpdb->last_error, "query" => $wpdb->last_query]);
         } else {
             // error_log("Insert OK, ID: " . $wpdb->insert_id);
         }
@@ -321,7 +349,7 @@ class Bill_Catch_Bots
         if ($cached_data !== false) {
             return $cached_data;
         }
-        // debug4($ip);
+        // // debug4($ip);
         // Construct the RDAP API URL
         $urlcurl = 'https://rdap.db.ripe.net/ip/' . $ip;
         try {
@@ -337,7 +365,7 @@ class Bill_Catch_Bots
             if ($http_code !== 200) {
                 return false; // API did not return a successful response
             }
-            // debug4($http_code);
+            // // debug4($http_code);
             // Ensure the response is an array and contains a body
             if (is_array($response) && isset($response['body'])) {
                 $decoded_response = json_decode($response['body'], true);
@@ -347,7 +375,7 @@ class Bill_Catch_Bots
                     // Cache the decoded response in a transient for 1 hour
                     // set_transient($cache_key, $decoded_response, HOUR_IN_SECONDS);
                     set_transient($cache_key, $decoded_response, 3 * MINUTE_IN_SECONDS);
-                    //// debug4($decoded_response);
+                    //// // debug4($decoded_response);
                     return $decoded_response; // Process and return the result
                 }
             }
@@ -364,20 +392,20 @@ class Bill_Catch_Bots
         $ret = $this->bill_catch_check_host_ripe($ip);
         if (!isset($ret) || !is_array($ret)) {
             // A chave 'body' não existe no array $ret
-            // debug4();
+            // // debug4();
             return false;
         } else {
             $bodyArray = $ret;
         }
-        //// debug4($bill_bad_host);
+        //// // debug4($bill_bad_host);
         foreach ($this->bill_bad_host as $host) {
             if ($this->bill_procurarPalavra($bodyArray, $host)) {
                 // echo "A palavra '$palavra' foi encontrada no array.<br>";
-                // debug4();
+                // // debug4();
                 return true;
             }
         }
-        // debug4();
+        // // debug4();
         return false; // Retorna false se nenhum host for encontrado (importante!)
     }
     private function bill_procurarPalavra($array, $palavra)
