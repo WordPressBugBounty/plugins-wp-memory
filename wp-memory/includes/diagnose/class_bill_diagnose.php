@@ -216,6 +216,8 @@ class ErrorChecker
             $bill_folders[] = $error_log_path;
         }
 
+        //debug2($bill_folders);
+
 
 
         // Logs in WordPress root directory
@@ -290,7 +292,7 @@ class ErrorChecker
 
 
 
-
+        // debug2($bill_folders);
 
 
         return $bill_folders;
@@ -410,25 +412,89 @@ class ErrorChecker
         return false;
     }
 
+
+
+
+
+
+
+
     public function bill_read_file($file, $lines)
     {
+        // Check if the file exists and is readable
+        //debug2($file);
+        //debug2($lines);
+
+        clearstatcache(true, $file); // Clear cache to ensure current file state
+        if (!file_exists($file) || !is_readable($file)) {
+            return []; // Return empty array in case of error
+        }
+
+        $text = [];
+
+        // Check if SplFileObject is available
+        /*
+        if (class_exists('SplFileObject')) {
+            try {
+                // Open the file with SplFileObject (using global namespace)
+                $fileObj = new \SplFileObject($file, 'r');
+                debug2("SplFileObject aberto para: $file");
+
+                // Move to the end to count total lines
+                $fileObj->seek(PHP_INT_MAX);
+                $totalLines = $fileObj->key(); // Total number of lines (zero-based index)
+                debug2("Total de linhas detectadas: $totalLines");
+
+                // Calculate the starting line for the last $lines
+                $startLine = max(0, $totalLines - $lines);
+                debug2("Linha inicial calculada: $startLine (para $lines linhas)");
+
+                // Move the pointer to the starting line
+                $fileObj->seek($startLine);
+                debug2("Ponteiro movido para linha: " . $fileObj->key());
+
+                // Read lines until the end
+                while (!$fileObj->eof() && count($text) < $lines) {
+                    $line = $fileObj->fgets();
+                    if ($line === false && file_exists($file)) {
+                        debug2("Falha ao ler linha na posição " . $fileObj->key() . ", tentando novamente...");
+                        usleep(500000); // Wait 0.5 seconds if reading fails
+                        $line = $fileObj->fgets(); // Retry reading the line
+                    }
+                    if ($line !== false) {
+                        $text[] = rtrim($line); // Remove trailing newlines
+                        // debug2("Linha lida: " . rtrim($line));
+                    } else {
+                        debug2("Nenhuma linha lida na posição " . $fileObj->key() . ", EOF ou erro");
+                        break;
+                    }
+                }
+                debug2("Linhas lidas com SplFileObject: " . count($text));
+            } catch (\Exception $e) {
+                // In case of error, return empty array and log the issue
+                debug2("Exceção capturada ao usar SplFileObject: " . $e->getMessage());
+                error_log("Error reading $file with SplFileObject: " . $e->getMessage());
+                return [];
+            }
+        } else {
+         */
+        // Fallback to original method with fopen
         $handle = fopen($file, "r");
         if (!$handle) {
-            return "";
+            return [];
         }
-        $bufferSize = 8192; // Tamanho do bloco de leitura (8KB)
-        $text = [];
+
+        $bufferSize = 8192; // 8KB
         $currentChunk = '';
         $linecounter = 0;
-        // Move para o final do arquivo e começa a leitura para trás
         fseek($handle, 0, SEEK_END);
-        $filesize = ftell($handle); // Tamanho do arquivo
-        // Ajustar bufferSize para o tamanho do arquivo se for menor que 8KB
+        $filesize = ftell($handle);
         if ($filesize < $bufferSize) {
             $bufferSize = $filesize;
         }
         if ($bufferSize < 1) {
-            return '';
+            fclose($handle);
+            return [];
         }
         $pos = $filesize - $bufferSize;
         while ($pos >= 0 && $linecounter < $lines) {
@@ -437,6 +503,10 @@ class ErrorChecker
             }
             fseek($handle, $pos);
             $chunk = fread($handle, $bufferSize);
+            if ($chunk === false && file_exists($file)) {
+                usleep(500000); // Wait 0.5 seconds if reading fails
+                $chunk = fread($handle, $bufferSize); // Retry reading the chunk
+            }
             $currentChunk = $chunk . $currentChunk;
             $linesInChunk = explode("\n", $currentChunk);
             $currentChunk = array_shift($linesInChunk);
@@ -453,6 +523,10 @@ class ErrorChecker
             $text[] = $currentChunk;
         }
         fclose($handle);
+        // }
+
+        //debug2($text);
+
         return $text;
     }
 } // end class error checker
@@ -558,7 +632,7 @@ class wpmemory_Bill_Diagnose
         $this->global_variable_memory = $memoryChecker->check_memory();
         $this->global_plugin_slug = $this->get_plugin_slug();
         // Adicionando as ações dentro do construtor
-        add_action("admin_notices", [$this, "show_dismissible_notification"]);
+        //add_action("admin_notices", [$this, "show_dismissible_notification"]);
         //add_action("admin_notices", [$this, "show_dismissible_notification2"]);
         // 2024
         // debug4($this->global_variable_has_errors);
@@ -643,6 +717,8 @@ class wpmemory_Bill_Diagnose
     //
     public function show_dismissible_notification()
     {
+        return;
+
         if ($this->is_notification_displayed_today()) {
             return;
         }
@@ -763,60 +839,71 @@ class wpmemory_Bill_Diagnose
             </h3>
 
 
-            <!--  // --------------------   Memory   -->
-
             <div> <!-- pai dos acordeos -->
+
+                <!--  // --------------------   Memory   -->
 
                 <div id="accordion1">
                     <?php
-                    $memory = $this->global_variable_memory;
-                    $wpmemory = $memory;
-                    if ($memory["free"] < 30 || $wpmemory["percent"] > 0.85) {
+                    $wpmemory = $this->global_variable_memory;
+                    $show_memory_info = true;
+                    // Verifica se $wpmemory é válido
+                    if (empty($wpmemory) || !is_array($wpmemory)) {
+                        $show_memory_info = false;
+                    }
+                    // Verifica se as chaves necessárias existem
+                    $required_keys = ['wp_limit', 'usage', 'limit', 'free', 'percent', 'color'];
+                    foreach ($required_keys as $key) {
+                        if (!array_key_exists($key, $wpmemory)) {
+                            $show_memory_info = false;
+                        }
+                    }
+                    if ($show_memory_info) {
+                        if ($wpmemory["free"] < 30 || $wpmemory["percent"] > 0.85) {
                     ?>
-                        <!-- Título da seção -->
-                        <h2 style="color: red;">
-                            <?php echo esc_attr__("Low WordPress Memory Limit (click to open)", "wp-memory"); ?>
-                        </h2>
-
-                        <!-- Conteúdo da seção -->
-                        <div>
-                            <b>
+                            <!-- Título da seção -->
+                            <h2 style="color: red;">
+                                <?php echo esc_attr__("Low WordPress Memory Limit (click to open)", "wp-memory"); ?>
+                            </h2>
+                            <!-- Conteúdo da seção -->
+                            <div>
+                                <b>
+                                    <?php
+                                    $mb = "MB";
+                                    echo "WordPress Memory Limit: " . esc_attr($wpmemory["wp_limit"]) . esc_attr($mb) .
+                                        "&nbsp;&nbsp;&nbsp;  |&nbsp;&nbsp;&nbsp;";
+                                    // $perc = $wpmemory["usage"] / $wpmemory["wp_limit"];
+                                    if ($wpmemory["percent"] > 0.7) {
+                                        echo '<span style="color:' . esc_attr($wpmemory["color"]) . ';">';
+                                    }
+                                    echo esc_attr__("Your usage now", "wp-memory") . ": " . esc_attr($wpmemory["usage"]) . "MB &nbsp;&nbsp;&nbsp;";
+                                    if ($wpmemory["percent"] > 0.7) {
+                                        echo "</span>";
+                                    }
+                                    echo "|&nbsp;&nbsp;&nbsp;" . esc_attr__("Total Php Server Memory", "wp-memory") . " : " . esc_attr($wpmemory["limit"]) . "MB";
+                                    ?>
+                                </b>
+                                <hr>
                                 <?php
-                                $mb = "MB";
-                                echo "WordPress Memory Limit: " . esc_attr($wpmemory["wp_limit"]) . esc_attr($mb) .
-                                    "&nbsp;&nbsp;&nbsp;  |&nbsp;&nbsp;&nbsp;";
-                                $perc = $wpmemory["usage"] / $wpmemory["wp_limit"];
-                                if ($perc > 0.7) {
-                                    echo '<span style="color:' . esc_attr($wpmemory["color"]) . ';">';
-                                }
-                                echo esc_attr__("Your usage now", "wp-memory") . ": " . esc_attr($wpmemory["usage"]) . "MB &nbsp;&nbsp;&nbsp;";
-                                if ($perc > 0.7) {
-                                    echo "</span>";
-                                }
-                                echo "|&nbsp;&nbsp;&nbsp;" . esc_attr__("Total Php Server Memory", "wp-memory") . " : " . esc_attr($wpmemory["limit"]) . "MB";
+                                //$free = $wpmemory["wp_limit"] - $wpmemory["usage"];
+                                echo '<p>';
+                                echo '<br>';
+                                echo esc_attr__("Your WordPress Memory Limit is too low, which can lead to critical issues on your site due to insufficient resources. Promptly address this issue before continuing.", "wp-memory");
+                                echo '</p>';
                                 ?>
-                            </b>
-                            <hr>
-                            <?php
-                            $free = $wpmemory["wp_limit"] - $wpmemory["usage"];
-                            echo '<p>';
-                            echo esc_attr__("Your WordPress Memory Limit is too low, which can lead to critical issues on your site due to insufficient resources. Promptly address this issue before continuing.", "wp-memory");
-                            echo '</p>';
-                            ?>
-                            <a href="https://wpmemory.com/fix-low-memory-limit/">
-                                <?php echo esc_attr__("Learn More", "wp-memory"); ?>
-                            </a>
-                        </div>
-                    <?php } ?>
+                                <a href="https://wpmemory.com/fix-low-memory-limit/">
+                                    <?php echo esc_attr__("Learn More", "wp-memory"); ?>
+                                </a>
+                            </div>
+                    <?php }
+                    }
+                    ?>
                 </div>
-
                 <?php
                 // --------------------   End Memory
 
 
                 /* --------------------- PAGE LOAD -----------------------------*/
-
-
 
                 function wptools_check_page_load()
                 {
@@ -984,8 +1071,14 @@ class wpmemory_Bill_Diagnose
                     echo '<br>';
                     echo '<strong>';
                     esc_attr_e("Our free AntiHacker plugin can even check for abandoned plugins that you are using, as these plugins may no longer receive security updates, leaving your site vulnerable to attacks and potential exploits, which can compromise your site's integrity and data.", "wp-memory");
+
+
+                    echo '<br>';
+                    echo '<br>';
+                    // echo '<br>';
+
                     echo '<strong>';
-                    echo '<hr>';
+                    //echo '<hr>';
                     foreach ($update_plugins as $plugin_path => $plugin) {
                         // Obtém a versão do plugin e a versão da atualização disponível
                         $update_version = $updates[$plugin_path]->update->new_version;
@@ -1325,11 +1418,15 @@ class wpmemory_Bill_Diagnose
                                 echo "</strong>";
                                 $bill_count++;
                                 $errorChecker = new ErrorChecker();
+                                // debug2($bill_filename);
                                 $marray = $errorChecker->bill_read_file($bill_filename, 3000);
                                 //$marray = $this->bill_read_file($bill_filename, 3000);
                                 if (gettype($marray) != "array" or count($marray) < 1) {
                                     continue;
                                 }
+
+                                // debug2($bill_filename);
+
                                 $total = count($marray);
                                 if (count($marray) > 0) {
                                     echo '<textarea style="width:99%;" id="anti_hacker" rows="12">';
@@ -1345,6 +1442,9 @@ class wpmemory_Bill_Diagnose
                                         if (empty($line)) {
                                             continue;
                                         }
+
+                                        // debug2($line);
+
                                         //  stack trace
                                         //[30-Sep-2023 11:28:52 UTC] PHP Stack trace:
                                         $pattern = "/PHP Stack trace:/";
