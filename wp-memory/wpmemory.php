@@ -2,7 +2,7 @@
 Plugin Name: WP Memory
 Plugin URI: http://wpmemory.com
 Description: Check for high memory usage, include the results on the Site Health page, and provide suggestions.
-Version: 3.80
+Version: 3.81
 Author: Bill Minozzi
 Domain Path: /language
 Author URI: http://billminozzi.com
@@ -28,10 +28,11 @@ define('WPMEMORYPAGE', trim(sanitize_text_field($GLOBALS['pagenow'])));
 define('WPMEMORYHOMEURL', admin_url());
 define('WPMEMORYADMURL', admin_url());
 $wpmemory_request_url = sanitize_url($_SERVER['REQUEST_URI']);
+$wpmemory_is_admin = wpmemory_check_wordpress_logged_in_cookie();
 
 // require_once WPMEMORYPATH . 'functions/bill-catch-errors.php';
 
-if (is_admin())
+if ($wpmemory_is_admin)
 	add_action('init', 'wpmemory_localization_init');
 //	add_action('plugins_loaded', 'wpmemory_localization_init');
 
@@ -46,6 +47,7 @@ $wp_memory_update = trim(sanitize_text_field(get_option('wp_memory_update', ''))
 function wpmemory_add_admstylesheet()
 {
 	global $wpmemory_request_url;
+	global $wpmemory_is_admin;
 
 	$pos = strpos($wpmemory_request_url, 'page=wp_memory_admin_page');
 	$pos2 = strpos($wpmemory_request_url, 'wp-admin/index.php');
@@ -109,7 +111,7 @@ function wpmemory_add_admstylesheet()
 	wp_register_style('bill-jquery-ui', $wpmemory_jqueryurl, array(), '1.12.1', 'all');
 	wp_enqueue_style('bill-jquery-ui');
 }
-if (is_admin()) {
+if ($wpmemory_is_admin) {
 	add_action('admin_init', 'wpmemory_add_admstylesheet');
 	// Activation...
 	register_activation_hook(__FILE__, 'wpmemory_activated');
@@ -166,7 +168,7 @@ if ($perc > .7) {
 
 
 require_once WPMEMORYPATH . "functions/functions.php";
-if (is_admin()) {
+if ($wpmemory_is_admin) {
 	//debug();
 	require_once(WPMEMORYPATH . 'includes/help/help.php');
 	require_once(WPMEMORYPATH . 'functions/function_sysinfo.php');
@@ -236,6 +238,8 @@ function wpmemory_plugin_installed($slug)
 function wpmemory_load_upsell()
 {
 
+	global $wpmemory_is_admin;
+
 	//wp_enqueue_style('wpmemory-more', WPMEMORYURL . 'includes/more/more.css');
 	//wp_register_script('wpmemory-more-js', WPMEMORYURL . 'includes/more/more.js', array('jquery'));
 	//wp_enqueue_script('wpmemory-more-js');
@@ -289,7 +293,7 @@ function wpmemory_load_upsell()
 if (!function_exists('wp_get_current_user')) {
 	require_once(ABSPATH . "wp-includes/pluggable.php");
 }
-if (is_admin() or is_super_admin()) {
+if ($wpmemory_is_admin or is_super_admin()) {
 	add_action('admin_enqueue_scripts', 'wpmemory_load_upsell');
 	add_action('wp_ajax_wpmemory_install_plugin', 'wpmemory_install_plugin');
 }
@@ -519,7 +523,7 @@ add_action('wp_ajax_wpmemory_dismissible_notice2', 'wpmemory_dismissible_notice2
 /*
 function wpmemory_load_feedback()
 {
-  if (is_admin()) {
+  if ($wpmemory_is_admin) {
     // ob_start();
     // require_once(WPMEMORYPATH . "includes/feedback/feedback.php");
     require_once(WPMEMORYPATH . "includes/feedback/feedback-last.php");
@@ -691,11 +695,10 @@ add_action('wpmemory_keep_latest_records_cron', 'wpmemory_keep_latest_records');
 
 function wpmemory_load_chat()
 {
-	if (function_exists('is_admin') && function_exists('current_user_can')) {
-		if (is_admin() and current_user_can("manage_options")) {
-			if (! class_exists('wpmemory_BillChat\ChatPlugin')) {
-				require_once dirname(__FILE__) . "/includes/chat/class_bill_chat.php";
-			}
+	global $wpmemory_is_admin;
+	if ($wpmemory_is_admin and current_user_can("manage_options")) {
+		if (! class_exists('wpmemory_BillChat\ChatPlugin')) {
+			require_once dirname(__FILE__) . "/includes/chat/class_bill_chat.php";
 		}
 	}
 }
@@ -706,21 +709,28 @@ add_action('wp_loaded', 'wpmemory_load_chat');
 
 function wpmemory_bill_hooking_diagnose()
 {
-	if (function_exists('is_admin') && function_exists('current_user_can')) {
-		if (is_admin() and current_user_can("manage_options")) {
-			$declared_classes = get_declared_classes();
-			foreach ($declared_classes as $class_name) {
-				if (strpos($class_name, "Bill_Diagnose") !== false) {
-					return;
-				}
+
+	global $wpmemory_is_admin;
+
+	//die(var_dump(__LINE__));
+
+	// debug4();
+	if ($wpmemory_is_admin and current_user_can("manage_options")) {
+
+		// debug4();
+
+		$declared_classes = get_declared_classes();
+		foreach ($declared_classes as $class_name) {
+			if (strpos($class_name, "Bill_Diagnose") !== false) {
+				return;
 			}
-			$plugin_slug = 'wpmemory';
-			$plugin_text_domain = $plugin_slug;
-			$notification_url = "https://wpmemory.com/fix-low-memory-limit/";
-			$notification_url2 =
-				"https://wptoolsplugin.com/site-language-error-can-crash-your-site/";
-			require_once dirname(__FILE__) . "/includes/diagnose/class_bill_diagnose.php";
 		}
+		$plugin_slug = 'wpmemory';
+		$plugin_text_domain = $plugin_slug;
+		$notification_url = "https://wpmemory.com/fix-low-memory-limit/";
+		$notification_url2 =
+			"https://wptoolsplugin.com/site-language-error-can-crash-your-site/";
+		require_once dirname(__FILE__) . "/includes/diagnose/class_bill_diagnose.php";
 	}
 }
 add_action("plugins_loaded", "wpmemory_bill_hooking_diagnose", 10);
@@ -728,17 +738,34 @@ add_action("plugins_loaded", "wpmemory_bill_hooking_diagnose", 10);
 
 function wpmemory_bill_hooking_catch_errors()
 {
-	if (function_exists('is_admin') && function_exists('current_user_can')) {
-		if (is_admin() and current_user_can("manage_options")) {
-			$declared_classes = get_declared_classes();
-			foreach ($declared_classes as $class_name) {
-				if (strpos($class_name, "bill_catch_errors") !== false) {
-					return;
-				}
-			}
-			$wpmemory_plugin_slug = 'restore-classic-widgets';
-			require_once dirname(__FILE__) . "/includes/catch-errors/class_bill_catch_errors.php";
+	// debug4();
+	global $wpmemory_is_admin;
+
+	//debug4();
+
+
+
+	if ($wpmemory_is_admin and current_user_can("manage_options")) {
+
+		if (!function_exists('bill_install_mu_plugin')) {
+			//debug4();
+			require_once dirname(__FILE__) . "/includes/catch-errors/bill_install_catch_errors.php";
 		}
+		//else
+		//debug4();
+
+		// debug4();
+
+		$declared_classes = get_declared_classes();
+		foreach ($declared_classes as $class_name) {
+			if (strpos($class_name, "bill_catch_errors") !== false) {
+				// debug4();
+				// ////////////////////////////////return;
+			}
+		}
+		$wpmemory_plugin_slug = 'wp-memory';
+		//debug4();
+		require_once dirname(__FILE__) . "/includes/catch-errors/class_bill_catch_errors.php";
 	}
 }
 add_action("init", "wpmemory_bill_hooking_catch_errors", 15);
@@ -754,23 +781,22 @@ function wpmemory_bill_hooking_catch_bots()
 	}
 	require_once dirname(__FILE__) . "/includes/catch-bots/class_bill_catch_bots.php";
 }
- add_action("init", "wpmemory_bill_hooking_catch_bots", 15);
+add_action("init", "wpmemory_bill_hooking_catch_bots", 15);
 // add_action('shutdown', 'wpmemory_bill_hooking_catch_bots');
 //add_action('wp_footer', 'wpmemory_bill_hooking_catch_bots');
 
 
 function wpmemory_bill_more()
 {
-	if (function_exists('is_admin') && function_exists('current_user_can')) {
-		if (is_admin() and current_user_can("manage_options")) {
-			$declared_classes = get_declared_classes();
-			foreach ($declared_classes as $class_name) {
-				if (strpos($class_name, "Bill_show_more_plugins") !== false) {
-					// return;
-				}
+	global $wpmemory_is_admin;
+	if ($wpmemory_is_admin and current_user_can("manage_options")) {
+		$declared_classes = get_declared_classes();
+		foreach ($declared_classes as $class_name) {
+			if (strpos($class_name, "Bill_show_more_plugins") !== false) {
+				// return;
 			}
-			require_once dirname(__FILE__) . "/includes/more-tools/class_bill_more.php";
 		}
+		require_once dirname(__FILE__) . "/includes/more-tools/class_bill_more.php";
 	}
 }
 add_action("init", "wpmemory_bill_more");
@@ -782,13 +808,25 @@ add_action("init", "wpmemory_bill_more");
 
 function wpmemory_load_feedback()
 {
-	if (function_exists('is_admin') && function_exists('current_user_can')) {
-		if (is_admin() and current_user_can("manage_options")) {
-			// ob_start();
-			//debug2();
-			require_once dirname(__FILE__) . "/includes/feedback-last/feedback-last.php";
-			// ob_end_clean();
-		}
+	global $wpmemory_is_admin;
+	if ($wpmemory_is_admin and current_user_can("manage_options")) {
+		// ob_start();
+		//debug2();
+		require_once dirname(__FILE__) . "/includes/feedback-last/feedback-last.php";
+		// ob_end_clean();
 	}
 }
 add_action('wp_loaded', 'wpmemory_load_feedback');
+function wpmemory_check_wordpress_logged_in_cookie()
+{
+	// Percorre todos os cookies definidos
+	foreach ($_COOKIE as $key => $value) {
+		// Verifica se algum cookie começa com 'wordpress_logged_in_'
+		if (strpos($key, 'wordpress_logged_in_') === 0) {
+			// Cookie encontrado
+			return true;
+		}
+	}
+	// Cookie não encontrado
+	return false;
+}

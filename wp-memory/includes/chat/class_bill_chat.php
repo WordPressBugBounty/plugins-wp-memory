@@ -112,6 +112,7 @@ class ChatPlugin
         }
         $text = [];
         // Check if SplFileObject is available
+        /*
         if (class_exists('SplFileObject')) {
             try {
                 // Open the file with SplFileObject (using global namespace)
@@ -140,51 +141,52 @@ class ChatPlugin
                 return [];
             }
         } else {
-            // Fallback to original method with fopen
-            $handle = fopen($file, "r");
-            if (!$handle) {
-                return [];
-            }
-            $bufferSize = 8192; // 8KB
-            $currentChunk = '';
-            $linecounter = 0;
-            fseek($handle, 0, SEEK_END);
-            $filesize = ftell($handle);
-            if ($filesize < $bufferSize) {
-                $bufferSize = $filesize;
-            }
-            if ($bufferSize < 1) {
-                fclose($handle);
-                return [];
-            }
-            $pos = $filesize - $bufferSize;
-            while ($pos >= 0 && $linecounter < $lines) {
-                if ($pos < 0) {
-                    $pos = 0;
-                }
-                fseek($handle, $pos);
-                $chunk = fread($handle, $bufferSize);
-                if ($chunk === false && file_exists($file)) {
-                    usleep(500000); // Wait 0.5 seconds if reading fails
-                    $chunk = fread($handle, $bufferSize); // Retry reading the chunk
-                }
-                $currentChunk = $chunk . $currentChunk;
-                $linesInChunk = explode("\n", $currentChunk);
-                $currentChunk = array_shift($linesInChunk);
-                foreach (array_reverse($linesInChunk) as $line) {
-                    $text[] = $line;
-                    $linecounter++;
-                    if ($linecounter >= $lines) {
-                        break 2;
-                    }
-                }
-                $pos -= $bufferSize;
-            }
-            if (!empty($currentChunk)) {
-                $text[] = $currentChunk;
-            }
-            fclose($handle);
+        */
+        // Fallback to original method with fopen
+        $handle = fopen($file, "r");
+        if (!$handle) {
+            return [];
         }
+        $bufferSize = 8192; // 8KB
+        $currentChunk = '';
+        $linecounter = 0;
+        fseek($handle, 0, SEEK_END);
+        $filesize = ftell($handle);
+        if ($filesize < $bufferSize) {
+            $bufferSize = $filesize;
+        }
+        if ($bufferSize < 1) {
+            fclose($handle);
+            return [];
+        }
+        $pos = $filesize - $bufferSize;
+        while ($pos >= 0 && $linecounter < $lines) {
+            if ($pos < 0) {
+                $pos = 0;
+            }
+            fseek($handle, $pos);
+            $chunk = fread($handle, $bufferSize);
+            if ($chunk === false && file_exists($file)) {
+                usleep(500000); // Wait 0.5 seconds if reading fails
+                $chunk = fread($handle, $bufferSize); // Retry reading the chunk
+            }
+            $currentChunk = $chunk . $currentChunk;
+            $linesInChunk = explode("\n", $currentChunk);
+            $currentChunk = array_shift($linesInChunk);
+            foreach (array_reverse($linesInChunk) as $line) {
+                $text[] = $line;
+                $linecounter++;
+                if ($linecounter >= $lines) {
+                    break 2;
+                }
+            }
+            $pos -= $bufferSize;
+        }
+        if (!empty($currentChunk)) {
+            $text[] = $currentChunk;
+        }
+        fclose($handle);
+        // }
         return $text;
     }
     /**
@@ -282,9 +284,12 @@ class ChatPlugin
     public static function get_path_logs()
     {
         $bill_folders = [];
+
+        /*
         $caminho_padrao = realpath(ABSPATH . "error_log");
         $bill_folders[] = $caminho_padrao;
         $bill_folders[] = realpath(ABSPATH . "php_errorlog");
+        */
         /*
          // PHP error log (defined in php.ini)
          $error_log_path = trim(ini_get("error_log"));
@@ -293,12 +298,31 @@ class ChatPlugin
          }
          */
         // Opção 2 (mais robusta): Adiciona se estiver definido e for diferente do padrão
-        $error_log_path = trim(ini_get("error_log"));
+
+        //$error_log_path = trim(ini_get("error_log"));
+
+
+        $error_log_path = ini_get("error_log");
+        if (!empty($error_log_path)) {
+            $error_log_path = trim($error_log_path);
+        } else {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                $error_log_path = trailingslashit(WP_CONTENT_DIR) . 'debug.log';
+            } else {
+                $error_log_path = trailingslashit(ABSPATH) . 'error_log';
+            }
+        }
+
+        $bill_folders[] = $error_log_path;
+
+        /*
         $caminho_padrao = realpath(ABSPATH . "error_log");
         $caminho_atual = realpath($error_log_path);
+
         if (!empty($error_log_path) && $caminho_atual != $caminho_padrao && !in_array($error_log_path, $bill_folders)) {
             $bill_folders[] = $error_log_path;
         }
+        */
         // Logs in WordPress root directory
         //
         $bill_folders[] = WP_CONTENT_DIR . "/debug.log";
@@ -349,6 +373,12 @@ class ChatPlugin
             // Handle the exception
             error_log("Error scanning theme directory: " . $e->getMessage());
         }
+
+        //error_log(var_export($bill_folders));
+        //debug4($bill_folders);
+        //die();
+
+
         return $bill_folders;
     }
     public function bill_chat_send_message()

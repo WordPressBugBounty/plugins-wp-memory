@@ -9,7 +9,8 @@ if (function_exists('is_multisite') and is_multisite()) {
     return;
 }
 
-// debug4();
+
+
 
 /*
 // >>>>>>>>>>>>>>>> call
@@ -52,6 +53,9 @@ if (function_exists('is_plugin_active')) {
         }
     }
 }
+
+/*
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 $logErrors = ini_get('log_errors');
 $errorLog = ini_get('error_log');
 if ($logErrors) {
@@ -61,6 +65,7 @@ if ($logErrors) {
 } else {
     ini_set('log_errors', 'On');
 }
+    */
 // -- Help
 // Função para exibir o ID da tela
 function debug_screen_id_current_screen($screen)
@@ -106,7 +111,10 @@ class ErrorChecker
     {
         return preg_replace('/[[:^print:]]/', '', $string);
     }
-    public function bill_parseDate($dateString, $locale)
+
+
+
+    public function bill_parseDate_old_mexida($dateString, $locale)
     {
 
 
@@ -153,7 +161,17 @@ class ErrorChecker
             'd.m.Y', // 31.12.2024 (Alemão)
             'd-m-Y', // 31-12-2024 (Holandês)
         ];
+        // debug4($locale);
         foreach ($possibleFormats as $format) {
+
+            $timestamp = strtotime($dateString);
+
+            if ($timestamp !== false) {
+
+                return true;
+            }
+
+            /*
             $date = \DateTime::createFromFormat($format, $dateString);
             // debug4($date);
             // debug4($format);
@@ -161,11 +179,64 @@ class ErrorChecker
                 // debug4($date);
                 return $date;
             }
+            */
         }
         // Se nenhum formato funcionar, lança uma exceção
         // throw new \Exception("Falha ao parsear a data: " . $dateString);
+        // debug4('Falhou !!!');
         return false;
     }
+
+
+
+
+    /* Transform data em objeto DateTime */
+    // \DateTime::__set_state(array( 'date' => '2025-02-23 17:51:41.920019', 'timezone_type' => 3, 'timezone' => 'UTC', ))
+
+    public function bill_parseDate($dateString, $locale)
+    {
+        if (isset($dateString) && !empty($dateString)) {
+            $dateString = trim($dateString);
+            $dateString = ErrorChecker::limparString($dateString);
+        } else {
+            // debug4("Data vazia ou inválida");
+            return false;
+        }
+
+        // Formatos possíveis em inglês
+        $possibleFormats = [
+            'd/m/Y',    // 31/12/2024
+            'm/d/Y',    // 12/31/2024
+            'Y-m-d',    // 2024-12-31
+            'd-M-Y',    // 31-Dec-2024
+            'd F Y',    // 31 December 2024
+            'd.m.Y',    // 31.12.2024
+            'd-m-Y',    // 31-12-2024
+        ];
+
+        foreach ($possibleFormats as $format) {
+            $date = \DateTime::createFromFormat($format, $dateString);
+            // debug4("Testando formato: $format");
+            if ($date !== false) {
+                // debug4("Data reconhecida: " . $date->format('Y-m-d'));
+                return $date;
+            }
+        }
+
+        // Fallback com strtotime para formatos em inglês não listados
+        $timestamp = strtotime($dateString);
+        if ($timestamp !== false) {
+            $date = new DateTime();
+            $date->setTimestamp($timestamp);
+            // debug4("Data reconhecida via strtotime: " . $date->format('Y-m-d'));
+            return $date;
+        }
+
+        // debug4("Falhou ao parsear a data: $dateString");
+        return false;
+    }
+
+
     public function enqueue_diagnose_scripts()
     {
         wp_enqueue_script('jquery-ui-accordion'); // Enfileira o jQuery UI Accordion
@@ -193,28 +264,19 @@ class ErrorChecker
     public static function get_path_logs()
     {
         $bill_folders = [];
-        $caminho_padrao = realpath(ABSPATH . "error_log");
-        $bill_folders[] = $caminho_padrao;
-        $bill_folders[] = realpath(ABSPATH . "php_errorlog");
 
-
-        /*
-        // PHP error log (defined in php.ini)
-        $error_log_path = trim(ini_get("error_log"));
-        if (!is_null($error_log_path) && $error_log_path != trim(ABSPATH . "error_log")) {
-            $bill_folders[] = $error_log_path;
+        $error_log_path = ini_get("error_log");
+        if (!empty($error_log_path)) {
+            $error_log_path = trim($error_log_path);
+        } else {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                $error_log_path = trailingslashit(WP_CONTENT_DIR) . 'debug.log';
+            } else {
+                $error_log_path = trailingslashit(ABSPATH) . 'error_log';
+            }
         }
-        */
 
-
-        // Opção 2 (mais robusta): Adiciona se estiver definido e for diferente do padrão
-        $error_log_path = trim(ini_get("error_log"));
-        $caminho_padrao = realpath(ABSPATH . "error_log");
-        $caminho_atual = realpath($error_log_path);
-
-        if (!empty($error_log_path) && $caminho_atual != $caminho_padrao && !in_array($error_log_path, $bill_folders)) {
-            $bill_folders[] = $error_log_path;
-        }
+        $bill_folders[] = $error_log_path;
 
         //debug2($bill_folders);
 
@@ -294,6 +356,11 @@ class ErrorChecker
 
         // debug2($bill_folders);
 
+        //var_dump($bill_folders);
+
+
+        //die();
+
 
         return $bill_folders;
     }
@@ -311,12 +378,22 @@ class ErrorChecker
 
         $bill_count = 0;
 
+        // // debug4();
+
+        //
+        //
+        ///
+        //
+        //
+        //
 
 
 
 
         // $bill_folders = get_path_logs();
         $bill_folders = ErrorChecker::get_path_logs();
+
+        // var_dump($bill_folders);
 
 
 
@@ -343,12 +420,12 @@ class ErrorChecker
         $language = substr($locale, 0, 2); // Extrai o código de idioma (ex: 'pt', 'en')
         // Itera sobre as pastas 
 
-        //debug4($bill_folders);
+        //// debug4($bill_folders);
 
         foreach ($bill_folders as $bill_folder) {
             if (!empty($bill_folder) && file_exists($bill_folder) && filesize($bill_folder) > 0) {
 
-                //debug4($bill_folder);
+                // debug4($bill_folder);
 
                 $bill_count++;
                 $marray = $this->bill_read_file($bill_folder, 20);
@@ -356,12 +433,15 @@ class ErrorChecker
                     // debug4($marray);
                     foreach ($marray as $line) {
                         if (empty($line)) {
+                            // // debug4();
                             continue;
                         }
                         if ($filter !== null && stripos($line, $filter) === false) {
+                            // // debug4();
                             continue;
                         }
                         if (substr($line, 0, 1) !== '[') {
+                            // // debug4();
                             continue;
                         }
                         // Verifica se a linha corresponde a algum padrão de data
@@ -375,19 +455,28 @@ class ErrorChecker
 
                                     $date = $this->bill_parseDate($matches[0], $locale);
 
+                                    //die(var_export($date));
+                                    // \DateTime::__set_state(array( 'date' => '2025-02-26 17:48:55.000000', 'timezone_type' => 3, 'timezone' => 'UTC', ))
+
+
+                                    // die(var_export($dateThreshold));
+                                    // \DateTime::__set_state(array( 'date' => '2025-02-23 17:51:41.920019', 'timezone_type' => 3, 'timezone' => 'UTC', ))
+
                                     // debug4($date);
 
                                     if (!$date) {
+                                        // // debug4();
                                         continue;
                                     }
 
                                     if (!$date instanceof \DateTime) {
+                                        // // debug4();
                                         continue;
                                     }
 
                                     // Verifica se a data é anterior ao limite
-                                    // debug4($date);
-                                    // debug4($dateThreshold);
+                                    // // debug4($date);
+                                    // // debug4($dateThreshold);
                                     if ($date < $dateThreshold) {
                                         // debug2('Antiga');
                                         // debug4("Data antiga encontrada: " . $date->format('Y-m-d'));
@@ -401,14 +490,16 @@ class ErrorChecker
                                     continue;
                                 }
                             } else {
-                                // debug4('nao bateu');
+                                // // debug4('nao bateu');
                             }
                         }
+                        // debug4('False ??');
                         return false;
                     }
                 }
             }
         }
+        // debug4('False ??????????????');
         return false;
     }
 
@@ -607,6 +698,7 @@ class wpmemory_Bill_Diagnose
     private $notification_url2;
     private $global_variable_has_errors;
     private $global_variable_memory;
+    protected $wpdb; // Declarar a propriedade aqui
     public function __construct(
         $notification_url,
         $notification_url2
@@ -622,9 +714,13 @@ class wpmemory_Bill_Diagnose
         //
         $this->global_variable_has_errors  = $errorChecker->bill_check_errors_today(3);
 
+        //var_dump($this->global_variable_has_errors);
+        //die();
 
 
-        //debug4($this->global_variable_has_errors);
+
+
+        //// debug4($this->global_variable_has_errors);
 
 
         // NOT same class
@@ -635,10 +731,18 @@ class wpmemory_Bill_Diagnose
         //add_action("admin_notices", [$this, "show_dismissible_notification"]);
         //add_action("admin_notices", [$this, "show_dismissible_notification2"]);
         // 2024
-        // debug4($this->global_variable_has_errors);
+        // // debug4($this->global_variable_has_errors);
+        //var_dump($this->global_variable_has_errors);
+        //die(var_export(__LINE__));
+
+
+
         if ($this->global_variable_has_errors) {
             add_action("admin_bar_menu", [$this, "add_site_health_link_to_admin_toolbar"], 999);
             // debug2('global_variable_has_errors');
+
+            //var_dump($this->global_variable_has_errors);
+            //die(var_export(__LINE__));
         }
         add_action("admin_head", [$this, "custom_help_tab"]);
         $memory = $this->global_variable_memory;
@@ -1315,6 +1419,8 @@ class wpmemory_Bill_Diagnose
                 echo '<div>'; //  <!-- end pai dos acordeos -->
 
 
+                //var_dump($this->global_variable_has_errors);
+                // 
 
                 // Errors ...
                 if ($this->global_variable_has_errors) { ?>
@@ -1391,7 +1497,7 @@ class wpmemory_Bill_Diagnose
                     // Comeca a mostrar erros...
                     //
 
-                    // debug4($bill_folders);
+                    // // debug4($bill_folders);
 
                     // print_r($bill_folders);
 
@@ -1409,6 +1515,7 @@ class wpmemory_Bill_Diagnose
                                 echo esc_attr($bill_filename);
                                 echo "<br />";
                                 echo esc_attr__("File Size: ", "wp-memory");
+                                echo "&nbsp;";
                                 $fileSizeBytes = getFileSizeInBytes($bill_filename);
                                 if (is_int($fileSizeBytes)) {
                                     echo esc_attr(convertToHumanReadableSize($fileSizeBytes));
@@ -1753,6 +1860,7 @@ class wpmemory_Bill_Diagnose
                                 echo "<br />";
                             }
                         } // end for next each error_log...
+                        echo '<br>';
                     } // end fo next each folder...
                 } // end tem errors...
                 echo "</div>";
