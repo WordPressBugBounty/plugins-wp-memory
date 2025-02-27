@@ -107,8 +107,19 @@ function bill_install_mu_plugin()
 
         if (!is_readable($mu_plugins_dir) || !is_writable($mu_plugins_dir)) {
             // Tenta corrigir as permissões para 0755
-            if (!chmod($mu_plugins_dir, 0755)) {
-                error_log("Failed to set permissions on MU-Plugins directory: " . $mu_plugins_dir);
+
+
+            if (!@chmod($mu_plugins_dir, 0755)) {
+                //  error_log("Failed to set permissions on MU-Plugins directory: " . $mu_plugins_dir);
+
+
+                $transient_name = 'bill_unable_to_create_mu_folder';
+                $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+                $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+                set_transient($transient_name, $transient_value, $expiration);
+
+
+                return false;
             } else {
                 // Verifica novamente após tentar corrigir
                 if (!is_readable($mu_plugins_dir) || !is_writable($mu_plugins_dir)) {
@@ -116,7 +127,7 @@ function bill_install_mu_plugin()
                     $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
                     $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
                     set_transient($transient_name, $transient_value, $expiration);
-                    error_log("The MU-Plugins directory does not have the appropriate permissions after chmod attempt: " . $mu_plugins_dir);
+                    // error_log("The MU-Plugins directory does not have the appropriate permissions after chmod attempt: " . $mu_plugins_dir);
                 }
             }
         }
@@ -130,10 +141,39 @@ function bill_install_mu_plugin()
         // Check if the plugin file exists in the source directory
         if (!file_exists($source)) {
             error_log("The plugin file was not found in the source directory: " . $source);
+            $transient_name = 'bill_unable_to_create_mu_folder';
+            $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+            $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+            set_transient($transient_name, $transient_value, $expiration);
+
+            return false;
         }
+
+        if (is_dir($source)) {
+            $transient_name = 'bill_unable_to_create_mu_folder';
+            $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+            $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+            set_transient($transient_name, $transient_value, $expiration);
+            return false;
+        }
+        if (!file_exists($source)) {
+            $transient_name = 'bill_unable_to_create_mu_folder';
+            $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+            $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+            set_transient($transient_name, $transient_value, $expiration);
+            return false;
+        }
+
         // Copy the plugin file to the MU-Plugins directory
         if (!copy($source, $destination)) {
-            error_log("Unable to copy the plugin file to the MU-Plugins directory: " . $destination);
+            // error_log("Unable to copy the plugin file to the MU-Plugins directory: " . $destination);
+
+            $transient_name = 'bill_unable_to_create_mu_folder';
+            $transient_value = true; // Ou qualquer valor que você queira armazenar no transiente
+            $expiration = 60 * 60 * 24 * 30; // 1 mês em segundos
+            set_transient($transient_name, $transient_value, $expiration);
+
+            return false;
         }
         // Success
         return true;
