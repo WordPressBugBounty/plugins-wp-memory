@@ -33,7 +33,6 @@ if (file_exists($plugin_file_path1)) {
     }
     */
 
-// die(var_dump(__LINE__));
 
 
 $transient_name = 'bill_tried_to_install_mu_plugin';
@@ -48,23 +47,41 @@ $transient_value = true; // Ou qualquer valor que você queira armazenar no tran
 $expiration = 60 * 60 * 24 * 1; // 1 dia em segundos
 set_transient($transient_name, $transient_value, $expiration);
 
-$plugin_name = 'bill-catch-errors.php';
+$bill_install_plugin_name_1 = 'bill-catch-errors.php';
+$bill_install_plugin_name_1 = trim($bill_install_plugin_name_1); // Remove espaços extras
+
+
 bill_check_install_mu_plugin();
+
+
 
 
 function bill_check_install_mu_plugin()
 {
 
 
-    global $plugin_name;
+    //global $bill_install_plugin_name_1;
+    $bill_install_plugin_name_1 = 'bill-catch-errors.php';
+    $bill_install_plugin_name_1 = trim($bill_install_plugin_name_1); // Remove espaços extras
+
+
+
+
+
 
     // Retrieve all must-use plugins
     $wp_mu_plugins = get_mu_plugins();
     // Check if the plugin exists in the list of mu-plugins
-    if (isset($wp_mu_plugins[$plugin_name])) {
+
+
+    if (isset($wp_mu_plugins[$bill_install_plugin_name_1])) {
+
+
         // Get the plugin's data
-        $plugin_data = $wp_mu_plugins[$plugin_name];
+        $plugin_data = $wp_mu_plugins[$bill_install_plugin_name_1];
         $plugin_version = $plugin_data['Version'];
+
+
         // Check the version
         if (version_compare($plugin_version, '4.1', '>=')) {
             // A versão do plugin é 4.1 ou superior
@@ -81,7 +98,13 @@ function bill_check_install_mu_plugin()
 
 function bill_install_mu_plugin()
 {
-    global $plugin_name;
+    // global $bill_install_plugin_name_1;
+
+    $bill_install_plugin_name_1 = 'bill-catch-errors.php';
+    $bill_install_plugin_name_1 = trim($bill_install_plugin_name_1); // Remove espaços extras
+
+
+
 
     $install_mu_plugin_dir = WP_PLUGIN_DIR . '/wp-memory/includes/mu-plugins'; // Current path inside wp_memory
     $mu_plugins_dir = WPMU_PLUGIN_DIR; // MU-Plugins directory
@@ -104,6 +127,9 @@ function bill_install_mu_plugin()
             }
         }
         // Check if the MU-Plugins directory is readable and writable
+
+
+
 
         if (!is_readable($mu_plugins_dir) || !is_writable($mu_plugins_dir)) {
             // Tenta corrigir as permissões para 0755
@@ -134,8 +160,8 @@ function bill_install_mu_plugin()
 
 
         // Define the plugin file path in the wp_memory directory
-        $source = $install_mu_plugin_dir . '/' . $plugin_name;
-        $destination = $mu_plugins_dir . '/' . $plugin_name;
+        $source = $install_mu_plugin_dir . '/' . $bill_install_plugin_name_1;
+        $destination = $mu_plugins_dir . '/' . $bill_install_plugin_name_1;
         //debug4($source);
         //debug4($destination);
         // Check if the plugin file exists in the source directory
@@ -165,6 +191,7 @@ function bill_install_mu_plugin()
         }
 
         // Copy the plugin file to the MU-Plugins directory
+
         if (!copy($source, $destination)) {
             // error_log("Unable to copy the plugin file to the MU-Plugins directory: " . $destination);
 
