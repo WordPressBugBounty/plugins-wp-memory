@@ -106,7 +106,7 @@ function bill_install_mu_plugin()
 
 
 
-    $install_mu_plugin_dir = WP_PLUGIN_DIR . '/wp-memory/includes/mu-plugins'; // Current path inside wp_memory
+    $install_mu_plugin_dir = WP_PLUGIN_DIR . '/restore-classic-widgets/includes/mu-plugins'; // Current path inside wp_memory
     $mu_plugins_dir = WPMU_PLUGIN_DIR; // MU-Plugins directory
     $transient_name = 'bill_unable_to_create_mu_folder';
     $transient_check = get_transient($transient_name);
@@ -192,7 +192,7 @@ function bill_install_mu_plugin()
 
         // Copy the plugin file to the MU-Plugins directory
 
-        if (!copy($source, $destination)) {
+        if (!@copy($source, $destination)) {
             // error_log("Unable to copy the plugin file to the MU-Plugins directory: " . $destination);
 
             $transient_name = 'bill_unable_to_create_mu_folder';

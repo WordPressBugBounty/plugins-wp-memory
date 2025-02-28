@@ -2,7 +2,7 @@
 Plugin Name: WP Memory
 Plugin URI: http://wpmemory.com
 Description: Check for high memory usage, include the results on the Site Health page, and provide suggestions.
-Version: 3.84
+Version: 3.87
 Author: Bill Minozzi
 Domain Path: /language
 Author URI: http://billminozzi.com
@@ -739,19 +739,20 @@ add_action("plugins_loaded", "wpmemory_bill_hooking_diagnose", 10);
 function wpmemory_bill_hooking_catch_errors()
 {
 	global $wpmemory_is_admin;
-	if ($wpmemory_is_admin and current_user_can("manage_options")) {
-		if (!function_exists('bill_install_mu_plugin')) {
-			require_once dirname(__FILE__) . "/includes/catch-errors/bill_install_catch_errors.php";
-		}
-		$declared_classes = get_declared_classes();
-		foreach ($declared_classes as $class_name) {
-			if (strpos($class_name, "bill_catch_errors") !== false) {
-				return;
-			}
-		}
-		$wpmemory_plugin_slug = 'wp-memory';
-		require_once dirname(__FILE__) . "/includes/catch-errors/class_bill_catch_errors.php";
+	global $wpmemory_plugin_slug;
+
+	if (!function_exists("bill_check_install_mu_plugin")) {
+		require_once dirname(__FILE__) . "/includes/catch-errors/bill_install_catch_errors.php";
 	}
+
+	$declared_classes = get_declared_classes();
+	foreach ($declared_classes as $class_name) {
+		if (strpos($class_name, "bill_catch_errors") !== false) {
+			return;
+		}
+	}
+	$wpmemory_plugin_slug = 'wp-memory';
+	require_once dirname(__FILE__) . "/includes/catch-errors/class_bill_catch_errors.php";
 }
 add_action("init", "wpmemory_bill_hooking_catch_errors", 15);
 
