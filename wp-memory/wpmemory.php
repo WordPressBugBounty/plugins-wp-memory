@@ -2,7 +2,7 @@
 Plugin Name: WP Memory
 Plugin URI: http://wpmemory.com
 Description: Check for high memory usage, include the results on the Site Health page, and provide suggestions.
-Version: 3.83
+Version: 3.84
 Author: Bill Minozzi
 Domain Path: /language
 Author URI: http://billminozzi.com
@@ -738,33 +738,18 @@ add_action("plugins_loaded", "wpmemory_bill_hooking_diagnose", 10);
 
 function wpmemory_bill_hooking_catch_errors()
 {
-	// debug4();
 	global $wpmemory_is_admin;
-
-	//debug4();
-
-
-
 	if ($wpmemory_is_admin and current_user_can("manage_options")) {
-
 		if (!function_exists('bill_install_mu_plugin')) {
-			//debug4();
 			require_once dirname(__FILE__) . "/includes/catch-errors/bill_install_catch_errors.php";
 		}
-		//else
-		//debug4();
-
-		// debug4();
-
 		$declared_classes = get_declared_classes();
 		foreach ($declared_classes as $class_name) {
 			if (strpos($class_name, "bill_catch_errors") !== false) {
-				// debug4();
-				// ////////////////////////////////return;
+				return;
 			}
 		}
 		$wpmemory_plugin_slug = 'wp-memory';
-		//debug4();
 		require_once dirname(__FILE__) . "/includes/catch-errors/class_bill_catch_errors.php";
 	}
 }
