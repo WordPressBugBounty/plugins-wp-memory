@@ -2,7 +2,7 @@
 Plugin Name: WP Memory
 Plugin URI: http://wpmemory.com
 Description: Check for high memory usage, include the results on the Site Health page, and provide suggestions.
-Version: 3.87
+Version: 3.88
 Author: Bill Minozzi
 Domain Path: /language
 Author URI: http://billminozzi.com
