@@ -119,8 +119,6 @@ function wp_memory_sysinfo_get()
         } catch (Exception $e) {
             $return .= 'Error checking error log path: ' . $e->getMessage() . "\n";
         }
-
-
     } else {
 
         $return .= "Error log not defined on PHP file ini\n";
@@ -183,7 +181,7 @@ function wp_memory_sysinfo_get()
 
     // $return .= "\n" . '-- PHP Error Log Configuration' . "\n\n";
 
-   // $error_log_path = ABSPATH . 'error_log'; // Consistent use of single quotes
+    // $error_log_path = ABSPATH . 'error_log'; // Consistent use of single quotes
 
     $return .= 'Root Place:                     ' . (file_exists($error_log_path) ? 'Exists. (' . $error_log_path . ')'  : 'Does Not Exist') . "\n"; // More descriptive wording
 
@@ -313,8 +311,8 @@ function wp_memory_sysinfo_get()
 
 
     // WordPress active Theme
-    $return .= "\n" . '-- WordPress Active Theme' . "\n\n";
-    $return .= 'Theme Name:             ' . $parent_theme . "\n";
+    //$return .= "\n" . '-- WordPress Active Theme' . "\n\n";
+    //$return .= 'Theme Name:             ' . $parent_theme . "\n";
     // return $return;
     // Get plugins that have an update
     $updates = get_plugin_updates();
@@ -395,6 +393,85 @@ function wp_memory_sysinfo_get()
             $return .= $plugin['Name'] . ': ' . $plugin['Version'] . $update . $plugin_url . "\n\n";
         }
     }
+
+
+    // WordPress themes - 3-2025
+    $return .= "\n" . '-- WordPress Active Theme' . "\n\n";
+    $current_theme = wp_get_theme(); // Pega o tema ativo
+    $themes = wp_get_themes(); // Pega todos os temas instalados
+    $updates = get_site_transient('update_themes'); // Pega informações de atualizações
+
+    // Tema ativo
+    $update = (isset($updates->response[$current_theme->get_stylesheet()]))
+        ? ' (needs update - ' . $updates->response[$current_theme->get_stylesheet()]['new_version'] . ')'
+        : '';
+    $theme_url = '';
+    if ($current_theme->get('ThemeURI')) {
+        $theme_url = $current_theme->get('ThemeURI');
+    } elseif ($current_theme->get('AuthorURI')) {
+        $theme_url = $current_theme->get('AuthorURI');
+    } elseif ($current_theme->get('Author')) {
+        $theme_url = $current_theme->get('Author');
+    }
+    if ($theme_url) {
+        $theme_url = "\n" . $theme_url;
+    }
+    $return .= $current_theme->get('Name') . ': ' . $current_theme->get('Version') . $update . $theme_url . "\n\n";
+
+    // Temas inativos
+    $return .= "\n" . '-- WordPress Inactive Themes' . "\n\n";
+    foreach ($themes as $theme) {
+        if ($theme->get_stylesheet() === $current_theme->get_stylesheet()) {
+            continue; // Pula o tema ativo
+        }
+        $update = (isset($updates->response[$theme->get_stylesheet()]))
+            ? ' (needs update - ' . $updates->response[$theme->get_stylesheet()]['new_version'] . ')'
+            : '';
+        $theme_url = '';
+        if ($theme->get('ThemeURI')) {
+            $theme_url = $theme->get('ThemeURI');
+        } elseif ($theme->get('AuthorURI')) {
+            $theme_url = $theme->get('AuthorURI');
+        } elseif ($theme->get('Author')) {
+            $theme_url = $theme->get('Author');
+        }
+        if ($theme_url) {
+            $theme_url = "\n" . $theme_url;
+        }
+        $return .= $theme->get('Name') . ': ' . $theme->get('Version') . $update . $theme_url . "\n\n";
+    }
+
+    // Para multisite, adicionar temas ativos na rede (se aplicável)
+    if (is_multisite()) {
+        $return .= "\n" . '-- Network Enabled Themes' . "\n\n";
+        $network_themes = get_site_option('allowedthemes'); // Temas permitidos na rede
+        foreach ($themes as $theme) {
+            if (!isset($network_themes[$theme->get_stylesheet()]) || $network_themes[$theme->get_stylesheet()] !== true) {
+                continue;
+            }
+            if ($theme->get_stylesheet() === $current_theme->get_stylesheet()) {
+                continue; // Pula se já foi listado como ativo
+            }
+            $update = (isset($updates->response[$theme->get_stylesheet()]))
+                ? ' (needs update - ' . $updates->response[$theme->get_stylesheet()]['new_version'] . ')'
+                : '';
+            $theme_url = '';
+            if ($theme->get('ThemeURI')) {
+                $theme_url = $theme->get('ThemeURI');
+            } elseif ($theme->get('AuthorURI')) {
+                $theme_url = $theme->get('AuthorURI');
+            } elseif ($theme->get('Author')) {
+                $theme_url = $theme->get('Author');
+            }
+            if ($theme_url) {
+                $theme_url = "\n" . $theme_url;
+            }
+            $return .= $theme->get('Name') . ': ' . $theme->get('Version') . $update . $theme_url . "\n\n";
+        }
+    }
+
+
+
     // Server configuration 
     $return .= "\n" . '-- Webserver Configuration' . "\n\n";
     $return .= 'OS Type & Version:        ' . wp_memory_OSName();

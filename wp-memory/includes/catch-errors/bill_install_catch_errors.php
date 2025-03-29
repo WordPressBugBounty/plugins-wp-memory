@@ -106,7 +106,8 @@ function bill_install_mu_plugin()
 
 
 
-    $install_mu_plugin_dir = WP_PLUGIN_DIR . '/wp-memory/includes/mu-plugins'; // Current path inside wp_memory
+    //$install_mu_plugin_dir = WP_PLUGIN_DIR . '/wp-memory/includes/mu-plugins'; // Current path inside wp_memory
+    $install_mu_plugin_dir = dirname(dirname(__FILE__)) . '/mu-plugins';
     $mu_plugins_dir = WPMU_PLUGIN_DIR; // MU-Plugins directory
     $transient_name = 'bill_unable_to_create_mu_folder';
     $transient_check = get_transient($transient_name);
