@@ -3,7 +3,7 @@ Contributors: sminozzi
 Tags: memory limit, memory usage, memory exhausted, memory increase, ram
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 3.90
+Stable tag: 3.92
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,11 @@ WPmemory Check High Memory Usage, Memory Limit, PHP Memory, hardware memory, err
 
 >This plugin is not just a simple and singular piece of information from your WordPress memory available. It's a **comprehensive set of tools** to help you manage your website's memory. For example, hardware memory, PHP memory, and WordPress memory limits.It confirms that your **hosting is indeed delivering the promised hardware memory size**.
 
-But it goes further: it alerts you when memory is dangerously low, especially if it's already depleted. It also keeps a log of how much memory each page has occupied, as different pages use varying amounts of memory. Additionally, it logs errors from your server. While WordPress only notifies you of fatal errors, it doesn't alert you to other issues that can also impact your site's performance, making it slower or hindering navigation, and preventing users from seeing things correctly.
+But it goes further: it alerts you when memory is dangerously low, especially if it's already depleted. 
+
+>**Note: a higher limit is not always better. The WP_MEMORY_LIMIT sets the maximum memory a WordPress instance can use. A frequent error is setting it too high, which can cause resource exhaustion on servers with multiple instances, leading to instability and inability to handle requests from users or bots. Maintaining memory usage at an appropriate level requires ongoing monitoring**.
+
+It also keeps a log of how much memory each page has occupied, as different pages use varying amounts of memory. Additionally, it logs errors from your server. While WordPress only notifies you of fatal errors, it doesn't alert you to other issues that can also impact your site's performance, making it slower or hindering navigation, and preventing users from seeing things correctly.
 
 Premium Version: Say goodbye to complex coding and the risk of accidental file changes. WP Memory Check allows you to effortlessly **fix both the PHP Memory Limit and the WordPress Memory Limit** without the need for intricate coding modifications or the fear of unintended file alterations.
 

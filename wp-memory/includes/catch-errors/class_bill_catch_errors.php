@@ -177,7 +177,7 @@ class wp_memory_bill_catch_errors
             // alert();
 
             var errorQueue = [];
-            let timeout;
+            let wp_memory_timeout;
             var errorMessage = '';
 
             function isBot() {
@@ -201,8 +201,8 @@ class wp_memory_bill_catch_errors
                 if (errorQueue.length >= 5) {
                     sendErrorsToServer();
                 } else {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(sendErrorsToServer, 5000);
+                    clearTimeout(wp_memory_timeout);
+                    wp_memory_timeout = setTimeout(sendErrorsToServer, 5000);
                 }
             }
                 */
@@ -266,8 +266,8 @@ class wp_memory_bill_catch_errors
                 if (errorQueue.length >= 5) {
                     sendErrorsToServer();
                 } else {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(sendErrorsToServer, 5000);
+                    clearTimeout(wp_memory_timeout);
+                    wp_memory_timeout = setTimeout(sendErrorsToServer, 5000);
                 }
             }
 
