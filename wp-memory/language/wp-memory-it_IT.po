@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-19 09:53+0100\n"
-"PO-Revision-Date: 2025-04-19 10:48+0100\n"
+"POT-Creation-Date: 2025-06-08 07:41+0100\n"
+"PO-Revision-Date: 2025-06-08 07:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -48,12 +48,10 @@ msgid "Unknown"
 msgstr "Sconosciuto"
 
 #: dashboard/circle_memory.php:42
-#| msgid "Low WordPress Memory Limit"
 msgid "WordPress Memory Usage"
 msgstr "Utilizzo della memoria di WordPress"
 
 #: dashboard/circle_memory.php:47
-#| msgid "Memory Usage"
 msgid "PHP Memory Usage"
 msgstr "Utilizzo della memoria di WordPress"
 
@@ -70,7 +68,6 @@ msgstr ""
 "WP e la memoria PHP senza rischiare modifiche accidentali dei file."
 
 #: dashboard/dashboard.php:116
-#| msgid "Your usage now"
 msgid "Your Memory usage now"
 msgstr "Il tuo utilizzo della memoria adesso"
 
@@ -101,7 +98,6 @@ msgstr ""
 "necessario comprendere tre punti chiave:"
 
 #: dashboard/dashboard.php:238
-#| msgid "1) Total server memory (HARDWARE MEMORY):"
 msgid "Total server memory (HARDWARE MEMORY):"
 msgstr "Memoria totale del server (MEMORIA HARDWARE):"
 
@@ -117,7 +113,6 @@ msgstr ""
 "sopra."
 
 #: dashboard/dashboard.php:243
-#| msgid "2) PHP Memory**:"
 msgid "PHP Memory**:"
 msgstr "Memoria PHP**:"
 
@@ -134,7 +129,6 @@ msgstr ""
 "Deve essere inferiore alla memoria del server (punto 1)."
 
 #: dashboard/dashboard.php:251
-#| msgid "Instructions to increase PHP Memory:"
 msgid "Instructions to increase PHP Memory"
 msgstr "Istruzioni per aumentare il PHP Memory"
 
@@ -143,7 +137,6 @@ msgid "Click Here to learn more"
 msgstr "Clicca qui per saperne di più"
 
 #: dashboard/dashboard.php:266
-#| msgid "3) WordPress Memory Limit*:"
 msgid "WordPress Memory Limit*:"
 msgstr "Limite di memoria di WordPress*:"
 
@@ -184,7 +177,6 @@ msgstr ""
 "un monitoraggio continuo."
 
 #: dashboard/dashboard.php:298
-#| msgid "Instructions to increase WP Memory Limit:"
 msgid "Instructions to increase  WP Memory Limit"
 msgstr "Istruzioni per aumentare il limite di memoria WP"
 
@@ -700,8 +692,12 @@ msgstr ""
 "Chat di supporto per l'intelligenza artificiale per problemi e soluzioni"
 
 #: includes/diagnose/class_bill_diagnose.php:912
-msgid "Enter your message..."
-msgstr "Inserisci il tuo messaggio..."
+msgid ""
+"Describe your issue, or use the buttons below to check for errors or server "
+"settings..."
+msgstr ""
+"Descrivi il problema oppure utilizza i pulsanti qui sotto per verificare la "
+"presenza di errori o impostazioni del server..."
 
 #: includes/diagnose/class_bill_diagnose.php:913
 msgid "Send"
@@ -710,7 +706,7 @@ msgstr "Inviare"
 #: includes/diagnose/class_bill_diagnose.php:916
 msgid ""
 "Enter a message and click 'Send', or just click 'Auto Checkup' to analyze "
-"error log ou server info configuration."
+"error log or server info configuration."
 msgstr ""
 "Inserisci un messaggio e clicca su \"Invia\", oppure clicca semplicemente su "
 "\"Controllo automatico\" per analizzare il registro degli errori o la "
@@ -1108,6 +1104,9 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://billminozzi.com"
 msgstr "http://billminozzi.com"
+
+#~ msgid "Enter your message..."
+#~ msgstr "Inserisci il tuo messaggio..."
 
 #~ msgid "Your site has errors."
 #~ msgstr "Il tuo sito presenta errori."

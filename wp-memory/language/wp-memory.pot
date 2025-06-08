@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-19 09:51+0100\n"
+"POT-Creation-Date: 2025-06-08 07:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: WP Memory Team\n"
@@ -577,7 +577,9 @@ msgid "Artificial Intelligence Support Chat for Issues and Solutions"
 msgstr ""
 
 #: includes/diagnose/class_bill_diagnose.php:912
-msgid "Enter your message..."
+msgid ""
+"Describe your issue, or use the buttons below to check for errors or server "
+"settings..."
 msgstr ""
 
 #: includes/diagnose/class_bill_diagnose.php:913
@@ -587,7 +589,7 @@ msgstr ""
 #: includes/diagnose/class_bill_diagnose.php:916
 msgid ""
 "Enter a message and click 'Send', or just click 'Auto Checkup' to analyze "
-"error log ou server info configuration."
+"error log or server info configuration."
 msgstr ""
 
 #: includes/diagnose/class_bill_diagnose.php:922

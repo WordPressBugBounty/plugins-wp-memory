@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-19 09:53+0100\n"
-"PO-Revision-Date: 2025-04-19 10:42+0100\n"
+"POT-Creation-Date: 2025-06-08 07:43+0100\n"
+"PO-Revision-Date: 2025-06-08 06:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: wpmemory.php\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Loco-Version: 2.7.1; wp-6.7.2\n"
+"X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.10\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
@@ -49,11 +49,11 @@ msgstr "Desconocido"
 
 #: dashboard/circle_memory.php:42
 msgid "WordPress Memory Usage"
-msgstr ""
+msgstr "Uso de memoria de WordPress"
 
 #: dashboard/circle_memory.php:47
 msgid "PHP Memory Usage"
-msgstr ""
+msgstr "Uso de memoria de PHP"
 
 #: dashboard/dashboard.php:73
 msgid ""
@@ -70,7 +70,7 @@ msgstr ""
 
 #: dashboard/dashboard.php:116
 msgid "Your Memory usage now"
-msgstr ""
+msgstr "Uso de memoria ahora"
 
 #: dashboard/dashboard.php:126
 msgid "PHP Memory"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: dashboard/dashboard.php:238
 msgid "Total server memory (HARDWARE MEMORY):"
-msgstr ""
+msgstr "Memoria total del servidor (MEMORIA DE HARDWARE):"
 
 #: dashboard/dashboard.php:240
 msgid ""
@@ -115,7 +115,7 @@ msgstr ""
 
 #: dashboard/dashboard.php:243
 msgid "PHP Memory**:"
-msgstr ""
+msgstr "**Memoria de PHP**:"
 
 #: dashboard/dashboard.php:245
 msgid ""
@@ -131,7 +131,7 @@ msgstr ""
 
 #: dashboard/dashboard.php:251
 msgid "Instructions to increase PHP Memory"
-msgstr ""
+msgstr "Instrucciones para aumentar la memoria de PHP"
 
 #: dashboard/dashboard.php:259 dashboard/dashboard.php:306
 msgid "Click Here to learn more"
@@ -139,7 +139,7 @@ msgstr "Haga clic aquí para saber más"
 
 #: dashboard/dashboard.php:266
 msgid "WordPress Memory Limit*:"
-msgstr ""
+msgstr "Límite de memoria de WordPress*:"
 
 #: dashboard/dashboard.php:268
 msgid ""
@@ -156,7 +156,7 @@ msgstr "Debe ser menor que la memoria PHP (punto 2)."
 
 #: dashboard/dashboard.php:284
 msgid "Note: a higher limit is not always better."
-msgstr ""
+msgstr "Nota: un límite más alto no siempre es mejor."
 
 #: dashboard/dashboard.php:286
 msgid ""
@@ -165,15 +165,21 @@ msgid ""
 "instances, leading to instability and inability to handle requests from "
 "users or bots."
 msgstr ""
+"La WP_MEMORY_LIMIT establece la memoria máxima que puede utilizar una "
+"instancia de WordPress. Establecerla demasiado alta puede causar agotamiento "
+"de recursos en servidores con múltiples instancias, lo que lleva a "
+"inestabilidad y la incapacidad de manejar solicitudes de usuarios o bots."
 
 #: dashboard/dashboard.php:290
 msgid ""
 "Maintaining memory usage at an appropriate level requires ongoing monitoring."
 msgstr ""
+"Mantener el uso de la memoria a un nivel adecuado requiere una supervisión "
+"continua."
 
 #: dashboard/dashboard.php:298
 msgid "Instructions to increase  WP Memory Limit"
-msgstr ""
+msgstr "Instrucciones para aumentar el límite de memoria de WP"
 
 #: dashboard/dashboard.php:322
 msgid "How to Tell if Your Site Needs a Shot of more Memory"
@@ -283,8 +289,8 @@ msgstr ""
 
 #: dashboard/hardware.php:48
 msgid ""
-"Sometimes hosting companies block access to this information. In these "
-"cases, you need to request them to unblock it or inquire directly with them."
+"Sometimes hosting companies block access to this information. In these cases,"
+" you need to request them to unblock it or inquire directly with them."
 msgstr ""
 "En ocasiones, las empresas de hosting bloquean el acceso a esta información. "
 "En estos casos, deberás solicitarles que la desbloqueen o consultarles "
@@ -540,8 +546,8 @@ msgstr ""
 "alterar la funcionalidad, desde fallas menores hasta fallas críticas del "
 "sitio. Aborde estos problemas de inmediato antes de continuar porque estos "
 "problemas persistirán incluso si desactiva nuestro complemento. Tenga en "
-"cuenta que el sistema de errores de PHP no captura los errores de "
-"JavaScript. Sólo nuestro complemento los captura."
+"cuenta que el sistema de errores de PHP no captura los errores de JavaScript."
+" Sólo nuestro complemento los captura."
 
 #: functions/functions.php:796
 msgid "For bigger files, download and open them in your local computer."
@@ -686,8 +692,12 @@ msgid "Artificial Intelligence Support Chat for Issues and Solutions"
 msgstr "Chat de soporte de inteligencia artificial para problemas y soluciones"
 
 #: includes/diagnose/class_bill_diagnose.php:912
-msgid "Enter your message..."
-msgstr "Ingrese su mensaje..."
+msgid ""
+"Describe your issue, or use the buttons below to check for errors or server "
+"settings..."
+msgstr ""
+"Describe su problema, o utilice los botones a continuación para buscar "
+"errores o configuraciones del servidor..."
 
 #: includes/diagnose/class_bill_diagnose.php:913
 msgid "Send"
@@ -696,7 +706,7 @@ msgstr "Enviar"
 #: includes/diagnose/class_bill_diagnose.php:916
 msgid ""
 "Enter a message and click 'Send', or just click 'Auto Checkup' to analyze "
-"error log ou server info configuration."
+"error log or server info configuration."
 msgstr ""
 "Ingrese un mensaje y haga clic en 'Enviar', o simplemente haga clic en "
 "'Verificación automática' para analizar el registro de errores o la "
@@ -893,8 +903,8 @@ msgstr ""
 #: includes/diagnose/class_bill_diagnose.php:1365
 #, php-format
 msgid ""
-"Our free <a href=\"%1$s\">StopBadBots</a> and <a href=\"%2$s\">AntiHacker</"
-"a> plugins help safeguard your site."
+"Our free <a href=\"%1$s\">StopBadBots</a> and <a href=\"%2$s\">AntiHacker</a>"
+" plugins help safeguard your site."
 msgstr ""
 "Nuestros complementos gratuitos <a href=\"%1$s\">StopBadBots</a> y <a "
 "href=\"%2$s\">AntiHacker</a> ayudan a proteger su sitio."
@@ -1041,9 +1051,9 @@ msgstr "¿Podrías hacerme un GRAN favor?"
 
 #: includes/feedback/feedback.php:91
 msgid ""
-"If you use & enjoy WP Memory Plugin, please rate it 5 stars on WordPress."
-"org. It only takes a second and help us spread the word and boost our "
-"motivation. Thank you!"
+"If you use & enjoy WP Memory Plugin, please rate it 5 stars on WordPress.org."
+" It only takes a second and help us spread the word and boost our motivation."
+" Thank you!"
 msgstr ""
 "Si usas y disfrutas del plugin WP Memory, por favor valóralo en WordPress."
 "org. Sólo se tarda un segundo y nos ayuda a mantener el plugin vivo y "
@@ -1096,54 +1106,3 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://billminozzi.com"
 msgstr "http://billminozzi.com"
-
-#~ msgid "Your site has errors."
-#~ msgstr "Su sitio tiene errores."
-
-#~ msgid ""
-#~ "can't function as intended. Errors, including JavaScript errors, may lead "
-#~ "to visual problems or disrupt functionality, from minor glitches to "
-#~ "critical site failures. Promptly address these issues before continuing."
-#~ msgstr ""
-#~ "Nuestro complemento no puede funcionar según lo previsto. Los errores, "
-#~ "incluidos los errores de JavaScript, pueden provocar problemas visuales o "
-#~ "alterar la funcionalidad, desde fallas menores hasta fallas críticas del "
-#~ "sitio. Aborde estos problemas de inmediato antes de continuar porque "
-#~ "estos problemas persistirán incluso si desactiva nuestro complemento. "
-#~ "Tenga en cuenta que el sistema de errores de PHP no captura los errores "
-#~ "de JavaScript. Sólo nuestro complemento los captura.msgctxt \"Site Health"
-
-#~ msgid ""
-#~ "Displaying the latest recurring errors from your error log file and "
-#~ "eventually alert about low WordPress memory limit is a courtesy of plugin"
-#~ msgstr ""
-#~ "La visualización de los últimos errores recurrentes de su archivo de "
-#~ "registro de errores y, eventualmente, alerta sobre el límite bajo de "
-#~ "memoria de WordPress es cortesía del complemento"
-
-#~ msgid ""
-#~ "Disabling our plugin does not stop the errors from occurring; \n"
-#~ "                it simply means you will no longer be notified here that "
-#~ "they are happening, but they can still harm your site."
-#~ msgstr ""
-#~ "Deshabilitar nuestro complemento no evita que se produzcan los errores; \n"
-#~ "simplemente significa que ya no recibirás notificaciones aquí sobre que "
-#~ "están ocurriendo, pero aún pueden dañar tu sitio."
-
-#~ msgid "We'd like to thank you for trying our products."
-#~ msgstr "Nos gustaría agradecerle por probar nuestros productos."
-
-#~ msgid ""
-#~ "We offer 20+ free plugins and 6 themes to supercharge your website's "
-#~ "security, functionality, and backups. Trusted by over 50,000 users."
-#~ msgstr ""
-#~ "Ofrecemos más de 20 complementos gratuitos y 6 temas para potenciar la "
-#~ "seguridad, la funcionalidad y las copias de seguridad de su sitio web. "
-#~ "Más de 50 000 usuarios confían en nosotros."
-
-#~ msgid ""
-#~ "Visit the plugin site for more details, video, FAQ and Troubleshooting "
-#~ "page."
-#~ msgstr ""
-#~ "Visite el sitio del plugin para obtener más detalles, vídeo, preguntas "
-#~ "frecuentes y página de resolución de problemas."

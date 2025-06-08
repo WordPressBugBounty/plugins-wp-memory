@@ -909,11 +909,11 @@ class wpmemory_Bill_Diagnose
                 <div id="error-message" style="display:none;"></div> <!-- Mensagem de erro -->
                 <form id="chat-form">
                     <div id="input-group">
-                        <input type="text" id="chat-input" placeholder="<?php echo esc_attr__('Enter your message...', "wp-memory"); ?>" />
+                        <input type="text" id="chat-input" placeholder="<?php echo esc_attr__('Describe your issue, or use the buttons below to check for errors or server settings...', "wp-memory"); ?>" />
                         <button type="submit"><?php echo esc_attr__('Send', "wp-memory"); ?></button>
                     </div>
                     <div id="action-instruction" style="text-align: center; margin-top: 10px;">
-                        <span><?php echo esc_attr__("Enter a message and click 'Send', or just click 'Auto Checkup' to analyze error log ou server info configuration.", "wp-memory"); ?></span>
+                        <span><big><?php echo esc_attr__("Enter a message and click 'Send', or just click 'Auto Checkup' to analyze error log or server info configuration.", "wp-memory"); ?></big></span>
                     </div>
                     <div class="auto-checkup-container" style="text-align: center; margin-top: 10px;">
 
