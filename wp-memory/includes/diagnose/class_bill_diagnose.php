@@ -264,7 +264,6 @@ class ErrorChecker
     public static function get_path_logs()
     {
         $bill_folders = [];
-
         $error_log_path = ini_get("error_log");
         if (!empty($error_log_path)) {
             $error_log_path = trim($error_log_path);
@@ -275,39 +274,21 @@ class ErrorChecker
                 $error_log_path = trailingslashit(ABSPATH) . 'error_log';
             }
         }
-
         $bill_folders[] = $error_log_path;
-
         //debug2($bill_folders);
-
-
-
         // Logs in WordPress root directory
         //
-
         $bill_folders[] = WP_CONTENT_DIR . "/debug.log";
-
         // Logs in current plugin directory
         $bill_folders[] = plugin_dir_path(__FILE__) . "error_log";
         $bill_folders[] = plugin_dir_path(__FILE__) . "php_errorlog";
-
         // Logs in current theme directory
         $bill_folders[] = get_theme_root() . "/error_log";
         $bill_folders[] = get_theme_root() . "/php_errorlog";
-
         // Logs in administration area (if it exists)
         $bill_admin_path = str_replace(get_bloginfo("url") . "/", ABSPATH, get_admin_url());
         $bill_folders[] = $bill_admin_path . "/error_log";
         $bill_folders[] = $bill_admin_path . "/php_errorlog";
-
-
-
-
-
-
-
-
-
         // Logs in plugin subdirectories
         try {
             $bill_plugins = array_slice(scandir(plugin_dir_path(__FILE__)), 2);
@@ -322,9 +303,6 @@ class ErrorChecker
             // Handle the exception
             error_log("Error scanning plugins directory: " . $e->getMessage());
         }
-
-
-
         // Logs in theme subdirectories
         /*
         $bill_themes = array_slice(scandir(get_theme_root()), 2);
@@ -336,11 +314,8 @@ class ErrorChecker
             }
         }
         */
-
         try {
             $bill_themes = array_slice(scandir(get_theme_root()), 2);
-
-
             foreach ($bill_themes as $bill_theme) {
                 if (is_dir(get_theme_root() . "/" . $bill_theme)) {
                     $bill_folders[] = get_theme_root() . "/" . $bill_theme . "/error_log";
@@ -351,18 +326,11 @@ class ErrorChecker
             // Handle the exception
             error_log("Error scanning theme directory: " . $e->getMessage());
         }
-
-
-
         // debug2($bill_folders);
-
         //var_dump($bill_folders);
-
-
         //die();
-
-
-        return $bill_folders;
+        //return $bill_folders;
+        return array_unique($bill_folders);
     }
 
 
