@@ -3,7 +3,7 @@ Contributors: sminozzi
 Tags: memory limit, memory usage, memory exhausted, memory increase, ram
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 3.96
+Stable tag: 3.98
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,11 +224,24 @@ Questo plugin controlla l'uso di memoria e include il risultato nella pagina Str
 == Look the file changelog.txt for details ==
 We can keep the size of the standard WordPress readme.txt file reasonable.
 
-== External service ==
-The WPMemory plugin will retrieve tips and news from our site BillMinozzi.com. This information will be displayed in the plugin dashboard, in the right-hand column under the title "Tips and News." No data is sent to our server. Learn about the terms of use for our plugins and themes at this link:
-https://siterightaway.net/terms-of-use-of-our-plugins-and-themes/
-
-== External service 2 ==
+== External service (1) ==
 When using our chat, only some information about issues, such as your language and data from the Diagnose tab, may be sent to our server. We do not share, publish, or disclose any information with third parties.
+domain: https://BillMinozzi.com/chat/api/api.php
+
+== External service (2) ==
+The plugin will retrieve tips and news from our site BillMinozzi.com. This information will be displayed in the plugin dashboard, in the right-hand column under the title "Tips and News." No data is sent to our server. 
+domain: https://billminozzi.com/API/bill-api.php
 
 
+== Advanced Site Health ==
+
+WordPresss built-in Site Health feature provides a great baseline for your sites well-being. However, in todays digital landscape, true health goes beyond server configuration. A site can have a perfect score and still be slow, vulnerable, or plagued by critical errors.
+
+Our plugin extends the core Site Health concept to provide a truly holistic analysis of what keeps your site fast, stable, and secure. We dont just check the basics; we diagnose critical issues that directly impact your visitors experience and your sites operational integrity.
+
+Our enhanced checks include:Performance & Memory Analysis, Proactive Error Detection, Modern Security Monitoring.
+That  involves querying public, authoritative services like rdap.db.ripe.net with visitor IP addresses for security analysis.
+domain: https://rdap.db.ripe.net/ip/
+
+For a complete overview of all features, our data handling practices, and the full terms governing our software, please visit our official website: 
+https://siterightaway.net/terms-of-use-of-our-plugins-and-themes/ 
