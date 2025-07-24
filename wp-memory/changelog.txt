@@ -3,6 +3,7 @@
 This file contains changelog entries, so we can keep the size of the standard WordPress readme.txt file reasonable.
 
 == Changelog ==
+3.99 - 2025-07-24 - Improved Security.
 3.97 - 2025-07-05 - Improved Chat Security.
 3.94/96 - 2025-06-09 - Improved Diagnostic.
 3.93 - Improved Diagnostic.
